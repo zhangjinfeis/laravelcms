@@ -45,6 +45,11 @@
                 <input type="text" class="form-control" id="key" name="key" placeholder="键" value="">
                 <small class="form-text text-muted">取值的字段名</small>
             </div>
+            <div class="form-group hide js-radio-checkbox">
+                <label>单选/复选选项</label>
+                <textarea class="form-control" rows="4" name="radio_checkbox_json" placeholder="选项值"></textarea>
+                <small class="form-text text-muted">例如，颜色:1-红色，多个选项换行区分</small>
+            </div>
             <div class="form-group js-value">
                 <label>值</label>
                 <input type="text" class="form-control" name="value" placeholder="值" value="">
@@ -111,8 +116,15 @@
                 $('.js-width').show();
                 $('.js-height').show();
                 $('.js-size').hide();
+            }else if($(this).val() == 6 || $(this).val() == 7){
+                $('.js-value').hide().find('input[name=value]').val('');
+                $('.js-custom').hide();
+                $('.js-radio-checkbox').show();
+                $('.js-width').hide().find('input[name=width]').val('');
+                $('.js-height').hide().find('input[name=height]').val('');
+                $('.js-size').hide();
             }else{
-                $('.js-value').show();
+                $('.js-value').hide();
                 $('.js-custom').hide();
                 $('.js-width').hide().find('input[name=width]').val('');
                 $('.js-height').hide().find('input[name=height]').val('');
@@ -123,7 +135,7 @@
         //新增菜单提交
         function create_config(){
             if(!$('input[name=name]').val()){
-                $boot.warn({text:'分类名称不能为空'});
+                $boot.warn({text:'参数名称不能为空'});
                 return false;
             }
             var data = $('#form1').serialize();

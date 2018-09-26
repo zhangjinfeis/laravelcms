@@ -28,6 +28,12 @@ class ConfigController extends Controller
         $sign['cate_id'] = $request->cate_id?$request->cate_id:$cate[0]->id;
         //参数
         $config = Config::where('cate_id',$sign['cate_id'])->orderBy('sort','asc')->get();
+        foreach($config as &$val){
+            if(!empty($val['radio_checkbox_json'])){
+                $val['radio_checkbox_json'] = explode('\r\n',$val['radio_checkbox_json']);
+            }
+        }
+        dd($config);
         $sign['conf'] = $config;
         return view("admin.config.index",$sign);
     }
@@ -93,6 +99,9 @@ class ConfigController extends Controller
             $config->width = $request->width;
             $config->height = $request->height;
             $config->custom = $request->custom;
+        }
+        if(in_array($request->type,[6,7])){
+            $config->radio_checkbox_json = $request->radio_checkbox_json;
         }
         $config->tips = $request->tips;
         $config->sort = $request->sort;
