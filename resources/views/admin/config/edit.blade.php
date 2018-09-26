@@ -41,6 +41,11 @@
             <input type="text" class="form-control" id="key" name="key" placeholder="键" style="width:400px;" value="{{$conf->key or ''}}">
             <small class="form-text text-muted">取值的字段名</small>
         </div>
+        <div class="form-group @if(!in_array($conf->type,[6,7])) hide @endif js-radio-checkbox">
+            <label>单选/复选选项</label>
+            <textarea class="form-control" rows="4" name="radio_checkbox_json" placeholder="选项值">{{$conf->radio_checkbox_json or ''}}</textarea>
+            <small class="form-text text-muted">例如，颜色:1-红色，多个选项换行区分</small>
+        </div>
         <div class="form-group @if(!in_array($conf->type,[3,4,5])) hide @endif js-width">
             <label>宽度</label>
             <input type="text" class="form-control" name="width" placeholder="宽度" style="width:400px;" value="{{$conf->width or ''}}">
@@ -92,6 +97,13 @@
                 $('.js-custom').show();
                 $('.js-width').show();
                 $('.js-height').show();
+                $('.js-size').hide();
+            }else if($(this).val() == 6 || $(this).val() == 7){
+                $('.js-value').hide().find('input[name=value]').val('');
+                $('.js-custom').hide();
+                $('.js-radio-checkbox').show();
+                $('.js-width').hide().find('input[name=width]').val('');
+                $('.js-height').hide().find('input[name=height]').val('');
                 $('.js-size').hide();
             }else{
                 $('.js-value').show();

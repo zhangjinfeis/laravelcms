@@ -28,12 +28,22 @@ class ConfigController extends Controller
         $sign['cate_id'] = $request->cate_id?$request->cate_id:$cate[0]->id;
         //参数
         $config = Config::where('cate_id',$sign['cate_id'])->orderBy('sort','asc')->get();
-        foreach($config as &$val){
-            if(!empty($val['radio_checkbox_json'])){
-                $val['radio_checkbox_json'] = explode('\r\n',$val['radio_checkbox_json']);
+        foreach($config as $key => $val){
+            if(!empty($val->radio_checkbox_json)){
+
+                $item = str_replace("\r\n","\n",$config[$key]->radio_checkbox_json);
+                $item = trim($item,"\n");
+                $item = explode("\n",$item);
+                foreach($item as $k => $v){
+                    $item[$k] = explode('-',$v);
+                }
+                $config[$key]->radio_checkbox_json = $item;
+            }
+            if($val->type == 7){
+                $config[$key]->value=json_decode($val->value,true);
             }
         }
-        dd($config);
+        //dd($config);
         $sign['conf'] = $config;
         return view("admin.config.index",$sign);
     }
@@ -177,6 +187,9 @@ class ConfigController extends Controller
                 $config->height = $request->height;
                 $config->custom = $request->custom;
             }
+            if(in_array($request->type,[6,7])){
+                $config->radio_checkbox_json = $request->radio_checkbox_json;
+            }
             $config->tips = $request->tips;
             $config->sort = $request->sort;
             $res = $config->save();
@@ -211,10 +224,15 @@ class ConfigController extends Controller
      */
     public function ajaxEditValue(Request $request){
         $input = $request->all();
-        unset($input['pic_not_use_id']);
-        unset($input['pic_use_id']);
         foreach($input as $k => $v){
-            Config::where('key',$k)->update(['value'=>$v]);
+            $c = Config::where('key',$k)->first();
+            if(!in_array($c->type,[7])){
+                $c->value= $v;
+                $c->save();
+            }else{
+                $c->value= json_encode($v);
+                $c->save();
+            }
         }
         return response()->json(['status'=>1,'msg'=>'编辑成功']);
     }

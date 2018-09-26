@@ -189,6 +189,26 @@
                             @case(5)
                             @include('admin.component.ckeditor',array("input_id"=>md5($vo->key),"input_name"=>$vo->key,'width'=>$vo->width,'height'=>$vo->height,'input_value'=>$vo->value,'custom'=>$vo->custom))
                             @break
+                            @case(6)
+                            <div>
+                                @foreach($vo->radio_checkbox_json as $item)
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" id="{{$vo->key}}{{$item[0]}}" name="{{$vo->key}}" value="{{$item[0]}}" @if($vo->value==$item[0]) checked @endif>
+                                        <label class="custom-control-label" for="{{$vo->key}}{{$item[0]}}">{{$item[1]}}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                            @break
+                            @case(7)
+                            <div>
+                                @foreach($vo->radio_checkbox_json as $item)
+                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                        <input type="checkbox" class="custom-control-input" name="{{$vo->key}}[]"  value="{{$item[0]}}" id="{{$vo->key}}{{$item[0]}}" @if(in_array($item[0],$vo['value'])) checked @endif>
+                                        <label class="custom-control-label" for="{{$vo->key}}{{$item[0]}}">{{$item[1]}}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                            @break
                         @endswitch
                         <small class="form-text text-muted">
                             @if($vo->tips)
