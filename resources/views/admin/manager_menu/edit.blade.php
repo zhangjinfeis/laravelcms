@@ -21,6 +21,13 @@
             <input type="text" class="form-control" id="name" name="name" placeholder="菜单名称" style="width:400px;" value="{{old('name')?old('name'):$menu->name}}" />
             <small class="form-text text-muted">1-20个字符</small>
         </div>
+        @if($menu->depth > 0)
+        <div class="form-group">
+            <label>icon图标</label>
+            <input type="text" class="form-control" name="icon" placeholder="icon图标" style="width:400px;" value="{{$menu->icon or ''}}" />
+            <small class="form-text text-muted">前往http://www.fontawesome.com.cn/faicons/选择</small>
+        </div>
+        @endif
         @if($menu->depth == 2)
         <div class="form-group">
             <label for="url">路径</label>

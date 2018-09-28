@@ -9,21 +9,16 @@
                     @foreach($vo['children'] as $voo)
                         <li class="on">
                             <a class="item">
-                                <span class="icon"></span>
+                                <span class="icon"><span class="fa {{$voo['icon']}}"></span></span>
                                 {{$voo['name']}}
                                 <span class="arrow arrow-1 fa fa-chevron-down"></span>
                                 <span class="arrow arrow-2 fa fa-chevron-up"></span>
                             </a>
-
-                            {{--<a href="#" class="item" data-title="{{$voo['name']}}" url="{{$voo['url']}}" url_md5="{{md5($voo['url'])}}">--}}
-                            {{--<span class="icon"></span>--}}
-                            {{--{{$voo['name']}}--}}
-                            {{--</a>--}}
                             @if($voo['children'])
                                 <div class="handle">
                                     <dl>
                                         @foreach($voo['children'] as $vooo)
-                                            <dd><a title="{{$vooo['name']}}" data-title="{{$vooo['name']}}" url="{{$vooo['url']}}" url_md5="{{md5($vooo['url'])}}">- {{$vooo['name']}}</a></dd>
+                                            <dd><a title="{{$vooo['name']}}" data-title="{{$vooo['name']}}" url="{{$vooo['url']}}" url_md5="{{md5($vooo['url'])}}">{{$vooo['name']}}</a></dd>
                                         @endforeach
                                     </dl>
                                     <div class="clear"></div>
@@ -245,11 +240,20 @@
             if($(this).hasClass("on")){
                 $(this).removeClass('on');
                 $(this).find('.arrow').addClass('am-icon-angle-down').removeClass('am-icon-angle-up');
+                $(this).find('.handle').css({height:0});
             }else{
                 $(this).addClass('on');
                 $(this).find('.arrow').addClass('am-icon-angle-up').removeClass('am-icon-angle-down');
+                var h = $(this).find('dd').length*36;
+                $(this).find('.handle').css({height:h});
             }
         });
+        //设置默认高度
+        $(".m-frame-sidenav ul li").each(function(){
+            var h = $(this).find('dd').length*36;
+            $(this).find('.handle').css({height:h});
+        });
+
 
 
         //$('.m-frame-sidenav_control').addClass('am-icon-toggle-off');

@@ -14,7 +14,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function() {
 
         // ———————————————————————————后台菜单管理—————————————————————————————————
         Route::group(['prefix' => 'manager_menu'],function(){
-            Route::get('/', 'ManagerMenuController@index')->middleware('can:manager_menu');  //菜单列表
+            Route::get('/', 'ManagerMenuController@index');//->middleware('can:manager_menu');  //菜单列表
             Route::match(['post'],'/ajax_create', 'ManagerMenuController@ajaxCreate');//->middleware('can:manager_menu_create');  //创建菜单
             Route::match(['get','post'],'/edit','ManagerMenuController@edit');//->middleware('can:manager_menu_edit');  //编辑菜单
             Route::match(['post'],'/ajax_del','ManagerMenuController@ajaxDel');//->middleware('can:manager_menu_del');  //删除菜单

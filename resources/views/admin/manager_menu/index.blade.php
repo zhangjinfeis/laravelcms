@@ -130,7 +130,7 @@
         @foreach($list as $vo)
             <tr>
                 <td>{{$vo['id']}}</td>
-                <td>{!! $vo['depth_name'] !!}{{$vo['name']}}</td>
+                <td>{!! $vo['depth_name'] !!}&nbsp;<span class="fa {{$vo['icon']}}"></span>&nbsp;{{$vo['name']}}</td>
                 <td>{{$vo['url']}}</td>
                 <td>
                     @foreach($powers as $voo)

@@ -147,6 +147,7 @@ class ManagerMenuController extends Controller
             }
 
             $menu->name = $request->name;
+            $menu->icon = $request->icon;
             $menu->url = isset($request->url)?$request->url:null;
             $menu->power_id = isset($request->power_id)?$request->power_id:null;
             $menu->is_show = $request->is_show;

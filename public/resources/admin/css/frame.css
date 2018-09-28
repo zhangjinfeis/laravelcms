@@ -59,7 +59,7 @@ table,th,td{ border-collapse:collapse;}
 /**************************default-框架*****************************/
 
 /*左侧*/
-.lay_default_left{position:relative;float:left;width:180px;margin-right:-180px; height:100%; background:#005bbd; position:relative; z-index: 2;}
+.lay_default_left{position:relative;float:left;width:200px;margin-right:-200px; height:100%; background:linear-gradient(135deg,#8f75da 0,#727cf5 60%); position:relative; z-index: 2;}
 /*右侧*/
 .lay_default_right{float:right;width:100%;height:100%;}
 
@@ -67,30 +67,30 @@ table,th,td{ border-collapse:collapse;}
 /*菜单控制按钮*/
 .m-frame-sidenav-control{ height: 20px; line-height: 20px; width: 40px; font-size: 20px;margin:6px 0 0 12px; cursor: pointer;color:#e0e6ee;}
 /*二级菜单*/
-.m-frame-sidenav{ width:180px;}
-.m-frame-sidenav ul{ width:180px; float:left;margin:1px 0 0 0;}
-.m-frame-sidenav ul li{ width:100%; float:left;margin:3px 0 0 0; position: relative;background:rgba(255,255,255,0.1); transition:all 1s;}
-.m-frame-sidenav ul li:hover{background:rgba(255,255,255,0.3);}
-.m-frame-sidenav ul li a.item{display:block;padding:0 5px 0 10px; height:36px; line-height:36px;font-size: 14px;color:#fff;position: relative; z-index: 2;box-sizing: border-box; cursor: pointer;}
-.m-frame-sidenav ul li a.item:hover{color:#fff;}
-.m-frame-sidenav ul li a.item .icon{padding:0 2px 0 0;}
+.m-frame-sidenav{ width:200px;}
+.m-frame-sidenav ul{ width:200px; float:left;margin:1px 0 0 0;}
+.m-frame-sidenav ul li{ width:100%; float:left;margin:3px 0 0 0; position: relative; transition:all 0.5s;}
+.m-frame-sidenav ul li a.item{display:block;padding:0 5px 0 15px; height:36px; line-height:36px;font-size: 14px;color:#cedce4;position: relative; z-index: 2;box-sizing: border-box; cursor: pointer;}
+.m-frame-sidenav ul li a.item:hover{color:#f2f5f9;}
+.m-frame-sidenav ul li a.item .icon{padding:0 2px 0 0; display: inline-block;width:20px;}
 .m-frame-sidenav ul li a.item .arrow{ float: right; width: 20px; height: 20px; margin:8px 8px 0 0; text-align: center; line-height: 20px; font-size: 10px;}
 .m-frame-sidenav ul li a.item .arrow-2{display:none;}
+.m-frame-sidenav ul li.on a.item{color:#f2f5f9;}
 .m-frame-sidenav ul li.on a.item .arrow-1{display:none;}
 .m-frame-sidenav ul li.on a.item .arrow-2{display:inline;}
-.m-frame-sidenav ul li.on .handle{display:block;}
-.m-frame-sidenav ul li .handle{z-index: 1; display: none;}
+.m-frame-sidenav ul li .handle{z-index: 1;height:0px; overflow: hidden;transition:all 0.4s;}
+.m-frame-sidenav ul li.on .handle{display:block;height:auto;transition:all 0.4s;}
 .m-frame-sidenav ul li .handle dl{width:100%; float:left;}
 .m-frame-sidenav ul li .handle dd{width:100%; height:36px; float:left;}
-.m-frame-sidenav ul li .handle dd a{ display:block; padding:0 5px 0 20px; height:36px; line-height:36px;color:#fff;overflow:hidden;font-size:14px;cursor:pointer;transition:all .5s;}
-.m-frame-sidenav ul li .handle dd.on a{background:rgba(0,0,0,0.3); color:#fff;}
-.m-frame-sidenav ul li .handle dd a:hover{background:rgba(0,0,0,0.3);text-decoration:none;color:#fff;}
+.m-frame-sidenav ul li .handle dd a{ display:block; padding:0 5px 0 38px; height:36px; line-height:36px;color:#cedce4;overflow:hidden;font-size:14px;cursor:pointer;transition:all .5s;}
+.m-frame-sidenav ul li .handle dd.on a{background:rgba(0,0,0,0.2); color:#f2f5f9;}
+.m-frame-sidenav ul li .handle dd a:hover{background:rgba(0,0,0,0.2);text-decoration:none;color:#f2f5f9;}
 
 /*版本*/
 .g-vision{ height: 30px; line-height: 30px;color:#bfcde0; text-align:center;margin:20px 0 0 0;}
 
 /*右侧顶部*/
-.m-frame-top{ height:40px; background:#ffffff;position:relative; z-index:100;margin-left:180px;box-shadow:0 1px 0px rgba(0,0,0,0.05)}
+.m-frame-top{ height:40px; background:#ffffff;position:relative; z-index:100;margin-left:200px;box-shadow:0 1px 0px rgba(0,0,0,0.05)}
 .m-frame-top .user{ float:right; display:inline; margin:0px 20px 0 0; height:40px; line-height:40px;}
 .m-frame-top .user a{}
 /*一级菜单*/
@@ -118,5 +118,5 @@ table,th,td{ border-collapse:collapse;}
 .m-frame-tab .contain ul li.on span.title{ height: 30px; line-height: 30px;}
 .m-frame-tab .contain ul li.on a.close-btn{top:7px;}
 
-.lay_default_right_con{margin-left:180px;height:100%;position:relative;}
+.lay_default_right_con{margin-left:200px;height:100%;position:relative;}
 .lay_default_right_con iframe{ width:100%; height:100%; border:none;position:absolute;left:0px;top:40px;margin:0px;padding:0px;}
