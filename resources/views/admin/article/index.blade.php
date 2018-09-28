@@ -64,7 +64,7 @@
             <td>
                 {{$vo->title}}
                 @if($vo->thumb)
-                    <span class="badge badge-warning">图</span>
+                    <span class="text-primary"><i class="fa fa-picture-o"></i></span>
                 @endif
             </td>
             <td>

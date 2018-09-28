@@ -49,8 +49,10 @@
                 </ul>
             </div>
             <div class="user">
-                <span>{{$admin->name}}</span>，欢迎登录！&nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="text-primary" href="/admin/logout">退出</a>
+
+                <i class="fa fa-user-circle"></i> <span>{{$admin->name}}</span>&nbsp;&nbsp;&nbsp;
+                <a class="text-primary" target="_blank" href="/"><i class="fa fa-home"></i></a>&nbsp;&nbsp;
+                <a class="text-primary" href="/admin/logout"><i class="fa fa-sign-out"></i></a>
             </div>
             <div class="clear"></div>
         </div>
@@ -61,7 +63,7 @@
                 <div class="contain_wrap">
                     <div class="contain">
                         <ul><li class="on" url_md5="{{md5('http://baidu.com')}}">
-                                <a class="refresh" href="#"></a>
+                                <a class="refresh fa fa-refresh" href="#"></a>
                                 <span class="title">首页</span>
                             </li></ul>
                     </div>
@@ -78,7 +80,7 @@
         {
             var h = $(window).height();
             $(".lay_default_left,.lay_default_right").css({height:h});
-            $(".lay_default_right_con").css({height:h-80});
+            $(".lay_default_right_con").css({height:h-40});
             $(".lay_default_right_con .iframe_wrap,.lay_default_right_con .iframe_wrap iframe").css({height:h-80});
             //$(".lay_default_left").mCustomScrollbar();
         }
@@ -139,7 +141,7 @@
             newwin.prependTo($iframe_contain);
             reset_frame();
             $('.m-frame-tab .contain ul li').removeClass('on');
-            $('<li class="on" url_md5="'+url_md5+'"><span class="title">'+title+'</span><a class="refresh" href="#"></a><a class="close-btn">×</a></li>').appendTo('.m-frame-tab .contain ul');
+            $('<li class="on" url_md5="'+url_md5+'"><span class="title">'+title+'</span><a class="refresh fa fa-refresh" href="#"></a><a class="close-btn">×</a></li>').appendTo('.m-frame-tab .contain ul');
             return false;
         }
         (function(){

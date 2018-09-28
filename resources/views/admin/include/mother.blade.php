@@ -26,7 +26,7 @@
 <script>
     (function(){
         var h = $(window).height();
-        $('.g-page-in').css({'min-height':h-20});
+        $('.g-page-in').css({'min-height':h-30});
     })();
 
 </script>
