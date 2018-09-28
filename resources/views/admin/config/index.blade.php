@@ -16,6 +16,9 @@
     <div class="h15"></div>
 
 
+
+    @include('admin.component.upload_imgs',array("input_id"=>"ok","input_name"=>"ok",'width'=>200,'height'=>'','input_value'=>'','size'=>'5'))
+
     <div id="conf-add" style="display: none;">
         <form id="form1">
         <div class="m-manager-menu-create">

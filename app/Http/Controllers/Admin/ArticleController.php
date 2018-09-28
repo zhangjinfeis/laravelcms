@@ -186,6 +186,7 @@ class ArticleController extends Controller
             $article['cate_id'] = $request->cate_id;
             $article['url'] = $request->url;
             $article['thumb'] = $request->thumb;
+            $article['thumbs'] = $request->thumbs;
             $article['body'] = htmlspecialchars($request->body);
             $article['keywords'] = $request->keywords;
             $article['description'] = $request->description;
@@ -200,13 +201,10 @@ class ArticleController extends Controller
         }else{
             //载入文章
             $article = Article::find($request->id);
+
             $sign['article'] = $article;
             //载入文章分类
             $sign['cate'] = ArticleCate::getList();
-            //载入图片数组
-            $md5s = explode(',',$article->thumbs);
-            $thumbs = Pic::whereIn('md5',$md5s)->get()->toArray();
-            $sign['thumbs'] = $thumbs;
             return view('admin.article.edit',$sign);
         }
     }

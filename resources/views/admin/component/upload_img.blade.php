@@ -6,16 +6,26 @@
     赋值：input_value
 --}}
 
+
+@php
+    $input_value = isset($input_value)&&$input_value?$input_value:'';
+    if($input_value){
+        preg_match_all('/[a-z0-9]{32}/',$input_value,$res);
+        $md5 = $res[0][0];
+    }
+
+@endphp
+
+
 <style>
 .m-uploadimg-one{width:150px;height:150px;overflow:hidden;border:#ddd 1px solid; background:#fff;position: relative;}
 .m-uploadimg-one img{ width: 100%; height: auto;}
 .m-uploadimg-one span.size{display:inline-block;padding:0 5px;background:rgba(0,0,0,0.5);line-height:18px;height:18px;overflow:hidden;position:absolute;left:5px;top:5px;border-radius:9px;color:#eee;font-size:12px;display:none;}
 .m-uploadimg-one span.size-show{ display: inline-block;}
-.m-uploadimg-one a.delete{display:inline-block;line-height:20px;height:20px;width:20px;border-radius:10px;text-align:center;overflow:hidden;position:absolute;right:5px;top:5px;text-decoration:none;background: rgba(0,0,0,0.5);font-size:16px;color:#fff; display:none; cursor: pointer;}
+.m-uploadimg-one a.delete{display:inline-block;line-height:18px;height:20px;width:20px;border-radius:10px;text-align:center;overflow:hidden;position:absolute;right:5px;top:5px;text-decoration:none;background: rgba(0,0,0,0.5);font-size:16px;color:#fff; display:none; cursor: pointer;}
+.m-uploadimg-one a.delete:hover{color:#fff;}
 .m-uploadimg-one a.delete-show{display:block;}
 </style>
-
-
 <div id="upload-{{$input_id}}">
 
     <label id="{{$input_id}}_btn" class="u-dmuploader">
@@ -24,17 +34,19 @@
     </label>
 
 
-    <input type="hidden" data-o="{{$input_value or ''}}" name="{{$input_name}}" value="{{$input_value or ''}}">
+    <input type="hidden" data-o-md5="{{$md5 or ''}}" name="{{$input_name}}" value="{{$input_value or ''}}">
     <input type="hidden" name="pic_not_use_id[]" value="">
     <input type="hidden" name="pic_use_id[]" value="">
 
     <div class="m-uploadimg-one">
-        <img id="{{$input_id}}_img" src="{{isset($input_value)&&$input_value?'/image/'.$input_value:'/resources/admin/images/nopicture.png'}}">
+        <img id="{{$input_id}}_img" src="{{$input_value or '/resources/admin/images/nopicture.png'}}">
         <span class="size"></span>
-        <a class="delete" data="/resources/admin/images/nopicture.png">×</a>
+        <a class="delete @if(isset($input_value)&&$input_value) delete-show @endif" data="/resources/admin/images/nopicture.png">×</a>
     </div>
 
 </div>
+
+
 
 <script>
 (function(){
@@ -67,7 +79,7 @@
                 $boot.warn({text:res.msg});
             }else {
                 //赋值操作
-                reset_group{{ $input_id}}(res.data.md5)
+                reset_group{{ $input_id}}(res.data.md5,res.data.path)
 
                 //显示图片
                 $("#{{$input_id}}_img").attr('src',res.data.url);
@@ -101,17 +113,20 @@
         $("#upload-{{$input_id}}").find('input[name="{{ $input_name }}"]').val('');
         $("#upload-{{$input_id}} .m-uploadimg-one span.size").removeClass('size-show');
         $("#upload-{{$input_id}}").find('.delete').removeClass('delete-show');
+        //原md5值赋给not_use
+        var $old_md5 = $("input[name='{{$input_name}}']").attr('data-o-md5');
+        $("#upload-{{$input_id}}").find("input[name='pic_not_use_id[]']").val($old_md5);
     });
 
     //上传图片后重新赋值
-    function reset_group{{ $input_id}}($new_md5){
+    function reset_group{{ $input_id}}($new_md5,$path){
         //原md5值赋给not_use
-        var $old_md5 = $("input[name='{{$input_name}}']").attr('data-o');
+        var $old_md5 = $("input[name='{{$input_name}}']").attr('data-o-md5');
         $("#upload-{{$input_id}}").find("input[name='pic_not_use_id[]']").val($old_md5);
         //新md5值赋给use
         $("#upload-{{$input_id}}").find("input[name='pic_use_id[]']").val($new_md5);
         //新md5值赋给input
-        $("input[name='{{$input_name}}']").val($new_md5);
+        $("input[name='{{$input_name}}']").val($path);
     }
 })();
 </script>

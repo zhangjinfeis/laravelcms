@@ -49,6 +49,14 @@
                     @include('admin.component.upload_img',array("input_id"=>md5("thumb"),"input_name"=>"thumb",'input_value'=>$article->thumb,'width'=>200,'height'=>100))
                     <small class="form-text text-muted"></small>
                 </div>
+
+                <div class="form-group">
+                    <label for="url">缩略图2</label>
+                    @include('admin.component.upload_imgs',array("input_id"=>'ssa',"input_name"=>"thumbs",'input_value'=>$article->thumbs,'width'=>200,'height'=>100))
+                    <small class="form-text text-muted"></small>
+                </div>
+
+
                 <div class="form-group">
                     <label for="sort">排序</label>
                     <input type="text" class="form-control" id="sort" name="sort" placeholder="排序" style="width:400px;" value="{{$article->sort or ''}}" />
@@ -84,7 +92,7 @@
                 <div class="form-group">
                     <label for="url">内容</label>
                     <div>
-                        @component('admin.component.ckeditor',array('input_id'=>'body','input_name'=>'body','custom'=>'full','height'=>400,'input_value'=>$article->body)) @endcomponent
+                        @component('admin.component.ckeditor',array('input_id'=>'body','input_name'=>'body','custom'=>'full','height'=>400,'pic_max_width'=>100,'input_value'=>htmlspecialchars_decode($article->body))) @endcomponent
                     </div>
 
                     <small class="form-text text-muted"></small>

@@ -9,21 +9,20 @@ use App\Models\Article;
 use App\Models\Pic;
 use Validator;
 
-
 /**
  * 首页模块
- * @author my 2017-10-25
- * Class MenuController
- * @package App\Http\Controllers\Admin
+ * Created by zjf
+ * Time: 2018/9/28 0:02
  */
 class IndexController extends Controller
 {
 
     /**
      * 首页
-     * @author zjf ${date}
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * Created by zjf
+     * Time: 2018/9/28 0:10
      */
     public function index(Request $request){
         //首页banner

@@ -8,7 +8,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function() {
 
 
     /*需要登录的*/
-    Route::group(['middleware' => 'auth:admin'], function(){
+    Route::group(['middleware' => ['auth:admin','processPic']], function(){
         //后台框架
         Route::match(['get'],'/', 'FrameController@index');
 
@@ -137,6 +137,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function() {
         // ———————————————————————————文件上传管理——————————————————————————————
         Route::group(['prefix'=>'upload'],function(){
             Route::post('/ajax_upload_img', 'UploadController@ajaxUploadImg'); //图片上传
+            Route::post('/ajax_upload_imgs_goods', 'UploadController@ajaxUploadImgsGoods'); //商品图片上传
             Route::post('/ajax_upload_file', 'UploadController@ajaxUploadFile'); //文件上传
             Route::post('/ajax_ckeditor_img','UploadController@ajaxCkeditorImg');//ckeditor的图片上传
         });

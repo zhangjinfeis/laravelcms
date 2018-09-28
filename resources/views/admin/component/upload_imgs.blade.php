@@ -3,7 +3,7 @@
     @include('admin.component.uploadImgsResize',array())
     必填：input_id,input_name
     可选：width、height、size（单位M）
-    赋值：md5s
+    赋值：input_value
     优先按宽度缩放，其次按高度，都未定义则上传原图
 --}}
 
@@ -16,18 +16,24 @@
 .m-uploadimg-group ul li span.size{position:absolute;left:5px;top:5px;display:inline-block;height:18px;line-height:18px;border-radius:9px;padding:0 5px;background:rgba(0,0,0,0.5);color:#fff; font-size: 12px;}
 .m-uploadimg-group ul li a.prev{position:absolute;left:50px;bottom:5px;display:inline-block;height:20px;line-height:18px;width:20px;border-radius:10px;text-align:center;background:rgba(0,0,0,0.5);color:#fff; cursor: pointer;}
 .m-uploadimg-group ul li a.next{position:absolute;left:80px;bottom:5px;display:inline-block;height:20px;line-height:18px;width:20px;border-radius:10px;text-align:center;background:rgba(0,0,0,0.5);color:#fff;cursor: pointer;}
-.m-uploadimg-group ul li a.delete{display:inline-block;line-height:20px;height:20px;width:20px;border-radius:10px;text-align:center;overflow:hidden;position:absolute;right:5px;top:5px;text-decoration:none;background: rgba(0,0,0,0.5);font-size:16px;color:#fff; cursor: pointer;}
+.m-uploadimg-group ul li a.delete{display:inline-block;line-height:18px;height:20px;width:20px;border-radius:10px;text-align:center;overflow:hidden;position:absolute;right:5px;top:5px;text-decoration:none;background: rgba(0,0,0,0.5);font-size:16px;color:#fff; cursor: pointer;}
+.m-uploadimg-group ul li a.delete:hover{color:#fff;}
 </style>
 
 @php
-    /*$input_value = isset($input_value)?$input_value:[];
-    $ids = [];
-    foreach($input_value as $val){
-        $ids[] = $val['md5'];
-    }
-    $ids = implode(',',$ids);*/
     $input_value = isset($input_value)&&$input_value?$input_value:'';
-    $arr = explode(',',$input_value);
+    $pics = [];
+    $old_md5s = '';
+    if(!empty($input_value)){
+        $arr = explode(',',$input_value);
+        foreach($arr as $key => $val){
+            preg_match_all('/[a-z0-9]{32}/',$val,$res);
+            $pics[$key]['path'] = $val;
+            $pics[$key]['md5'] = $res[0][0];
+            $old_md5s.= ','.$res[0][0];
+        }
+        $old_md5s = trim($old_md5s,',');
+    }
 @endphp
 
 <div id="upload-{{$input_id}}">
@@ -36,23 +42,21 @@
         <input type="file" name="files[]" class="hide">
     </label>
 
-    <input type="hidden" data-o="{{$input_value}}" name="{{$input_name}}" value="{{$input_value}}">
+    <input type="hidden" data-o="{{$old_md5s}}" name="{{$input_name}}" value="{{$input_value}}">
     <input type="hidden" name="pic_not_use_id[]" value="">
     <input type="hidden" name="pic_use_id[]" value="">
 
 
     <div class="m-uploadimg-group">
         <ul>
-            @foreach($arr as $vo)
-                @if($vo)
-                    <li data-md5="{{$vo}}">
-                        <img src="/image/{{$vo}}"/>
-                        {{--<span class="size">{{ $vo['width'] or '' }}×{{ $vo['height'] or '' }}</span>--}}
-                        <a class="prev">‹</a>
-                        <a class="next">›</a>
-                        <a class="delete">×</a>
-                    </li>
-                @endif
+            @foreach($pics as $vo)
+                <li data-path="{{$vo['path']}}" data-md5="{{$vo['md5']}}">
+                    <img src="{{$vo['path']}}"/>
+                    {{--<span class="size">{{ $vo['width'] or '' }}×{{ $vo['height'] or '' }}</span>--}}
+                    <a class="prev">‹</a>
+                    <a class="next">›</a>
+                    <a class="delete">×</a>
+                </li>
             @endforeach
         </ul>
         <div class="clear"></div>
@@ -98,7 +102,7 @@
             $boot.warn({text:res.msg});
         }else {
             //添加到ul后面
-            add_group{{ $input_id }}(res.data.md5,res.data.width,res.data.height);
+            add_group{{ $input_id }}(res.data.md5,res.data.path,res.data.width,res.data.height);
 
             //重新计算input值、no_use_id、use_id
             reset_group{{ $input_id }}();
@@ -125,10 +129,10 @@
 
 
     //插入新图片
-    function add_group{{ $input_id}}($md5,$width,$height){
-        var $a = $("#upload-{{$input_id}} .fun-li-clone").clone(true).removeClass().attr('data-md5',$md5); //移除所有class
+    function add_group{{ $input_id}}($md5,$path,$width,$height){
+        var $a = $("#upload-{{$input_id}} .fun-li-clone").clone(true).removeClass().attr({'data-md5':$md5,'data-path':$path}); //移除所有class
         $a.find('.size').text($width+"×"+$height);
-        $a.find('img').attr('src','/image/'+$md5);
+        $a.find('img').attr('src',$path);
         $a.appendTo('#upload-{{$input_id}} ul');
     };
 
@@ -138,27 +142,29 @@
         var $old_md5 = $("input[name='{{$input_name}}']").attr('data-o');
         $("#upload-{{$input_id}}").find("input[name='pic_not_use_id[]']").val($old_md5);
         //取新的md5值
-        var $new_mds = [];
+        var $new_paths =[]; var $new_md5s = [];
         $("#upload-{{$input_id}} ul li").each(function(){
-            $new_mds.push($(this).attr('data-md5'));
+            $new_paths.push($(this).attr('data-path'));
+            $new_md5s.push($(this).attr('data-md5'));
         });
-        $new_mds = $new_mds.join(',');
+        $new_paths = $new_paths.join(',');
+        $new_md5s = $new_md5s.join(',');
         //新md5值赋给use
-        $("#upload-{{$input_id}}").find("input[name='pic_use_id[]']").val($new_mds);
+        $("#upload-{{$input_id}}").find("input[name='pic_use_id[]']").val($new_md5s);
         //新md5值赋给input
-        $("input[name='{{$input_name}}']").val($new_mds);
+        $("input[name='{{$input_name}}']").val($new_paths);
     }
 
     //只重新计算位置更换（调整顺序情况下）
     function reset_group_sort{{ $input_id}}(){
         //取新的md5值
-        var $new_mds = [];
+        var $new_paths = [];
         $("#upload-{{$input_id}} ul li").each(function(){
-            $new_mds.push($(this).attr('data-md5'));
+            $new_paths.push($(this).attr('data-path'));
         });
-        $new_mds = $new_mds.join(',');
+        $new_paths = $new_paths.join(',');
         //新md5值赋给input
-        $("input[name='{{$input_name}}']").val($new_mds);
+        $("input[name='{{$input_name}}']").val($new_paths);
     }
 
     //删除当前选中缩略图
