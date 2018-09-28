@@ -8,9 +8,12 @@ select.form-control:not([size]):not([multiple]){height:auto;}
 
 .hide{display:none;}
 .clear{ clear:both; overflow:hidden;height:0px;}
-
-
 .line-through{text-decoration: line-through;}
+
+input::-webkit-input-placeholder,textarea::-webkit-input-placeholder{color:#ccc !important;}
+input::-moz-placeholder,textarea::-moz-placeholder{color:#ccc !important;}
+input:-moz-placeholder,textarea:-moz-placeholder{color:#ccc !important;}
+input:-ms-input-placeholder,textarea:-ms-input-placeholder{color:#ccc !important;}
 
 /*高度*/
 .h5{ height: 5px;}
@@ -121,6 +124,9 @@ a:hover{color:#4e5bf2;}
 .badge-info-lighten{color: #39afd1;background-color: rgba(57,175,209,.18);}
 .badge-light-lighten{color: #e3eaef;background-color: rgba(227,234,239,.18);}
 .badge-dark-lighten {color: #313a46;background-color: rgba(49,58,70,.18);}
+
+.table-hover tbody tr:hover{background-color:rgba(0,0,0,.05)}
+.table td, .table th{border-top:#eee 1px solid;}
 
 
 

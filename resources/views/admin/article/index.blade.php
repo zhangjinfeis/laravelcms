@@ -36,7 +36,7 @@
 
     <div class="h15"></div>
 
-    <table class="table table-hover" style="border-bottom:#dee2e6 1px solid;">
+    <table class="table table-hover" style="border-bottom:#eee 1px solid;">
         <tr>
             <th width="40">
                 <div class="custom-control custom-checkbox">
