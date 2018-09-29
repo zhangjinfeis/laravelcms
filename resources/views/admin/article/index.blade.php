@@ -41,7 +41,7 @@
             <th width="40">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input checkbox-all" id="checkbox-0">
-                    <label class="custom-control-label"  for="checkbox-0"></label>
+                    <label class="custom-control-label"  for="checkbox-0">&nbsp;</label>
                 </div>
             </th>
             <th>ID</th>
@@ -57,7 +57,7 @@
             <td>
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input checkbox-item" id="checkbox-{{$vo->id}}" data-id="{{$vo->id}}">
-                    <label class="custom-control-label"  for="checkbox-{{$vo->id}}"></label>
+                    <label class="custom-control-label" for="checkbox-{{$vo->id}}">&nbsp;</label>
                 </div>
             </td>
             <td>{{$vo['id']}}</td>

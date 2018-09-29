@@ -1,7 +1,9 @@
 <script src="/resources/plugs/jquery/jquery-3.3.1.min.js" ></script>
 
 {{--bootstrap组件--}}
-<link rel="stylesheet" href="/resources/plugs/bootstrap/bootstrap.min.css" >
+{{--<link rel="stylesheet" href="/resources/plugs/bootstrap/bootstrap.min.css" >--}}
+<link rel="stylesheet" href="/resources/plugs/bootstrap/bootstrap.purple.min.css" >
+
 <script src="/resources/plugs/bootstrap/popper.min.js"></script>
 <script src="/resources/plugs/bootstrap/bootstrap.min.js"></script>
 {{--bootstrap-dialog--}}

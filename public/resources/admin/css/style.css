@@ -1,4 +1,4 @@
-html,body{ font-size: 12px;}
+html{ font-size:14px;}
 body{ background: #f5f5f5;padding:15px;}
 .form-control{ font-size:0.8rem;}  /*input字体大小*/
 .btn{font-size:0.8rem;}
@@ -80,6 +80,10 @@ input:-ms-input-placeholder,textarea:-ms-input-placeholder{color:#ccc !important
 
 a{color:#727cf5;}
 a:hover{color:#4e5bf2;}
+
+.badge{ font-weight:normal;}
+
+/*
 .text-primary{color:#727cf5 !important;}
 .text-secondary{color:#6c757d !important;}
 .text-success{color:#0acf97 !important;}
@@ -106,7 +110,7 @@ a:hover{color:#4e5bf2;}
 .btn-light{background-color:#e3eaef;border-color:#e3eaef;}
 .btn-light:hover{background-color:#cbd8e1;border-color:#c3d2dc;}
 
-.badge{ font-weight:normal;}
+
 .badge-primary{background-color:#727cf5;}
 .badge-secondary{background-color:#6c757d;}
 .badge-success{background-color:#0acf97;}
@@ -127,6 +131,7 @@ a:hover{color:#4e5bf2;}
 
 .table-hover tbody tr:hover{background-color:rgba(0,0,0,.05)}
 .table td, .table th{border-top:#eee 1px solid;}
+*/
 
 
 
