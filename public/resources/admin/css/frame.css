@@ -41,7 +41,7 @@ table,th,td{ border-collapse:collapse;}
 .f26{font-size:26px;}
 .f28{font-size:28px;}
 
-.form-control-lg{ font-size: 1rem;border-radius:0px;}
+.form-control-lg{ font-size: 1rem;}
 
 /**-----------------------------------------------登录-----------------------------------------------*/
 .m-login-head{ text-align: center;}
