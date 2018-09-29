@@ -1,6 +1,6 @@
 /* CSS Document */
-html,body{ margin:0px; padding:0px;color:#333; font-family:Arial, Helvetica, sans-serif;}
-body{font-size: 14px; overflow: hidden;}
+html{font-size: 14px;}
+body{ overflow: hidden; margin:0px; padding:0px;color:#333; font-family:Arial, Helvetica, sans-serif; background: #fff;m-login-head}
 ul,li,dl,dt,dd,p,table{ margin:0px; padding:0px; list-style:none;}
 h1,h2,h3,h4,h5,h6,input,div,form{ margin:0px; padding:0px;}
 a{ color:#333; text-decoration:none; cursor: pointer;}
@@ -44,9 +44,9 @@ table,th,td{ border-collapse:collapse;}
 .form-control-lg{ font-size: 1rem;border-radius:0px;}
 
 /**-----------------------------------------------登录-----------------------------------------------*/
-.m-login-head{ height: 65px; width: 1000px; margin:0 auto;padding:0 0 15px 0;border-bottom:#ddd 1px solid;}
-.m-login-head .logo{ float: left;}
-.m-login-head .name{ float: left; height:20px; line-height: 20px;margin:20px 0 0 15px;padding:0 0 0 10px;border-left:#ddd 1px solid;}
+.m-login-head{ text-align: center;}
+.m-login-head .logo{ }
+.m-login-head .name{height:20px; line-height: 20px; font-size:16px;color:#666;margin:20px 0 0 0;padding:0 0 0 10px;border-left:#ddd 1px solid;}
 
 .m-login{ width: 400px;margin:0 auto;}
 .m-login .item{margin:10px 0 0 0;}

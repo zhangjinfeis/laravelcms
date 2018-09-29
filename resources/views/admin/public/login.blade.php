@@ -1,14 +1,13 @@
 @extends('admin.include.mother_frame')
 @section('content')
 
-    <div class="h15"></div>
+    <div class="h40"></div>
     <div class="m-login-head">
-        <a href="" class="logo"><img src="/resources/admin/images/logo_login.png" /></a>
+        <a class="logo"><img src="/resources/admin/images/logo_login.png" /></a>
         <div class="name">内容管理系统</div>
     </div>
 
     <div class="h30"></div>
-    <div class="h50"></div>
     <div class="m-login">
         <form action="/admin/login" method="post">
             {{ csrf_field() }}
@@ -32,7 +31,7 @@
                 <label class="custom-control-label" for="checkbox1">记住登录状态</label>
             </div>
             <div class="h20"></div>
-            <button class="btn btn-primary btn-block" type="submit">登录</button>
+            <button class="btn btn-primary btn-lg btn-block" type="submit">登录</button>
             {{--<div class="submit">登陆</div>--}}
         </form>
     </div>
