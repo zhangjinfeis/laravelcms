@@ -37,7 +37,7 @@
     </div>
 
     <div class="h50"></div>
-    <div class="m-copyright">copyright&nbsp;©&nbsp;兰谷科技&nbsp;&nbsp;&nbsp; All Rights Reserved.</div>
+    <div class="m-copyright">copyright&nbsp;©&nbsp;兰谷科技&nbsp;&nbsp;&nbsp;{{date('Y')}}&nbsp;&nbsp;&nbsp;All Rights Reserved</div>
 
 
     <script>

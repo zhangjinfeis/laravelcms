@@ -1,6 +1,6 @@
 /* CSS Document */
 html{font-size: 14px;}
-body{ overflow: hidden; margin:0px; padding:0px;color:#333; font-family:Arial, Helvetica, sans-serif; background: #fff;m-login-head}
+body{ overflow: hidden; margin:0px; padding:0px;color:#333; font-family:Arial, Helvetica, sans-serif; background: #fff;}
 ul,li,dl,dt,dd,p,table{ margin:0px; padding:0px; list-style:none;}
 h1,h2,h3,h4,h5,h6,input,div,form{ margin:0px; padding:0px;}
 a{ color:#333; text-decoration:none; cursor: pointer;}
@@ -53,7 +53,7 @@ table,th,td{ border-collapse:collapse;}
 .m-login .item .form-control-lg{position: relative; z-index: 1;}
 .m-login .verify{ border:#ddd 1px solid;text-align: center;}
 
-.m-copyright{ text-align: center;font-size: 14px;}
+.m-copyright{ text-align: center;font-size: 14px;color:#666;}
 
 
 /**************************default-框架*****************************/
