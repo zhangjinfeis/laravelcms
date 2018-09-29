@@ -1,39 +1,48 @@
 @extends('admin.include.mother_frame')
 
 @section('content')
+    <script src="/resources/plugs/slimscroll/jquery.slimscroll.min.js"></script>
     <div class="lay_default_left">
         <h1 class="m-frame-logo"><a href="/admin/"><img src="/resources/admin/images/logo.png" /></a></h1>
-        @foreach($menus as $vo)
-            <div class="m-frame-sidenav">
-                <ul>
-                    @foreach($vo['children'] as $voo)
-                        <li class="on">
-                            <a class="item">
-                                <span class="icon"><span class="fa {{$voo['icon']}}"></span></span>
-                                {{$voo['name']}}
-                                <span class="arrow arrow-1 fa fa-chevron-down"></span>
-                                <span class="arrow arrow-2 fa fa-chevron-up"></span>
-                            </a>
-                            @if($voo['children'])
-                                <div class="handle">
-                                    <dl>
-                                        @foreach($voo['children'] as $vooo)
-                                            <dd><a title="{{$vooo['name']}}" data-title="{{$vooo['name']}}" url="{{$vooo['url']}}" url_md5="{{md5($vooo['url'])}}">{{$vooo['name']}}</a></dd>
-                                        @endforeach
-                                    </dl>
-                                    <div class="clear"></div>
-                                </div>
-                            @endif
-                        </li>
-                    @endforeach
-                </ul>
+        <div class="scroll js-slimscroll">
+            @foreach($menus as $vo)
+                <div class="m-frame-sidenav">
+                    <ul>
+                        @foreach($vo['children'] as $voo)
+                            <li class="on">
+                                <a class="item">
+                                    <span class="icon"><span class="fa {{$voo['icon']}}"></span></span>
+                                    {{$voo['name']}}
+                                    <span class="arrow arrow-1 fa fa-chevron-down"></span>
+                                    <span class="arrow arrow-2 fa fa-chevron-up"></span>
+                                </a>
+                                @if($voo['children'])
+                                    <div class="handle">
+                                        <dl>
+                                            @foreach($voo['children'] as $vooo)
+                                                <dd><a title="{{$vooo['name']}}" data-title="{{$vooo['name']}}" url="{{$vooo['url']}}" url_md5="{{md5($vooo['url'])}}">{{$vooo['name']}}</a></dd>
+                                            @endforeach
+                                        </dl>
+                                        <div class="clear"></div>
+                                    </div>
+                                @endif
+                            </li>
+                        @endforeach
+                    </ul>
 
-                <div class="clear"></div>
-            </div>
-        @endforeach
-
-        <div class="g-vision">{{date('Y')}}© {{$config['sitename'] or ''}}</div>
+                    <div class="clear"></div>
+                </div>
+            @endforeach
+            <div class="g-vision">{{date('Y')}}© {{$config['sitename'] or ''}}</div>
+        </div>
     </div>
+    <script>
+        var h = $(window).height();
+        $(".js-slimscroll").slimScroll({
+            height:h-60,
+            color:'#8f75da'
+        });
+    </script>
 
 
     <div class="lay_default_right">

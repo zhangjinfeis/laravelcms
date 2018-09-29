@@ -8,16 +8,16 @@
 --}}
 
 <style>
-.m-uploadimg-group{border:#ddd 1px dashed;overflow: hidden;}
+.m-uploadimg-group{border:#ddd 1px dashed;overflow: hidden; display:table-cell;padding:0 10px 0 0;}
 .m-uploadimg-group ul{float:left;margin: 0px;padding:0px;}
-.m-uploadimg-group ul li{float:left;width:150px;height:150px;margin:10px 0px 10px 10px;position:relative;border:#ddd 1px solid; background:#fff;overflow: hidden;}
+.m-uploadimg-group ul li{float:left;width:110px;height:110px;margin:10px 0px 10px 10px;position:relative;border:#ddd 1px solid; background:#fff;overflow: hidden;}
 .m-uploadimg-group ul li img{ width: 100%;}
 .m-uploadimg-group ul li.default{display:none;}
 .m-uploadimg-group ul li span.size{position:absolute;left:5px;top:5px;display:inline-block;height:18px;line-height:18px;border-radius:9px;padding:0 5px;background:rgba(0,0,0,0.5);color:#fff; font-size: 12px;}
-.m-uploadimg-group ul li a.prev{position:absolute;left:50px;bottom:5px;display:inline-block;height:20px;line-height:18px;width:20px;border-radius:10px;text-align:center;background:rgba(0,0,0,0.5);color:#fff; cursor: pointer;}
-.m-uploadimg-group ul li a.next{position:absolute;left:80px;bottom:5px;display:inline-block;height:20px;line-height:18px;width:20px;border-radius:10px;text-align:center;background:rgba(0,0,0,0.5);color:#fff;cursor: pointer;}
-.m-uploadimg-group ul li a.delete{display:inline-block;line-height:18px;height:20px;width:20px;border-radius:10px;text-align:center;overflow:hidden;position:absolute;right:5px;top:5px;text-decoration:none;background: rgba(0,0,0,0.5);font-size:16px;color:#fff; cursor: pointer;}
-.m-uploadimg-group ul li a.delete:hover{color:#fff;}
+.m-uploadimg-group ul li a.prev{position:absolute;left:30px;bottom:5px;display:inline-block;height:20px;line-height:18px;width:20px;border-radius:10px;text-align:center;background:rgba(0,0,0,0.5);color:#fff; cursor: pointer;}
+.m-uploadimg-group ul li a.next{position:absolute;right:30px;bottom:5px;display:inline-block;height:20px;line-height:18px;width:20px;border-radius:10px;text-align:center;background:rgba(0,0,0,0.5);color:#fff;cursor: pointer;}
+.m-uploadimg-group ul li a.delete{display:inline-block;line-height:20px;height:20px;width:20px;border-radius:10px;text-align:center;overflow:hidden;position:absolute;right:5px;top:5px;text-decoration:none;background: rgba(0,0,0,0.5);font-size:14px;color:#fff; cursor: pointer;}
+.m-uploadimg-group ul li a:hover{color:#fff !important;background: rgba(0,0,0,0.8);}
 </style>
 
 @php
@@ -38,7 +38,7 @@
 
 <div id="upload-{{$input_id}}">
     <label id="{{$input_id}}_btn" class="u-dmuploader">
-        <span role="button" class="btn btn-sm btn-primary" style="width:150px;"><span class="fa fa-upload"></span> 多图上传</span>
+        <span role="button" class="btn btn-sm btn-primary w110"><span class="fa fa-upload"></span> 多图上传</span>
         <input type="file" name="files[]" class="hide">
     </label>
 
@@ -47,7 +47,7 @@
     <input type="hidden" name="pic_use_id[]" value="">
 
 
-    <div class="m-uploadimg-group">
+    <div class="m-uploadimg-group clearfix">
         <ul>
             @foreach($pics as $vo)
                 <li data-path="{{$vo['path']}}" data-md5="{{$vo['md5']}}">

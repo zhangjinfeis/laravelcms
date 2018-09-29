@@ -72,7 +72,7 @@ input:-ms-input-placeholder,textarea:-ms-input-placeholder{color:#ccc !important
 /*面包屑*/
 .u-breadcrumb{clear:both;}
 .u-breadcrumb::after{content:'';clear:both; overflow:hidden;height:0px; display: block;}
-.u-breadcrumb a.back{ float: left;margin:0 0.5rem 0 0;padding:0 0.5rem;height:26px; line-height:24px; border:#aaa 1px solid; font-size: 12px;border-radius:20px;color:#666; transition: all 0.3s;}
+.u-breadcrumb a.back{ float: left;margin:0 0.5rem 0 0;width:26px; text-align:center;height:26px; line-height:24px; border:#aaa 1px solid; font-size: 12px;border-radius:20px;color:#666; transition: all 0.3s;}
 .u-breadcrumb a.back:hover{border:#727cf5 1px solid;background:#727cf5;color:#fff; text-decoration: none;}
 .u-breadcrumb .name{ float: left;font-weight:bold;margin:0 0 0 0.5em; height: 24px; line-height: 24px;}
 

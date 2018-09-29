@@ -1,7 +1,7 @@
 <div class="u-breadcrumb">
     @if(isset($is_back) && $is_back)
-        <a class="back" href="{{ url()->previous() }}" ><span class="fa fa-chevron-left"></span> 后退</a>
+        <a class="back" href="{{ url()->previous() }}" title="返回"><span class="fa fa-chevron-left"></span></a>
     @endif
-    <a class="back" href="javascript:window.location.reload();" ><span class="fa fa-repeat"></span> 刷新</a>
+    <a class="back" href="javascript:window.location.reload();" title="刷新"><span class="fa fa-repeat"></span></a>
     <span class="name">{{$name}}</span>
 </div>
