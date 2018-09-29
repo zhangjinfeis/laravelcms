@@ -34,6 +34,7 @@ input:-ms-input-placeholder,textarea:-ms-input-placeholder{color:#ccc !important
 .w50{ width: 50px !important;}
 .w70{ width: 70px !important;}
 .w90{ width: 90px !important;}
+.w100{ width: 100px !important;}
 .w110{ width: 110px !important;}
 .w130{ width: 130px !important;}
 .w150{ width: 150px !important;}
@@ -85,6 +86,8 @@ a:hover{color:#4e5bf2;}
 .pagination-warp{ text-align: center;}
 .pagination{ text-align: center; display:inline-block;margin-bottom: 0px;}
 .pagination .page-item{ float: left;}
+
+.flatpickr-input[readonly]{ background:#fff !important;}
 /*
 .text-primary{color:#727cf5 !important;}
 .text-secondary{color:#6c757d !important;}

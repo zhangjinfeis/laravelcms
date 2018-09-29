@@ -3,10 +3,11 @@
 
     <div class="clearfix">
         <div class="float-left">
-            <div class="u-breadcrumb">
-                <a class="back" href="javascript:window.location.reload();" ><span class="fa fa-repeat"></span> 刷新</a>
-                <span class="name">参数分类</span>
-            </div>
+            @component('admin.component.breadcrumb')
+                @slot('name')
+                    参数分类
+                @endslot
+            @endcomponent
         </div>
         <div class="float-right">
             <button type="button" class="btn btn-sm btn-primary" onclick="return alert_win();"><i class="fa fa-plus"></i> 新增参数分类</button>

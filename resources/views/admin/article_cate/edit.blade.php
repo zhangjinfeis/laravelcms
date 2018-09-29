@@ -1,14 +1,12 @@
 @extends("admin.include.mother")
 
 @section("content")
-    <div class="u-breadcrumb">
-        <a class="back" href="{{ url()->previous() }}" ><span class="fa fa-chevron-left"></span> 后退</a>
-        <a class="back" href="javascript:window.location.reload();" ><span class="fa fa-repeat"></span> 刷新</a>
-        <span class="name">编辑分类</span>
-    </div>
+    @component('admin.component.breadcrumb',['is_back'=>true])
+        @slot('name')
+            编辑分类
+        @endslot
+    @endcomponent
     <div class="h30"></div>
-
-
 
     <div class="nav nav-tabs" role="tablist">
         <a class="nav-item nav-link active" data-toggle="tab" href="#nav-1" role="tab" aria-selected="true">基本信息</a>

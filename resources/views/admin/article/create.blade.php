@@ -1,11 +1,11 @@
 @extends("admin.include.mother")
 
 @section("content")
-    <div class="u-breadcrumb">
-        <a class="back" href="{{ url()->previous() }}" ><span class="fa fa-chevron-left"></span> 后退</a>
-        <a class="back" href="javascript:window.location.reload();" ><span class="fa fa-repeat"></span> 刷新</a>
-        <span class="name">新增文章</span>
-    </div>
+    @component('admin.component.breadcrumb',['is_back'=>true])
+        @slot('name')
+            新增文章
+        @endslot
+    @endcomponent
     <div class="h30"></div>
 
 
@@ -46,7 +46,7 @@
                 </div>
                 <div class="form-group">
                     <label for="url">缩略图</label>
-                    @include('admin.component.upload_img',array("input_id"=>md5("thumb"),"input_name"=>"thumb"))
+                    @include('admin.component.upload_img',array("input_id"=>md5("thumb"),"input_name"=>"thumb","input_value"=>""))
                     <small class="form-text text-muted"></small>
                 </div>
 

@@ -3,10 +3,11 @@
 @section("content")
     <div class="clearfix">
         <div class="float-left">
-            <div class="u-breadcrumb">
-                <a class="back" href="javascript:window.location.reload();" ><span class="fa fa-repeat"></span> 刷新</a>
-                <span class="name">权限</span>
-            </div>
+            @component('admin.component.breadcrumb')
+                @slot('name')
+                    权限
+                @endslot
+            @endcomponent
         </div>
         <div class="float-right">
             <a role="button" class="btn btn-sm btn-primary" href="#" onclick="return alert_win();"><i class="fa fa-plus"></i> 新增权限</a>

@@ -1,11 +1,11 @@
 @extends("admin.include.mother")
 
 @section("content")
-
-    <div class="u-breadcrumb">
-        <a class="back" href="javascript:window.location.reload();" ><span class="fa fa-repeat"></span> 刷新</a>
-        <span class="name">留言</span>
-    </div>
+    @component('admin.component.breadcrumb')
+        @slot('name')
+            留言
+        @endslot
+    @endcomponent
     <div class="h20"></div>
 
     <table class="table table-sm table-hover table-bb">

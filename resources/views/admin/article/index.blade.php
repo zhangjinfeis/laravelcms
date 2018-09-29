@@ -3,10 +3,11 @@
 @section("content")
     <div class="clearfix">
         <div class="float-left">
-            <div class="u-breadcrumb">
-                <a class="back" href="javascript:window.location.reload();" ><span class="fa fa-repeat"></span> 刷新</a>
-                <span class="name">文章列表</span>
-            </div>
+            @component('admin.component.breadcrumb')
+                @slot('name')
+                    文章列表
+                @endslot
+            @endcomponent
         </div>
         <div class="float-right">
             <a role="button" class="btn btn-sm btn-primary" href="{{url('/admin/article/create?cate_id='.($_GET['cate_id']??''))}}"><i class="fa fa-plus"></i> 新增文章</a>
@@ -217,4 +218,4 @@
         }
     </script>
 
-@endsection
+@stop

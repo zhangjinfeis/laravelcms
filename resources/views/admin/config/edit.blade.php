@@ -1,10 +1,11 @@
 @extends("admin.include.mother")
 
 @section("content")
-    <div class="u-breadcrumb">
-        <a class="back" href="{{ url()->previous() }}" ><span class="fa fa-chevron-left"></span> 后退</a>
-        <span class="name">编辑参数</span>
-    </div>
+    @component('admin.component.breadcrumb',['is_back'=>true])
+        @slot('name')
+            编辑参数
+        @endslot
+    @endcomponent
     <div class="h30"></div>
 
 

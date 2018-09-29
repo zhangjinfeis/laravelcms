@@ -1,16 +1,17 @@
 @extends("admin.include.mother")
 
 @section("content")
-    <div class="u-breadcrumb">
-        <a class="back" href="{{ url()->previous() }}" ><span class="fa fa-chevron-left"></span> 后退</a>
-        @if(isset($page->id))
-            <span class="name">编辑地图</span>
-        @else
-            <span class="name">新增地图</span>
-        @endif
-    </div>
-    <div class="h30"></div>
+    @component('admin.component.breadcrumb',['is_back'=>true])
+        @slot('name')
+            @if(isset($page->id))
+                <span class="name">编辑地图</span>
+            @else
+                <span class="name">新增地图</span>
+            @endif
+        @endslot
+    @endcomponent
 
+    <div class="h30"></div>
 
     <form>
         @if(isset($page->id))

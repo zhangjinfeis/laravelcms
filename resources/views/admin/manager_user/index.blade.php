@@ -4,10 +4,11 @@
 
     <div class="clearfix">
         <div class="float-left">
-            <div class="u-breadcrumb">
-                <a class="back" href="javascript:window.location.reload();" ><span class="fa fa-repeat"></span> 刷新</a>
-                <span class="name">管理员</span>
-            </div>
+            @component('admin.component.breadcrumb')
+                @slot('name')
+                    管理员
+                @endslot
+            @endcomponent
         </div>
         <div class="float-right">
             <a role="button" class="btn btn-sm btn-primary" href="{{url('/admin/manager_user/create')}}"><i class="fa fa-plus"></i> 新增管理员</a>
