@@ -1,6 +1,5 @@
 html{ font-size:14px;}
 body{ background: #f5f5f5;padding:15px;}
-.form-control{ font-size:0.8rem;}  /*input字体大小*/
 .btn{font-size:0.8rem;}
 .dropdown-menu{font-size:0.8rem;}
 select.form-control:not([size]):not([multiple]){height:auto;}
@@ -64,7 +63,7 @@ input:-ms-input-placeholder,textarea:-ms-input-placeholder{color:#ccc !important
 .c333{color:#333333;!important}
 .c111{color:#111111;!important}
 
-.table-bb{border-bottom:1px solid #dee2e6;}
+.table-bb{border-bottom:1px solid #e3eaef;}
 
 /*内页*/
 .g-page-in{padding:20px; background: #fff;min-height:600px;border-radius:3px;box-shadow:0 0 20px rgba(0,0,0,0.02)}
@@ -83,6 +82,9 @@ a:hover{color:#4e5bf2;}
 
 .badge{ font-weight:normal;}
 
+.pagination-warp{ text-align: center;}
+.pagination{ text-align: center; display:inline-block;margin-bottom: 0px;}
+.pagination .page-item{ float: left;}
 /*
 .text-primary{color:#727cf5 !important;}
 .text-secondary{color:#6c757d !important;}

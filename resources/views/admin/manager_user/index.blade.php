@@ -16,7 +16,7 @@
     <div class="h15"></div>
 
 
-    <table class="table table-hover">
+    <table class="table table-sm table-hover table-bb">
 
         <tr>
             <th>ID</th>
@@ -40,19 +40,11 @@
                 </td>
                 <td>{{$vo->updated_at}}</td>
                 <td>
-                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                        <a class="btn btn-sm btn-outline-secondary" href="{{url('/admin/manager_user/edit?id='.$vo['id'])}}" role="button"><i class="fa fa-edit"></i> 编辑</a>
-                        <a class="btn btn-sm btn-outline-secondary" href="#" role="button" onclick="return alert_powers('{{$vo['name']}}',{{$vo['id']}})"><i class="fa fa-empire"></i> 权限</a>
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                更多
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                <a href="#" class="dropdown-item" onclick="return del_user({{$vo['id']}});"><i class="fa fa-trash"></i>删除</a>
-                                <a href="#" class="dropdown-item" onclick="return alert_win_repass({{$vo['id']}});"><i class="fa fa-key"></i>修改密码</a>
-                            </div>
-                        </div>
-                    </div>
+                    <a class="btn btn-sm btn-light" href="{{url('/admin/manager_user/edit?id='.$vo['id'])}}" role="button" title="编辑"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-sm btn-light" href="#" role="button" onclick="return alert_powers('{{$vo['name']}}',{{$vo['id']}})" title="权限"><i class="fa fa-empire"></i></a>
+                    <a class="btn btn-sm btn-light" href="#" role="button" onclick="return del_user({{$vo['id']}});" title="删除"><i class="fa fa-trash"></i></a>
+                    <a class="btn btn-sm btn-light" href="#" role="button" onclick="return alert_win_repass({{$vo['id']}});" title="修改密码"><i class="fa fa-key"></i></a>
+
                 </td>
             </tr>
         @endforeach

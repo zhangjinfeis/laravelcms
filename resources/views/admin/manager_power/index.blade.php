@@ -75,17 +75,16 @@
         分组标签：
         @foreach($groups as $vo)
             @if(isset($_GET['group']) && $vo->group == $_GET['group'])
-                <a role="button" class="btn btn-sm btn-success js-group" href="{{url('/admin/manager_power').'?group='.$vo->group}}">{{$vo->group}}</a>
+                <a role="button" class="btn btn-sm btn-success btn-rounded js-group" href="{{url('/admin/manager_power').'?group='.$vo->group}}">{{$vo->group}}</a>
             @else
-                <a role="button" class="btn btn-sm btn-outline-success js-group" href="{{url('/admin/manager_power').'?group='.$vo->group}}">{{$vo->group}}</a>
+                <a role="button" class="btn btn-sm btn-outline-success btn-rounded js-group" href="{{url('/admin/manager_power').'?group='.$vo->group}}">{{$vo->group}}</a>
             @endif
 
         @endforeach
     </div>
 
     <div class="h15"></div>
-    <table class="table table-hover">
-
+    <table class="table table-sm table-hover table-bb">
         <tr>
             <th data-field="id">ID</th>
             <th data-field="name">权限名称</th>
@@ -101,24 +100,17 @@
                 <td>{{$vo['description']}}</td>
                 <td>{{$vo['group']}}</td>
                 <td>
-                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                        <a class="btn btn-sm btn-outline-secondary" href="{{url('/admin/manager_power/edit?id='.$vo['id'])}}" role="button"><i class="fa fa-edit"></i> 编辑</a>
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                更多
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" onclick="return del_power({{$vo['id']}});"><i class="fa fa-trash"></i>删除</a>
-                            </div>
-                        </div>
-                    </div>
+                    <a class="btn btn-sm btn-light" href="{{url('/admin/manager_power/edit?id='.$vo['id'])}}" role="button" title="编辑"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-sm btn-light" href="#" role="button" onclick="return del_power({{$vo['id']}});" title="删除"><i class="fa fa-trash"></i></a>
                 </td>
 
             </tr>
         @endforeach
 
     </table>
-    {{ $list->links() }}
+    <div class="pagination-warp mt10">
+        {{$list->links()}}
+    </div>
 
 
     <script>

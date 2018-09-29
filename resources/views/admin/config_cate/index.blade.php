@@ -70,7 +70,7 @@
 
     </script>
 
-    <table class="table table-hover">
+    <table class="table table-sm table-hover table-bb">
         <tr>
             <th>ID</th>
             <th>标题</th>
@@ -87,15 +87,8 @@
                     {{$vo->sort}}
                 </td>
                 <td>
-                    <a class="btn btn-sm btn-outline-secondary" href="{{url('/admin/config_cate/edit?id='.$vo['id'])}}" role="button"><i class="fa fa-edit"></i> 编辑</a>
-                    <div class="btn-group" role="group">
-                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            更多
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#" onclick="return del_menu({{$vo->id}});"><i class="fa fa-trash"></i> 删除</a>
-                        </div>
-                    </div>
+                    <a class="btn btn-sm btn-light" href="{{url('/admin/config_cate/edit?id='.$vo['id'])}}" role="button" title="编辑"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-sm btn-light" href="#" role="button" onclick="return del_menu({{$vo->id}});" title="删除"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
         @endforeach

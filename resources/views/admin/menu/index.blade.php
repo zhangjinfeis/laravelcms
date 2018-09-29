@@ -101,13 +101,13 @@
     </script>
 
 
-    <table class="table table-hover" style="border-bottom:#dee2e6 1px solid;">
+    <table class="table table-sm table-hover" style="border-bottom:#dee2e6 1px solid;">
 
             <tr>
                 <th width="40">
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input checkbox-all" id="checkbox-0">
-                        <label class="custom-control-label"  for="checkbox-0"></label>
+                        <label class="custom-control-label"  for="checkbox-0">&nbsp;</label>
                     </div>
                 </th>
                 <th>ID</th>
@@ -123,7 +123,7 @@
                 <td>
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input checkbox-item" id="checkbox-{{$vo['id']}}" data-id="{{$vo['id']}}">
-                        <label class="custom-control-label"  for="checkbox-{{$vo['id']}}"></label>
+                        <label class="custom-control-label"  for="checkbox-{{$vo['id']}}">&nbsp;</label>
                     </div>
                 </td>
                 <td>{{$vo['id']}}</td>
@@ -139,11 +139,10 @@
 
                 </td>
                 <td>
-                    <a class="btn btn-sm btn-outline-secondary" href="{{url('/admin/menu/edit?id='.$vo['id'])}}" role="button"><i class="fa fa-edit"></i> 编辑</a>
-                    <a class="btn btn-sm btn-outline-secondary" href="#" role="button" onclick="return del_one({{$vo['id']}});"><i class="fa fa-trash"></i> 删除</a>
+                    <a class="btn btn-sm btn-light" href="{{url('/admin/menu/edit?id='.$vo['id'])}}" role="button" title="编辑"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-sm btn-light" href="#" role="button" onclick="return del_one({{$vo['id']}});" title="删除"><i class="fa fa-trash"></i></a>
                     <div class="btn-group" role="group">
-                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            更多
+                        <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="#"  onclick="return alert_win('{{$vo['name']}}',{{$vo['id']}})"><i class="fa fa-plus"></i> 加子导航</a>

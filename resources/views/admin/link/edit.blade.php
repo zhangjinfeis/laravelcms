@@ -30,7 +30,7 @@
         </div>
         <div class="form-group">
             <label for="url">链接图片</label>
-            @include('admin.include.uploadImg',array("input_name"=>"thumb",'input_value'=>$article->thumb_pic))
+            @include('admin.component.upload_img',array("input_id"=>md5("thumb"),"input_name"=>"thumb","input_value"=>$article->thumb_pic))
             <small class="form-text text-muted"></small>
         </div>
         <div class="form-group">

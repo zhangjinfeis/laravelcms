@@ -8,7 +8,7 @@
     </div>
     <div class="h20"></div>
 
-    <table class="table table-hover">
+    <table class="table table-sm table-hover table-bb">
 
             <tr>
                 <th>ID</th>
@@ -42,5 +42,7 @@
         @endforeach
 
     </table>
-    {{$list->links()}}
+    <div class="pagination-warp mt10">
+        {{$list->links()}}
+    </div>
 @endsection

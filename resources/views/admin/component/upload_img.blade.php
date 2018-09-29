@@ -8,12 +8,11 @@
 
 
 @php
-    $input_value = isset($input_value)&&$input_value?$input_value:'';
-    if($input_value){
+    //$input_value = isset($input_value)&&$input_value?$input_value:'';
+    if(isset($input_value)){
         preg_match_all('/[a-z0-9]{32}/',$input_value,$res);
         $md5 = $res[0][0];
     }
-
 @endphp
 
 

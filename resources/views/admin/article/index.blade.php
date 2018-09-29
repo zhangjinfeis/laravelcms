@@ -36,7 +36,7 @@
 
     <div class="h15"></div>
 
-    <table class="table table-hover" style="border-bottom:#eee 1px solid;">
+    <table class="table table-sm table-hover" style="border-bottom:#eee 1px solid;">
         <tr>
             <th width="40">
                 <div class="custom-control custom-checkbox">
@@ -64,7 +64,7 @@
             <td>
                 {{$vo->title}}
                 @if($vo->thumb)
-                    <span class="text-primary"><i class="fa fa-picture-o"></i></span>
+                    &nbsp;<span class="text-warning"><i class="fa fa-picture-o"></i></span>
                 @endif
             </td>
             <td>
@@ -84,15 +84,8 @@
                 {{$vo->updated_at->format('Y-m-d H:i')}}
             </td>
             <td>
-                <a class="btn btn-sm btn-outline-secondary" href="{{url('/admin/article/edit?id='.$vo['id'])}}" role="button"><i class="fa fa-edit"></i> 编辑</a>
-                <div class="btn-group" role="group">
-                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        更多
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#" onclick="return del_one({{$vo['id']}});"><i class="fa fa-trash"></i> 删除</a>
-                    </div>
-                </div>
+                <a class="btn btn-sm btn-light" href="{{url('/admin/article/edit?id='.$vo['id'])}}" role="button" title="编辑"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-sm btn-light" href="#" role="button" onclick="return del_one({{$vo['id']}});" title="删除"><i class="fa fa-trash"></i></a>
             </td>
         </tr>
         @endforeach
@@ -101,7 +94,11 @@
         <button type="button" class="btn btn-secondary btn-sm" onclick="return ajax_del_all();">删除</button>
         <button type="button" class="btn btn-secondary btn-sm" onclick="return alert_move_win();">移动到</button>
     </div>
-    {{$list->links()}}
+
+    <div class="pagination-warp mt10">
+        {{$list->links()}}
+    </div>
+
 
     <div id="win1" class="hide">
         <div>
@@ -109,7 +106,7 @@
                 <label class="js-move-tip">移动到以下菜单下</label>
                 <select class="form-control" name="move_to_id">
                     @foreach($cate as $vo)
-                        <option @if($vo['is_able'] == 9) disabled @endif value="{{$vo['id']}}">{{$vo['depth_name']}}{{$vo['name_cn']}}({{$vo['count']}})
+                        <option @if($vo['is_able'] == 9) disabled @endif value="{{$vo['id']}}">{!!$vo['depth_name']!!}{{$vo['name_cn']}}({{$vo['count']}})
                         </option>
                     @endforeach
                 </select>

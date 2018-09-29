@@ -23,7 +23,7 @@
             <div class="tab-pane fade show active" id="nav-1" role="tabpanel">
                 <div class="form-group">
                     <label><span class="text-danger">* </span>文章分类</label>
-                    <select class="form-control form-control-sm w400" name="cate_id">
+                    <select class="form-control w400" name="cate_id">
                         @foreach($cate as $vo)
                             <option @if($vo['id'] == request('cate_id')) selected @endif @if($vo['is_able'] == 9) disabled @endif value="{{$vo['id']}}">{!! $vo['depth_name'] !!}{{$vo['name_cn']}}({{$vo['count']}})</option>
                         @endforeach
@@ -31,17 +31,17 @@
                 </div>
                 <div class="form-group">
                     <label for="title"><span class="text-danger">* </span>标题</label>
-                    <input type="text" class="form-control form-control-sm" id="title" name="title" placeholder="标题" style="width:400px;" value="" />
+                    <input type="text" class="form-control" id="title" name="title" placeholder="标题" style="width:400px;" value="" />
                     <small class="form-text text-muted">1-100个字符</small>
                 </div>
                 <div class="form-group">
                     <label for="title_sub">副标题</label>
-                    <input type="text" class="form-control form-control-sm" id="title_sub" name="title_sub" placeholder="副标题" style="width:400px;" value="" />
+                    <input type="text" class="form-control" id="title_sub" name="title_sub" placeholder="副标题" style="width:400px;" value="" />
                     <small class="form-text text-muted">1-100个字符</small>
                 </div>
                 <div class="form-group">
                     <label for="url">链接</label>
-                    <input type="text" class="form-control form-control-sm" id="url" name="url" placeholder="链接" style="width:400px;" value="" />
+                    <input type="text" class="form-control" id="url" name="url" placeholder="链接" style="width:400px;" value="" />
                     <small class="form-text text-muted">当填写外链时，文章内容将不显示</small>
                 </div>
                 <div class="form-group">
@@ -52,14 +52,14 @@
 
                 <div class="form-group">
                     <label for="sort">排序</label>
-                    <input type="text" class="form-control form-control-sm" id="sort" name="sort" placeholder="排序" style="width:400px;" value="" />
+                    <input type="text" class="form-control" id="sort" name="sort" placeholder="排序" style="width:400px;" value="" />
                     <small class="form-text text-muted">默认50，越小排序越靠前</small>
                 </div>
 
                 <div class="form-group">
                     <label for="sort">日期</label>
                     <div class="input-group w400">
-                        <input type="text" class="form-control form-control-sm" placeholder="选择时间" id="datetime">
+                        <input type="text" class="form-control" placeholder="选择时间" id="datetime">
                         <div class="input-group-append">
                     <span class="input-group-text">
                         <i class="fa fa-calendar" aria-hidden="true"></i>

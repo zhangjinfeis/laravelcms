@@ -91,7 +91,7 @@
     </script>
 
 
-    <table class="table table-hover">
+    <table class="table table-sm table-hover table-bb">
             <tr>
                 <th>ID</th>
                 <th>分类名称/英文名称</th>
@@ -120,14 +120,14 @@
 
                 </td>
                 <td>
-                    <a class="btn btn-sm btn-outline-secondary" href="{{url('/admin/link_cate/edit?id='.$vo['id'])}}" role="button"><i class="fa fa-edit"></i> 编辑</a>
-                    <a class="btn btn-sm btn-outline-secondary" href="#" role="button" onclick="return alert_win('{{$vo['name']}}',{{$vo['id']}})"><i class="fa fa-plus"></i> 加子分类</a>
+                    <a class="btn btn-sm btn-light" href="{{url('/admin/link_cate/edit?id='.$vo['id'])}}" role="button" title="编辑"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-sm btn-light" href="#" role="button" onclick="return del_menu({{$vo['id']}});" title="删除"><i class="fa fa-trash"></i></a>
                     <div class="btn-group" role="group">
-                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            更多
+                        <button class="btn btn-sm btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#" onclick="return del_menu({{$vo['id']}});"><i class="fa fa-trash"></i> 删除</a>
+                            <a class="dropdown-item" href="#" onclick="return alert_move_win({{$vo['id']}},'{{$vo['name']}}','child');"><i class="fa fa-plus
+"></i> 加子分类</a>
                             <a class="dropdown-item" href="#" onclick="return alert_move_win({{$vo['id']}},'{{$vo['name']}}','child');"><i class="fa fa-arrows
 "></i> 移到菜单下</a>
                             <a class="dropdown-item" href="#" onclick="return alert_move_win({{$vo['id']}},'{{$vo['name']}}','before');"><i class="fa fa-arrows
