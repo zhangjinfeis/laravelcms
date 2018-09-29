@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
+use App\Models\ManagerUser;
 
 class PublicController extends Controller
 {
@@ -51,6 +52,8 @@ class PublicController extends Controller
 
             $user = request(['account', 'password']);
             if (true == \Auth::guard('admin')->attempt($user,$remember)) {
+                $user = ManagerUser::where('account',$request->account)->first();
+                ManagerUser::where('id',$user->id)->update(['this_login_at'=>time(),'last_login_at'=>$user->this_login_at]);
                 return response()->json(['status'=>1,'msg'=>'系统登录中']);
             }
 

@@ -1,7 +1,6 @@
 @extends('admin.include.mother_frame')
 
 @section('content')
-    <script src="/resources/plugs/slimscroll/jquery.slimscroll.min.js"></script>
     <div class="lay_default_left">
         <h1 class="m-frame-logo"><a href="/admin/"><img src="/resources/admin/images/logo.png" /></a></h1>
         <div class="scroll js-slimscroll">
@@ -71,7 +70,7 @@
                 <div class="next">›</div>
                 <div class="contain_wrap">
                     <div class="contain">
-                        <ul><li class="on" url_md5="{{md5('http://baidu.com')}}">
+                        <ul><li class="on" url_md5="{{md5('/admin/index')}}">
                                 <a class="refresh fa fa-refresh" href="#"></a>
                                 <span class="title">首页</span>
                             </li></ul>
@@ -79,7 +78,7 @@
                 </div>
             </div>
             <div class="iframe_wrap">
-                <iframe name="{{md5('http://baidu.com')}}" src="http://baidu.com"></iframe>
+                <iframe name="{{md5('/admin/index')}}" src="/admin/index"></iframe>
             </div>
         </div>
     </div>

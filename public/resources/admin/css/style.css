@@ -1,5 +1,5 @@
 html{ font-size:14px;}
-body{ background: #f5f5f5;padding:15px;}
+body{ background: #f5f5f5;}
 .btn{font-size:0.8rem;}
 .dropdown-menu{font-size:0.8rem;}
 select.form-control:not([size]):not([multiple]){height:auto;}
@@ -83,11 +83,18 @@ a:hover{color:#4e5bf2;}
 
 .badge{ font-weight:normal;}
 
+/*分页*/
 .pagination-warp{ text-align: center;}
 .pagination{ text-align: center; display:inline-block;margin-bottom: 0px;}
 .pagination .page-item{ float: left;}
 
+/*日期设置白色*/
 .flatpickr-input[readonly]{ background:#fff !important;}
+
+/*后台首页统计*/
+.page-index{padding:20px;}
+
+
 /*
 .text-primary{color:#727cf5 !important;}
 .text-secondary{color:#6c757d !important;}

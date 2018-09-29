@@ -20,18 +20,21 @@
 <body>
 
 
-<div class="g-page-in">
-    @yield("content")
+@section('page')
+<div class="pl15 pr15 pt15 pb15">
+    <div class="g-page-in">
+        @yield("content")
+    </div>
 </div>
 <script>
     (function(){
         var h = $(window).height();
         $('.g-page-in').css({'min-height':h-30});
     })();
-
 </script>
+@show
+
 
 <script src="/resources/admin/js/my.js"></script>
-
 </body>
 </html>

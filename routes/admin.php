@@ -12,6 +12,9 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function() {
         //后台框架
         Route::match(['get'],'/', 'FrameController@index');
 
+        //后台首页
+        Route::match(['get'],'/index', 'IndexController@index');
+
         // ———————————————————————————后台菜单管理—————————————————————————————————
         Route::group(['prefix' => 'manager_menu'],function(){
             Route::get('/', 'ManagerMenuController@index');//->middleware('can:manager_menu');  //菜单列表

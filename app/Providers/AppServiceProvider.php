@@ -75,11 +75,13 @@ class AppServiceProvider extends ServiceProvider
         });
 
 
-        //前台页面写入导航信息
-        \View::composer('mobi/include/header', function($view){
-            $menu1 = Menu::getTree(6,true);
-            $menu1 = $menu1[0]['child'];
-            $view->with(['menu1'=>$menu1]);
+        //后台页面写入管理员信息
+        \View::composer('admin/*', function($view){
+            $user = \Auth::guard("admin")->user();//拿到当前登录的用户
+            if($user){
+                $view->with(['admin'=>$user]);
+            }
+
         });
 
         //全局写入配置信息

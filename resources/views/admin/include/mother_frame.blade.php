@@ -14,6 +14,9 @@
         <script src="/resources/plugs/bootstrap/popper.min.js"></script>
         <script src="/resources/plugs/bootstrap/bootstrap.min.js"></script>
 
+        {{--自定义滚动条--}}
+        <script src="/resources/plugs/slimscroll/jquery.slimscroll.min.js"></script>
+
         {{--awesome字体--}}
         <link href="/resources/plugs/awesome/font/css/font-awesome.min.css" rel="stylesheet">
 
