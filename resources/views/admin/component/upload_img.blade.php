@@ -17,7 +17,7 @@
 
 
 <style>
-.m-uploadimg-one{width:110px;height:110px;overflow:hidden;border:#ddd 1px solid; background:#fff;position: relative;}
+.m-uploadimg-one{width:110px;height:110px;overflow:hidden;border:#dee2e6 1px solid; background:#fff;position: relative;}
 .m-uploadimg-one img{ width: 100%; height: auto;}
 .m-uploadimg-one span.size{display:inline-block;padding:0 5px;background:rgba(0,0,0,0.5);line-height:18px;height:18px;overflow:hidden;position:absolute;left:5px;top:5px;border-radius:9px;color:#eee;font-size:10px;display:none;}
 .m-uploadimg-one span.size-show{ display: inline-block;}

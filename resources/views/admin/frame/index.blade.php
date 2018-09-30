@@ -58,7 +58,7 @@
             </div>
             <div class="user">
 
-                <i class="fa fa-user-circle"></i> <span>{{$admin->name}}</span>&nbsp;&nbsp;&nbsp;
+                <i class="fa fa-user-circle-o"></i> <span>{{$admin->name}}</span>&nbsp;&nbsp;&nbsp;
                 <a class="text-primary" target="_blank" href="/"><i class="fa fa-home"></i></a>&nbsp;&nbsp;
                 <a class="text-primary" href="/admin/logout"><i class="fa fa-sign-out"></i></a>
             </div>
@@ -136,14 +136,10 @@
             var $iframe_contain = $(".lay_default_right_con .iframe_wrap");
             //判断是否已存在iframe
             if(exist_iframe(url_md5)){
-                //$(".m-frame-tab .contain ul li[url_md5="+url_md5+"]").find('.title').click();
-                $('.lay_default_right_con').find('iframe').filter('iframe[name='+url_md5+']').attr({'src':url});
-                setTimeout(function(){
-                    iframe_on(url_md5);
-                },200);
+                //$('.lay_default_right_con').find('iframe').filter('iframe[name='+url_md5+']').attr({'src':url});
+                iframe_on(url_md5);
                 return false;
             }
-
             $('.lay_default_right_con').find('iframe').css({left:-9999});
             var newwin = $('<iframe name="'+url_md5+'" src="'+url+'"></iframe>');
             newwin.prependTo($iframe_contain);

@@ -126,7 +126,7 @@
                         /{{$vo['name_en']}}
                     @endif
                     @if($vo['is_able'] == 9)
-                        <span style="text-decoration:line-through;">({{$vo['count']}})</span>
+                        <span style="text-decoration:line-through;color:#999;">({{$vo['count']}})</span>
                     @else
                         ({{$vo['count']}})
                     @endif

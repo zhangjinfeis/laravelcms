@@ -46,7 +46,7 @@
                 </div>
                 <div class="form-group">
                     <label for="url">缩略图</label>
-                    @include('admin.component.upload_img',array("input_id"=>md5("thumb"),"input_name"=>"thumb",'input_value'=>$article->thumb,'width'=>200,'height'=>100))
+                    @include('admin.component.upload_img',array("input_id"=>md5("thumb"),"input_name"=>"thumb",'input_value'=>$article->thumb))
                     <small class="form-text text-muted"></small>
                 </div>
 
