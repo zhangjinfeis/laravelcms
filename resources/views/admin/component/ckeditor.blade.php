@@ -28,6 +28,8 @@
         ,customConfig : 'custom/ckeditor_{{$custom}}.js'
         @endif
     });
+    $('.cke_1.cke_chrome').css({'border-color':'#dee2e6'});
+    $('.cke_1 .cke_top').css({'border-bottom-color':'#dee2e6'})
     editor_{{$input_id}}.on('change',function(){
         var bd = editor_{{$input_id}}.getData();
         $("#{{$input_id}}").val(bd);
