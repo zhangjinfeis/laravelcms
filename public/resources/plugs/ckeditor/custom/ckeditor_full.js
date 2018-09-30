@@ -3,7 +3,7 @@
  * @param config
  */
 CKEDITOR.editorConfig = function( config ) {
-    config.uiColor = '#ffffff';
+    //config.uiColor = '#ffffff';
     config.removePlugins = 'elementspath,resize';
     config.image_previewText='图片预览区...'; //预览区域显示内容
     config.toolbarGroups = [
