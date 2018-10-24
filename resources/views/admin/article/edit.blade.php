@@ -25,7 +25,7 @@
                     <label for="name"><span class="text-danger">* </span>文章分类</label>
                     <select class="form-control" id="cate_id" name="cate_id" style="width:400px;">
                         @foreach($cate as $vo)
-                            <option @if($vo['id'] == request('cate_id')) selected @endif @if($vo['is_able'] == 9) disabled @endif value="{{$vo['id']}}">{!! $vo['depth_name'] !!}{{$vo['name_cn']}}({{$vo['count']}})</option>
+                            <option @if($vo['id'] == $article->cate_id) selected @endif @if($vo['is_able'] == 9) disabled @endif value="{{$vo['id']}}">{!! $vo['depth_name'] !!}{{$vo['name_cn']}}({{$vo['count']}})</option>
                         @endforeach
                     </select>
                 </div>

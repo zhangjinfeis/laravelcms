@@ -201,7 +201,7 @@
             </div>
         </form>
     </div>
-    
+
     <script>
         //提交编辑
         function post_edit(){
