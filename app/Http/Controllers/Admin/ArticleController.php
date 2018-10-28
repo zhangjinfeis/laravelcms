@@ -121,6 +121,9 @@ class ArticleController extends Controller
                 return response()->json(['status'=>0,'msg'=>$data['msg'],'field'=>$data['field']]);
             }
             //新增
+             if($request->created_at!=''){
+                $article['created_at'] = strtotime($request->created_at);
+            }
             $article['title'] = $request->title;
             $article['title_sub'] = $request->title_sub;
             $article['cate_id'] = $request->cate_id;
@@ -219,6 +222,9 @@ class ArticleController extends Controller
                 return response()->json(['status'=>0,'msg'=>$data['msg'],'field'=>$data['field']]);
             }
             //更新
+             if($request->created_at!=''){
+                $article['created_at'] = strtotime($request->created_at);
+            }
             $article['title'] = $request->title;
             $article['title_sub'] = $request->title_sub;
             $article['cate_id'] = $request->cate_id;
