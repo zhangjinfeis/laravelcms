@@ -57,9 +57,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="sort">日期</label>
-                    <div class="input-group w400">
-                        <input type="text" class="form-control" placeholder="选择时间" id="datetime">
+                    <label for="sort">创建日期</label>
+                    <div class="input-group" style="width: 400px;">
+                        <input type="text" class="form-control" placeholder="选择时间" name="created_at" id="datetime">
                         <div class="input-group-append">
                     <span class="input-group-text">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
