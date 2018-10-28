@@ -26,17 +26,55 @@ class ArticleController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request){
-        $where = [];
-        if($request->cate_id){
-            $where['cate_id'] = $request->cate_id;
+              //标题搜索
+        $query = Article::query();
+        if($request->title&&$request->title!=''){
+            $query=$query->where('title','like','%'.$request->title.'%');
         }
-        $sign['list'] = Article::where($where)->orderBy('sort','asc')->orderBy('updated_at','desc')->paginate(15);
+        //开启状态搜索
+        if($request->is_show=='on') {
+            $query=$query->where(['is_show'=>1]);
+        }elseif($request->is_show=='off'){
+            $query=$query->where(['is_show'=>9]);
+        }else{
+            $query=$query->whereIn('is_show',[9,1]);
+        }
+        //分类搜索
+        if($request->cate_id&&$request->cate_id!=''){
+            $w['parent_id'] = $request->cate_id;
+            $s=ArticleCate::where($w)->get();
+            if(count($s)>0){
+                foreach($s as $v){
+                    $wherea[] = $v['id'];
+                }
+                $query=$query->whereIn('cate_id', $wherea);
+            } else{
+                $query=$query->where('cate_id', $request->cate_id);
+            }
+        }else{
+            $allcate=ArticleCate::where(['is_show'=>1])->pluck('id')->toArray();
+            $query=$query->whereIn('cate_id', $allcate);
+        }
+
+        $list= $query->orderBy('sort','asc')
+            ->orderBy('updated_at','desc')
+            ->paginate(15);
+        $sign['list']=$list;
+
+        foreach($sign['list'] as $k=>$v){
+            $c= json_decode($v['exattr'],true);
+            if(!is_null($c)&&count($c)>0){
+                foreach($c as $kk=>$vv){
+                    $v[$kk]=$vv;
+                }
+            }
+        }
         //文章分类
         $cate = ArticleCate::getList();
         //dd($cate);
         $sign['cate'] = $cate;
         //总记录数
-        $sign['count'] = Article::where($where)->count();
+        $sign['count'] = $query->count();
         return view('admin/article/index', $sign);
     }
 
