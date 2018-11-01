@@ -137,7 +137,7 @@
                         });
                     }else{
                         $boot.success({text:res.msg},function(){
-                            window.location = "{{ url()->previous() }}";
+                            window.location = "{{action('Admin\ArticleController@index',decrypt($_GET['jump']))}}";
                         });
                     }
                 }

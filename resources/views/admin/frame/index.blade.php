@@ -128,6 +128,7 @@
         function iframe_on(url_md5){
             $('.m-frame-tab .contain ul li').removeClass('on').filter('li[url_md5='+url_md5+']').addClass('on');
             $('.lay_default_right_con').find('iframe').css({left:-9999}).filter('iframe[name='+url_md5+']').css({left:0});
+
         }
         //弹出内部选项卡
         function alert_iframe(title,url,url_md5){
@@ -136,7 +137,7 @@
             var $iframe_contain = $(".lay_default_right_con .iframe_wrap");
             //判断是否已存在iframe
             if(exist_iframe(url_md5)){
-                //$('.lay_default_right_con').find('iframe').filter('iframe[name='+url_md5+']').attr({'src':url});
+                $('.lay_default_right_con').find('iframe').filter('iframe[name='+url_md5+']').attr({'src':url});
                 iframe_on(url_md5);
                 return false;
             }

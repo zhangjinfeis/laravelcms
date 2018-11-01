@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * 将数组按指定顺序排列
  * @author zjf ${date}
@@ -40,4 +39,28 @@ function his_format($s){
     //计算秒数
     $secs = $remain%60;
     return ($hours?$hours.'小时':'').($mins?$mins.'分':'').($secs?$secs.'秒':'');
+}
+
+/**
+ * 加密数组
+ * @param $arr
+ * @return string
+ * Created by zjf
+ * Time: 2018/11/1 15:48
+ */
+function encrypt_arr($arr){
+    $arr = json_encode($arr);
+    return encrypt($arr);
+}
+
+/**
+ * 解密数组
+ * @param $str
+ * @return mixed
+ * Created by zjf
+ * Time: 2018/11/1 15:48
+ */
+function decrypt_arr($str){
+    $str = decrypt($str);
+    return json_decode($str,true);
 }

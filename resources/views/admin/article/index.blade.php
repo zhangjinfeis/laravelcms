@@ -90,7 +90,7 @@
                 {{$vo->updated_at->format('Y-m-d H:i')}}
             </td>
             <td>
-                <a class="btn btn-sm btn-light" href="{{url('/admin/article/edit?id='.$vo['id'])}}" role="button" title="编辑"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-sm btn-light" href="{{url('/admin/article/edit?id='.$vo['id'].'&jump='.encrypt($_GET))}}" role="button" title="编辑"><i class="fa fa-edit"></i></a>
                 <a class="btn btn-sm btn-light" href="#" role="button" onclick="return del_one({{$vo['id']}});" title="删除"><i class="fa fa-trash"></i></a>
             </td>
         </tr>
