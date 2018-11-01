@@ -19,7 +19,7 @@
         @endif
         <div class="form-group">
             <label for="title"><span class="text-danger">* </span>地图标题</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="地图标题" style="width:400px;" value="{{$page->title or ''}}" />
+            <input type="text" class="form-control" id="title" name="title" placeholder="地图标题" style="width:400px;" value="{{$page->title ?? ''}}" />
             <small class="form-text text-muted">1-100个字符</small>
         </div>
 
@@ -41,23 +41,23 @@
 
         <div class="form-group">
             <label>地址</label>
-            <input type="text" class="form-control" name="address" placeholder="地址" style="width:400px;" value="{{$page->address or ''}}" />
+            <input type="text" class="form-control" name="address" placeholder="地址" style="width:400px;" value="{{$page->address ?? ''}}" />
             <small class="form-text text-muted"></small>
         </div>
         <div class="form-group">
             <label>电话</label>
-            <input type="text" class="form-control" name="phone" placeholder="电话" style="width:400px;" value="{{$page->phone or ''}}" />
+            <input type="text" class="form-control" name="phone" placeholder="电话" style="width:400px;" value="{{$page->phone ?? ''}}" />
             <small class="form-text text-muted"></small>
         </div>
         <div class="form-group">
             <label>邮箱</label>
-            <input type="text" class="form-control" name="email" placeholder="邮箱" style="width:400px;" value="{{$page->email or ''}}" />
+            <input type="text" class="form-control" name="email" placeholder="邮箱" style="width:400px;" value="{{$page->email ?? ''}}" />
             <small class="form-text text-muted"></small>
         </div>
 
         <div class="form-group">
             <label>QQ</label>
-            <input type="text" class="form-control" name="qq" placeholder="QQ" style="width:400px;" value="{{$page->qq or ''}}" />
+            <input type="text" class="form-control" name="qq" placeholder="QQ" style="width:400px;" value="{{$page->qq ?? ''}}" />
             <small class="form-text text-muted"></small>
         </div>
 

@@ -44,9 +44,9 @@
         <ul>
             @foreach($input_value as $vo)
                 @if($vo)
-                    <li data-md5="{{$vo['md5'] or ''}}">
+                    <li data-md5="{{$vo['md5'] ?? ''}}">
                         <img src="{{isset($vo['md5'])?'/image/'.$vo['md5']:''}}"/>
-                        <span class="size">{{ $vo['width'] or '' }}×{{ $vo['height'] or '' }}</span>
+                        <span class="size">{{ $vo['width'] ?? '' }}×{{ $vo['height'] ?? '' }}</span>
                         <a class="prev">‹</a>
                         <a class="next">›</a>
                         <a class="delete">×</a>
@@ -80,8 +80,8 @@
         multiple:true,
         extraData:{
         _token: $('meta[name="csrf-token"]').attr('content'),
-            max_width : {{$max_width or 0}},
-        max_height : {{$max_height or 0}},
+            max_width : {{$max_width ?? 0}},
+        max_height : {{$max_height ?? 0}},
     },
     onComplete: function(){
         //$.danidemo.addLog('#demo-debug', 'default', 'All pending tranfers completed');

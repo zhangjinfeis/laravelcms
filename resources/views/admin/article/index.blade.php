@@ -69,7 +69,7 @@
                 @endif
             </td>
             <td>
-                {{$vo->cate->name_cn or ''}}
+                {{$vo->cate->name_cn ?? ''}}
             </td>
             <td>
                 {{$vo->sort}}

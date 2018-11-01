@@ -31,17 +31,17 @@
                 </div>
                 <div class="form-group">
                     <label for="title"><span class="text-danger">* </span>标题</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="标题" style="width:400px;" value="{{$article->title or ''}}" />
+                    <input type="text" class="form-control" id="title" name="title" placeholder="标题" style="width:400px;" value="{{$article->title ?? ''}}" />
                     <small class="form-text text-muted">1-100个字符</small>
                 </div>
                 <div class="form-group">
                     <label for="title_sub">副标题</label>
-                    <input type="text" class="form-control" id="title_sub" name="title_sub" placeholder="副标题" style="width:400px;" value="{{$article->title_sub or ''}}" />
+                    <input type="text" class="form-control" id="title_sub" name="title_sub" placeholder="副标题" style="width:400px;" value="{{$article->title_sub ?? ''}}" />
                     <small class="form-text text-muted">1-100个字符</small>
                 </div>
                 <div class="form-group">
                     <label for="url">链接</label>
-                    <input type="text" class="form-control" id="url" name="url" placeholder="链接" style="width:400px;" value="{{$article->url or ''}}" />
+                    <input type="text" class="form-control" id="url" name="url" placeholder="链接" style="width:400px;" value="{{$article->url ?? ''}}" />
                     <small class="form-text text-muted">当填写外链时，文章内容将不显示</small>
                 </div>
                 <div class="form-group">
@@ -51,7 +51,7 @@
                 </div>
                 <div class="form-group">
                     <label for="sort">排序</label>
-                    <input type="text" class="form-control" id="sort" name="sort" placeholder="排序" style="width:400px;" value="{{$article->sort or ''}}" />
+                    <input type="text" class="form-control" id="sort" name="sort" placeholder="排序" style="width:400px;" value="{{$article->sort ?? ''}}" />
                     <small class="form-text text-muted">默认50，越小排序越靠前</small>
                 </div>
 
@@ -93,14 +93,14 @@
             <div class="tab-pane fade show" id="nav-4" role="tabpanel">
                 <div class="form-group">
                     <label for="keywords">关键词</label>
-                    <input type="text" class="form-control" id="keywords" name="keywords" placeholder="关键词" style="width:400px;" value="{{$article->keywords or ''}}" />
+                    <input type="text" class="form-control" id="keywords" name="keywords" placeholder="关键词" style="width:400px;" value="{{$article->keywords ?? ''}}" />
                     <small class="form-text text-muted">不填则使用系统默认关键词</small>
                 </div>
 
                 <div class="form-group">
                     <label for="description">描述</label>
 
-                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="描述">{{$article->description or ''}}</textarea>
+                    <textarea class="form-control" id="description" name="description" rows="3" placeholder="描述">{{$article->description ?? ''}}</textarea>
                     <small class="form-text text-muted">不填则使用系统默认描述</small>
                 </div>
             </div>

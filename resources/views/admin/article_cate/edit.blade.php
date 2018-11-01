@@ -22,7 +22,7 @@
             <div class="tab-pane fade show active" id="nav-1" role="tabpanel">
                 <div class="form-group">
                     <label for="name">父级</label>
-                    <span class="text-muted pl-2 js-pid">{{$parent->name or '根菜单'}}</span>
+                    <span class="text-muted pl-2 js-pid">{{$parent->name ?? '根菜单'}}</span>
                 </div>
                 <input name="parent_id" type="hidden" value="">
                 <div class="form-group">

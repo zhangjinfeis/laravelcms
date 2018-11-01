@@ -13,7 +13,7 @@
         <input type="hidden" name="id" value="{{$menu->id}}" />
         <div class="form-group">
             <label for="name">父级</label>
-            <span class="text-muted pl-2 js-pid">{{$parent->name or '根菜单'}}</span>
+            <span class="text-muted pl-2 js-pid">{{$parent->name ?? '根菜单'}}</span>
         </div>
         <input name="parent_id" type="hidden" value="">
         <div class="form-group">
@@ -24,7 +24,7 @@
         @if($menu->depth > 0)
         <div class="form-group">
             <label>icon图标</label>
-            <input type="text" class="form-control" name="icon" placeholder="icon图标" style="width:400px;" value="{{$menu->icon or ''}}" />
+            <input type="text" class="form-control" name="icon" placeholder="icon图标" style="width:400px;" value="{{$menu->icon ?? ''}}" />
             <small class="form-text text-muted">前往http://www.fontawesome.com.cn/faicons/选择</small>
         </div>
         @endif

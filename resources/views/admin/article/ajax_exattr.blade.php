@@ -3,10 +3,10 @@
         <label>{{$vo['name']}}</label>
         @switch($vo['type'])
             @case(1)
-                <input type="text" class="form-control w400" name="exattr[{{$vo['key']}}]" placeholder="{{$vo['name']}}" value="{{$vo['value'] or ''}}" />
+                <input type="text" class="form-control w400" name="exattr[{{$vo['key']}}]" placeholder="{{$vo['name']}}" value="{{$vo['value'] ?? ''}}" />
             @break
             @case(2)
-                <textarea class="form-control w600" rows="3" name="exattr[{{$vo['key']}}]" placeholder="{{$vo['name']}}">{{$vo['value'] or ''}}</textarea>
+                <textarea class="form-control w600" rows="3" name="exattr[{{$vo['key']}}]" placeholder="{{$vo['name']}}">{{$vo['value'] ?? ''}}</textarea>
             @break
 
             @case(3)

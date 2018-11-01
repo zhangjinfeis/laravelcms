@@ -196,7 +196,7 @@ class ManagerUserController extends Controller
         }
 
         $user = ManagerUser::find($request->id);
-        $user->password = bcrypt($request->passwrod);
+        $user->password = bcrypt($request->password);
         $res = $user->save();
         if(true == $res){
             return response()->json(['status'=>1,'msg'=>'密码修改成功']);

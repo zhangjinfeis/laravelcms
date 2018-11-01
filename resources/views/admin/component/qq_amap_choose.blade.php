@@ -11,7 +11,7 @@ lat:纬度默认值,选填
 zoom:缩放级别默认值,选填
 --}}
 
-<div id="{{$input_lng}}map" style="width:{{$width or '100%'}};height:{{$height or '400px'}};overflow: hidden;margin:0;font-family:'微软雅黑';">
+<div id="{{$input_lng}}map" style="width:{{$width ?? '100%'}};height:{{$height ?? '400px'}};overflow: hidden;margin:0;font-family:'微软雅黑';">
     <div style="height:22px;"></div>
     <div id="fitBoundsDiv"></div>
     <div id="centerDiv"></div>
@@ -21,11 +21,11 @@ zoom:缩放级别默认值,选填
     <div id="projection"></div>
 </div>
 <div style="margin:5px 0 0 0;">
-    经度：<span class="{{$input_lng}}fun-lng">{{$lng or '0'}}</span>&nbsp;&nbsp;&nbsp;&nbsp;纬度：<span class="{{$input_lng}}fun-lat">{{$lat or '0'}}</span>
+    经度：<span class="{{$input_lng}}fun-lng">{{$lng ?? '0'}}</span>&nbsp;&nbsp;&nbsp;&nbsp;纬度：<span class="{{$input_lng}}fun-lat">{{$lat ?? '0'}}</span>
     <span class="c999">&nbsp;&nbsp;&nbsp;&nbsp;提示：拖拽地图选择位置</span>
 </div>
-<input type="hidden" name="{{$input_lng}}" value="{{$lng or ''}}">
-<input type="hidden" name="{{$input_lat}}" value="{{$lat or ''}}">
+<input type="hidden" name="{{$input_lng}}" value="{{$lng ?? ''}}">
+<input type="hidden" name="{{$input_lat}}" value="{{$lat ?? ''}}">
 @if(isset($input_zoom))
     <input type="hidden" name="{{$input_zoom}}"
            @if(isset($zoom)&&$zoom!=0)

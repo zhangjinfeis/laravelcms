@@ -25,7 +25,7 @@
     </label>
 
 
-    <input type="hidden" data-o="{{$input_value->md5 or ''}}" name="{{$input_name}}" value="{{$input_value->md5 or ''}}">
+    <input type="hidden" data-o="{{$input_value->md5 ?? ''}}" name="{{$input_name}}" value="{{$input_value->md5 ?? ''}}">
     <input type="hidden" name="pic_not_use_id[]" value="">
     <input type="hidden" name="pic_use_id[]" value="">
     <div class="layui-upload-list">
@@ -53,8 +53,8 @@
         multiple:false,
         extraData:{
             _token: $('meta[name="csrf-token"]').attr('content'),
-            max_width : {{$max_width or 0}},
-            max_height : {{$max_height or 0}},
+            max_width : {{$max_width ?? 0}},
+            max_height : {{$max_height ?? 0}},
         },
         onComplete: function(){
             //$.danidemo.addLog('#demo-debug', 'default', 'All pending tranfers completed');

@@ -21,7 +21,7 @@
         </div>
         <div class="form-group">
             <label for="name"><span class="text-danger">* </span>参数名称</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="参数名称" style="width:400px;" value="{{$conf->name or ''}}">
+            <input type="text" class="form-control" id="name" name="name" placeholder="参数名称" style="width:400px;" value="{{$conf->name ?? ''}}">
             <small class="form-text text-muted">1-20个字符</small>
         </div>
         <div class="form-group">
@@ -39,27 +39,27 @@
         </div>
         <div class="form-group">
             <label for="key"><span class="text-danger">* </span>键</label>
-            <input type="text" class="form-control" id="key" name="key" placeholder="键" style="width:400px;" value="{{$conf->key or ''}}">
+            <input type="text" class="form-control" id="key" name="key" placeholder="键" style="width:400px;" value="{{$conf->key ?? ''}}">
             <small class="form-text text-muted">取值的字段名</small>
         </div>
         <div class="form-group @if(!in_array($conf->type,[6,7])) hide @endif js-radio-checkbox">
             <label>单选/复选选项</label>
-            <textarea class="form-control" rows="4" name="radio_checkbox_json" placeholder="选项值">{{$conf->radio_checkbox_json or ''}}</textarea>
+            <textarea class="form-control" rows="4" name="radio_checkbox_json" placeholder="选项值">{{$conf->radio_checkbox_json ?? ''}}</textarea>
             <small class="form-text text-muted">例如，颜色:1-红色，多个选项换行区分</small>
         </div>
         <div class="form-group @if(!in_array($conf->type,[3,4,5])) hide @endif js-width">
             <label>宽度</label>
-            <input type="text" class="form-control" name="width" placeholder="宽度" style="width:400px;" value="{{$conf->width or ''}}">
+            <input type="text" class="form-control" name="width" placeholder="宽度" style="width:400px;" value="{{$conf->width ?? ''}}">
             <small class="form-text text-muted">图片的宽度，0或空值表示不限制</small>
         </div>
         <div class="form-group @if(!in_array($conf->type,[3,4,5])) hide @endif js-height">
             <label>高度</label>
-            <input type="text" class="form-control" name="height" placeholder="高度" style="width:400px;" value="{{$conf->height or ''}}">
+            <input type="text" class="form-control" name="height" placeholder="高度" style="width:400px;" value="{{$conf->height ?? ''}}">
             <small class="form-text text-muted">图片的高度，0或空值表示不限制</small>
         </div>
         <div class="form-group @if(!in_array($conf->type,[3,4])) hide @endif js-size">
             <label>图片允许大小</label>
-            <input type="text" class="form-control" name="size" placeholder="图片允许大小" style="width:400px;" value="{{$conf->size or ''}}">
+            <input type="text" class="form-control" name="size" placeholder="图片允许大小" style="width:400px;" value="{{$conf->size ?? ''}}">
             <small class="form-text text-muted">单位：M，0或空值表示不限制</small>
         </div>
         <div class="form-group @if(!in_array($conf->type,[5])) hide @endif js-custom">
@@ -73,12 +73,12 @@
         </div>
         <div class="form-group">
             <label for="tips">小贴士</label>
-            <input type="text" class="form-control" id="tips" name="tips" placeholder="小贴士" style="width:400px;" value="{{$conf->tips or ''}}">
+            <input type="text" class="form-control" id="tips" name="tips" placeholder="小贴士" style="width:400px;" value="{{$conf->tips ?? ''}}">
             <small class="form-text text-muted">字段的说明</small>
         </div>
         <div class="form-group">
             <label for="sort"><span class="text-danger">* </span>排序</label>
-            <input type="text" class="form-control" id="sort" name="sort" placeholder="排序" style="width:400px;" value="{{$conf->sort or ''}}">
+            <input type="text" class="form-control" id="sort" name="sort" placeholder="排序" style="width:400px;" value="{{$conf->sort ?? ''}}">
             <small class="form-text text-muted">默认500,数值越小排名越靠前</small>
         </div>
         <div class="h10"></div>

@@ -39,11 +39,7 @@ class ConfigController extends Controller
                 }
                 $config[$key]->radio_checkbox_json = $item;
             }
-            if($val->type == 7){
-                $config[$key]->value=json_decode($val->value,true);
-            }
         }
-        //dd($config);
         $sign['conf'] = $config;
         return view("admin.config.index",$sign);
     }
@@ -231,7 +227,7 @@ class ConfigController extends Controller
                 $c->value= $v;
                 $c->save();
             }else{
-                $c->value= json_encode($v);
+                $c->value= implode(',',$v);
                 $c->save();
             }
         }

@@ -119,7 +119,7 @@
                         });
                     }else{
                         $boot.success({text:res.msg},function(){
-                            window.location = window.location;
+                            //window.location = window.location;
                         });
                     }
                 }

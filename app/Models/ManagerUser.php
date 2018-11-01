@@ -14,16 +14,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class ManagerUser extends Authenticatable
 {
     protected $table = "manager_user";
+    protected $guarded = [];
     protected $dateFormat = 'U';
     use Notifiable;
 
-    protected $fillable = [//可以注入的字段
+    /*protected $fillable = [//可以注入的字段
         'name', 'password', 'account',
     ];
 
     protected $hidden = [//默认不查询出来的字段
         'password', 'remember_token',
-    ];
+    ];*/
 
     /**
      * 用户所有的角色

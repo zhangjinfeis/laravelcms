@@ -203,7 +203,7 @@
                             <div>
                                 @foreach($vo->radio_checkbox_json as $item)
                                     <div class="custom-control custom-checkbox custom-control-inline">
-                                        <input type="checkbox" class="custom-control-input" name="{{$vo->key}}[]"  value="{{$item[0]}}" id="{{$vo->key}}{{$item[0]}}" @if(in_array($item[0],$vo['value'])) checked @endif>
+                                        <input type="checkbox" class="custom-control-input" name="{{$vo->key}}[]"  value="{{$item[0]}}" id="{{$vo->key}}{{$item[0]}}" @if(in_array($item[0],explode(',',$vo['value']))) checked @endif>
                                         <label class="custom-control-label" for="{{$vo->key}}{{$item[0]}}">{{$item[1]}}</label>
                                     </div>
                                 @endforeach

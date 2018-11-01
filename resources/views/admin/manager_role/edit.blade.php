@@ -16,13 +16,13 @@
             <div class="col-4">
                 <div class="form-group">
                     <label for="name">角色名称</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="角色名称" value="{{$role->name or ''}}" />
+                    <input type="text" class="form-control" id="name" name="name" placeholder="角色名称" value="{{$role->name ?? ''}}" />
                     <small class="form-text text-muted">1-50个字符</small>
                 </div>
 
                 <div class="form-group">
                     <label for="url">描述</label>
-                    <input type="text" class="form-control" id="description" name="description" placeholder="描述" value="{{$role->description or ''}}">
+                    <input type="text" class="form-control" id="description" name="description" placeholder="描述" value="{{$role->description ?? ''}}">
                 </div>
                 <div class="h10"></div>
                 <button type="submit" class="btn btn-primary" onclick="return post_edit();">保存</button>

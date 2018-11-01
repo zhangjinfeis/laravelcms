@@ -33,7 +33,7 @@
     </label>
 
 
-    <input type="hidden" data-o-md5="{{$md5 or ''}}" name="{{$input_name}}" value="{{$input_value}}">
+    <input type="hidden" data-o-md5="{{$md5 ?? ''}}" name="{{$input_name}}" value="{{$input_value}}">
     <input type="hidden" name="pic_not_use_id[]" value="">
     <input type="hidden" name="pic_use_id[]" value="">
 
@@ -59,8 +59,8 @@
         multiple:false,
         extraData:{
             _token: $('meta[name="csrf-token"]').attr('content'),
-            width : '{{$width or 0}}',
-            height : '{{$height or 0}}',
+            width : '{{$width ?? 0}}',
+            height : '{{$height ?? 0}}',
         },
         onComplete: function(){
             //$.danidemo.addLog('#demo-debug', 'default', 'All pending tranfers completed');

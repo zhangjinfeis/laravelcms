@@ -13,7 +13,7 @@
         <input type="hidden" name="id" value="{{$menu->id}}" />
         <div class="form-group">
             <label for="name">父级</label>
-            <span class="text-muted pl-2 js-pid">{{$parent->name or '根菜单'}}</span>
+            <span class="text-muted pl-2 js-pid">{{$parent->name ?? '根菜单'}}</span>
         </div>
         <input name="parent_id" type="hidden" value="">
         <div class="form-group">
@@ -23,12 +23,12 @@
         </div>
         <div class="form-group">
             <label for="url">路径</label>
-            <input type="text" class="form-control" id="url" name="url" placeholder="路径" style="width:400px;" value="{{$menu->url or ''}}">
+            <input type="text" class="form-control" id="url" name="url" placeholder="路径" style="width:400px;" value="{{$menu->url ?? ''}}">
             <small class="form-text text-muted">路由地址</small>
         </div>
         <div class="form-group">
             <label for="target">打开方式</label>
-            <input type="text" class="form-control" id="target" name="target" placeholder="打开方式" style="width:400px;" value="{{$menu->target or ''}}">
+            <input type="text" class="form-control" id="target" name="target" placeholder="打开方式" style="width:400px;" value="{{$menu->target ?? ''}}">
             <small class="form-text text-muted">当前窗口：_self，新窗口：_blank</small>
         </div>
         <div class="form-group">

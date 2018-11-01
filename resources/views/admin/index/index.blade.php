@@ -39,31 +39,31 @@
                             <div class="item flex-1">
                                 <span class="icon"><i class="fa fa-file-text-o"></i></span>
                                 <div class="title">文章数</div>
-                                <div class="number">55</div>
+                                <div class="number">{{$article_count}}</div>
                                 <a href="#" onclick="return window.parent.alert_iframe('文章列表','/admin/article','{{md5("/admin/article")}}')">查看</a>
                             </div>
                             <div class="item flex-1">
                                 <span class="icon"><i class="fa fa-link"></i></span>
                                 <div class="title">链接数</div>
-                                <div class="number">8</div>
+                                <div class="number">{{$link_count}}</div>
                                 <a href="#" onclick="return window.parent.alert_iframe('链接列表','/admin/link','{{md5("/admin/link")}}')">查看</a>
                             </div>
                             <div class="item flex-1">
                                 <span class="icon"><i class="fa fa-commenting-o"></i></span>
                                 <div class="title">留言数</div>
-                                <div class="number">3</div>
+                                <div class="number">{{$guestbook_count}}</div>
                                 <a href="#" onclick="return window.parent.alert_iframe('留言内容','/admin/guestbook','{{md5("/admin/guestbook")}}')">查看</a>
                             </div>
                             <div class="item flex-1">
                                 <span class="icon"><i class="fa fa-map-o"></i></span>
                                 <div class="title">地图数</div>
-                                <div class="number">1</div>
+                                <div class="number">{{$map_count}}</div>
                                 <a href="#" onclick="return window.parent.alert_iframe('地图列表','/admin/map','{{md5("/admin/map")}}')">查看</a>
                             </div>
                             <div class="item flex-1">
                                 <span class="icon"><i class="fa fa-user-circle-o"></i></span>
                                 <div class="title">管理员</div>
-                                <div class="number">1</div>
+                                <div class="number">{{$manager_count}}</div>
                                 <a href="#" onclick="return window.parent.alert_iframe('管理员','/admin/manager_user','{{md5("/admin/manager_user")}}')">查看</a>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                                 data: {!! json_encode($data) !!},
                                 fill:false,
                                 borderWidth:10,
-                                lineTension:0.4,
+                                lineTension:0,
                                 pointBorderColor:'#fa5c7c',
                                 borderColor:'#fa5c7c',
                                 backgroundColor:'rgba(250,92,124,0.1)',

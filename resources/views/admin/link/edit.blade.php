@@ -25,7 +25,7 @@
         </div>
         <div class="form-group">
             <label for="title"><span class="text-danger">* </span>标题</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="标题" style="width:400px;" value="{{$article->title or ''}}" />
+            <input type="text" class="form-control" id="title" name="title" placeholder="标题" style="width:400px;" value="{{$article->title ?? ''}}" />
             <small class="form-text text-muted">1-100个字符</small>
         </div>
         <div class="form-group">
@@ -35,17 +35,17 @@
         </div>
         <div class="form-group">
             <label for="url">链接</label>
-            <input type="text" class="form-control" id="url" name="url" placeholder="链接" style="width:400px;" value="{{$article->url or ''}}" />
+            <input type="text" class="form-control" id="url" name="url" placeholder="链接" style="width:400px;" value="{{$article->url ?? ''}}" />
         </div>
         <div class="form-group">
             <label for="target"><span class="text-danger">* </span>打开方式</label>
-            <input type="text" class="form-control" id="target" name="target" placeholder="打开方式" style="width:400px;" value="{{$article->target or ''}}" />
+            <input type="text" class="form-control" id="target" name="target" placeholder="打开方式" style="width:400px;" value="{{$article->target ?? ''}}" />
             <small class="form-text text-muted">_self：本窗口，_blank：新窗口</small>
         </div>
 
         <div class="form-group">
             <label for="sort">排序</label>
-            <input type="text" class="form-control" id="sort" name="sort" placeholder="关键词" style="width:400px;" value="{{$article->sort or ''}}" />
+            <input type="text" class="form-control" id="sort" name="sort" placeholder="关键词" style="width:400px;" value="{{$article->sort ?? ''}}" />
             <small class="form-text text-muted">默认50，越小排序越靠前</small>
         </div>
 

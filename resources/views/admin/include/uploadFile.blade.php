@@ -20,13 +20,13 @@
 </style>
 <div id="upload-{{$input_name}}">
     <button type="button" class="layui-btn" id="upload-btn-{{$input_name}}"><i class="layui-icon"></i>{{$button_name??"上传文件"}}</button>
-    <input type="hidden" data-o="{{$input_value->md5 or ''}}" name="{{$input_name}}" value="{{isset($input_value->md5)?$input_value->md5:''}}" id="file_{{$input_name}}">
+    <input type="hidden" data-o="{{$input_value->md5 ?? ''}}" name="{{$input_name}}" value="{{isset($input_value->md5)?$input_value->md5:''}}" id="file_{{$input_name}}">
     <input type="hidden" name="file_old[]">
     <input type="hidden" name="file_new[]">
     <div class="layui-upload-list">
         <div class="m-uploadfile-one {{isset($input_value)?'m-uploadfile-one-show':''}}">
             <img class="layui-upload-img js-fileimg" src="{{isset($input_value->ext)?'/admin/images/icon_'.$input_value->ext.'.png':'#'}}">
-            <span class="title js-filename">{{$input_value->prename or ''}}</span>
+            <span class="title js-filename">{{$input_value->prename ?? ''}}</span>
             <a class="delete">×</a>
         </div>
     </div>

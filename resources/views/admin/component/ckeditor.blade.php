@@ -6,14 +6,14 @@
 
 **custom:编辑器类型,对应ckeditor/custom下的js名称
 --}}
-<textarea id="{{$input_id}}" name="{{$input_name}}" class="ckeditor">{{$input_value or ""}}</textarea>
-<input id="editor_old_{{$input_id}}" type="hidden" value="{{$input_value or ""}}" />
+<textarea id="{{$input_id}}" name="{{$input_name}}" class="ckeditor">{{$input_value ?? ""}}</textarea>
+<input id="editor_old_{{$input_id}}" type="hidden" value="{{$input_value ?? ""}}" />
 <input id="editor_no_{{$input_id}}" name="editor_not_use[]" type="hidden" value="" />
 <input id="editor_{{$input_id}}" name="editor_use[]" type="hidden" value="" />
 <script>
     var editor_{{$input_id}} = CKEDITOR.replace( '{{$input_id}}', {
         language: 'zh-cn'
-        ,filebrowserImageUploadUrl:'{{url('admin/upload/ajax_ckeditor_img')}}?_token={{csrf_token()}}&width={{$pic_max_width or '1000'}}'
+        ,filebrowserImageUploadUrl:'{{url('admin/upload/ajax_ckeditor_img')}}?_token={{csrf_token()}}&width={{$pic_max_width ?? '1000'}}'
         @if(isset($height)&&$height)
         ,height:'{{$height}}px'
         @else

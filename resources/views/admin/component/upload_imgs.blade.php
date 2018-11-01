@@ -52,7 +52,7 @@
             @foreach($pics as $vo)
                 <li data-path="{{$vo['path']}}" data-md5="{{$vo['md5']}}">
                     <img src="{{$vo['path']}}"/>
-                    {{--<span class="size">{{ $vo['width'] or '' }}×{{ $vo['height'] or '' }}</span>--}}
+                    {{--<span class="size">{{ $vo['width'] ?? '' }}×{{ $vo['height'] ?? '' }}</span>--}}
                     <a class="prev">‹</a>
                     <a class="next">›</a>
                     <a class="delete">×</a>
@@ -85,8 +85,8 @@
         multiple:true,
         extraData:{
         _token: $('meta[name="csrf-token"]').attr('content'),
-        width : '{{$width or 0}}',
-        height : '{{$height or 0}}',
+        width : '{{$width ?? 0}}',
+        height : '{{$height ?? 0}}',
     },
     onComplete: function(){
         //$.danidemo.addLog('#demo-debug', 'default', 'All pending tranfers completed');
