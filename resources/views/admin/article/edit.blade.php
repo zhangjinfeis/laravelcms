@@ -54,6 +54,18 @@
                     <input type="text" class="form-control" id="sort" name="sort" placeholder="排序" style="width:400px;" value="{{$article->sort ?? ''}}" />
                     <small class="form-text text-muted">默认50，越小排序越靠前</small>
                 </div>
+                 <div class="form-group">
+                    <label for="sort">创建日期</label>
+                    <div class="input-group" style="width: 400px;">
+                        <input type="text" class="form-control" placeholder="选择时间" id="datetime" name="created_at" value="{{$article->created_at or ''}}">
+                        <div class="input-group-append">
+                    <span class="input-group-text">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                        </div>
+                    </div>
+                    <small class="form-text text-muted">时间</small>
+                </div>
 
                 <div class="form-group">
                     <label>状态</label>
@@ -132,6 +144,11 @@
             })
             return false;
         }
+         $("#datetime").flatpickr({
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            locale: "zh"
+        });
 
         //加载附加值
         function load_exattr(cate_id,article_id){

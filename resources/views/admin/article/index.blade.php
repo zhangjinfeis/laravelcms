@@ -27,6 +27,11 @@
                     @endforeach
                 </select>
                 <input class="form-control form-control-sm ml-1" type="text" name="title" placeholder="关键字搜索" value="{{request('title')}}">
+                 开启状态搜索<select class="form-control form-control-sm" name="is_show">
+                    <option value="x" selected>全部</option>
+                    <option value="on">开启</option>
+                    <option value="off">关闭</option>
+                </select>
                 <button class="btn btn-sm btn-primary ml-1">搜索</button>
             </form>
         </div>
