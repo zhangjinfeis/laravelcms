@@ -10,6 +10,7 @@ use App\Models\ArticleCate;
 use App\Models\Article;
 use App\Models\ArticleExattr;
 use App\Library\LArticle;
+use Illuminate\Support\Facades\DB;
 /**
  * 后台分类控制器
  * @author my 2017-10-25
@@ -25,19 +26,23 @@ class ArticleCateController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(){
-
-
-        /*$pattern = '/(2(5[0-5]{1}|[0-4]\d{1})|[0-1]?\d{1,2})(\.(2(5[0-5]{1}|[0-4]\d{1})|[0-1]?\d{1,2})){3}/';
-        $str = file_get_contents('a.txt');
-        preg_match_all($pattern,$str,$a);
-        $s = '';
-        foreach($a[0] as $vo){
-            $s .= ('deny '.$vo.';');
-        }
-        file_put_contents('b.txt',$s);*/
-
-
         $list = ArticleCate::getList();
+        $ids = [];
+        foreach($list as $key => $val){
+            array_push($ids,$val['id']);
+            $list[$key]['exattr_keys'] = [];
+        }
+        //dd($list);
+        $attrs = ArticleExattr::whereIn('cate_id',$ids)->select('id','cate_id','key')->orderBy('sort','asc')->orderBy('id','asc')->get()->toArray();
+        //dd($attrs);
+        foreach($list as $ke => $va){
+            foreach($attrs as $k => $v){
+                if($va['id'] == $v['cate_id']){
+                    $list[$ke]['exattr_keys'][] = $v['key'];
+                }
+            }
+        }
+
         $sign['list'] = $list;
         return view('admin/article_cate/index', $sign);
     }
@@ -238,6 +243,43 @@ class ArticleCateController extends Controller
         }else{
             return response()->json(['status'=>0,'msg'=>'移动失败']);
         };
+    }
+
+    /**
+     * 复制附加字段
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * Created by zjf
+     * Time: 2018/11/5 14:49
+     */
+    public function ajaxCopyExattr(Request $request){
+
+        session(['article_exattr_copy_id'=>$request->id]);
+        return response()->json(['status'=>1,'msg'=>'复制成功']);
+    }
+
+    /**
+     * 粘贴附加字段
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * Created by zjf
+     * Time: 2018/11/5 14:50
+     */
+    public function ajaxPasteExattr(Request $request){
+        $id = session('article_exattr_copy_id');
+        if(!$id){
+            return response()->json(['status'=>0,'msg'=>'请先复制一个内容']);
+        }
+        $attr = ArticleExattr::where('cate_id',$id)->orderBy('sort','asc')->orderBy('id','asc')->get()->toArray();
+        foreach($attr as $key=>$val){
+            unset($attr[$key]['id']);
+            unset($attr[$key]['created_at']);
+            unset($attr[$key]['updated_at']);
+            $attr[$key]['cate_id'] = $request->id;
+        }
+        ArticleExattr::where('cate_id',$request->id)->delete();
+        $res = DB::table('article_exattr')->insert($attr);
+        return response()->json(['status'=>1,'msg'=>'粘贴成功']);
     }
 
 }

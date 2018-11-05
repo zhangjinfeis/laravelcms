@@ -72,13 +72,18 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function() {
             Route::match(['post'],'/ajax_move_content','ArticleCateController@ajaxMoveContent');  //移动文章内容
             Route::match(['post'],'/ajax_is_show','ArticleCateController@ajaxIsShow');  //开启分类
             Route::match(['post'],'/ajax_un_show','ArticleCateController@ajaxUnShow');  //关闭分类
+            Route::match(['post'],'/ajax_copy_exattr','ArticleCateController@ajaxCopyExattr');  //复制附加字段
+            Route::match(['post'],'/ajax_paste_exattr','ArticleCateController@ajaxPasteExattr');  //复制附加字段
         });
 
         // ———————————————————————————文章附加字段—————————————————————————————————
         Route::group(['prefix' => 'article_exattr'],function(){
             Route::match(['post'],'/create', 'ArticleExattrController@create');  //创建附加字段
             Route::match(['get','post'],'/edit', 'ArticleExattrController@edit');  //编辑附加字段
-            Route::match(['post'],'/ajax_del','ArticleExattrController@ajaxDel');  //删除附加字段
+            Route::match(['post'],'/ajax_del','ArticleExattrController@ajaxDel');  //删除某一附加字段
+            Route::match(['post'],'/ajax_del_by_cate','ArticleExattrController@ajaxDelByCate');  //删除某分类附加字段
+
+
         });
 
         // ———————————————————————————文章—————————————————————————————————
@@ -118,6 +123,13 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function() {
             Route::get('/', 'MapController@index');  //地图列表
             Route::match(['post','get'],'/create_edit', 'MapController@createEdit');  //地图新增+编辑
             Route::match(['post'],'/ajax_del','MapController@ajaxDel');  //删除地图
+        });
+
+        // ———————————————————————————资源-图片—————————————————————————————————
+        Route::group(['prefix' => 'pic'],function(){
+            Route::match(['get'],'/', 'PicController@index');  //图片列表
+            Route::match(['post'],'/ajax_detail', 'PicController@ajax_detail');  //图片详情
+            Route::match(['post'],'/ajax_clear', 'PicController@ajax_clear');  //图片详情
         });
 
         //————————————————————————参数分类—————————————————————————————————————————

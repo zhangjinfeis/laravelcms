@@ -18,6 +18,8 @@ class ProcessPic
     {
         if($request->isMethod('post')){
             Pic::processPic($request->pic_not_use_id,$request->pic_use_id,$request->editor_not_use,$request->editor_use);
+            //剔除变量
+            unset($request['pic_not_use_id'],$request['pic_use_id'],$request['editor_not_use'],$request['editor_use']);
         }
         return $next($request);
     }

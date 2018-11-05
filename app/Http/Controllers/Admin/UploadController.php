@@ -72,7 +72,7 @@ class UploadController extends Controller
         //存储文件
         $md5 = md5(time().str_random(40).env("md5_key",""));
         $filename = $md5.".".$image->clientExtension();//新文件名
-        $filepath = date("Y").date("m")."/".date("d");
+        $filepath = 'picture/'.date("Y").date("m")."/".date("d");
         $path = $image->storeAs('public'.'/'.$filepath,$filename);  //起始路径为storage/app
 
         /**
@@ -143,41 +143,44 @@ class UploadController extends Controller
         }
 
         //存储文件
-        $filename = md5(time().str_random(40)).".".$image->clientExtension();//新文件名
-        $filepath = date("Y")."/".date("m")."/".date("d");
+        $md5 = md5(time().str_random(40).env("md5_key",""));
+        $filename = $md5.".".$image->clientExtension();//新文件名
+        $filename_mid = $md5."_mid.".$image->clientExtension();//新文件名
+        $filename_min = $md5."_min.".$image->clientExtension();//新文件名
+        $filepath = 'goods/'.date("Y").date("m")."/".date("d");
         $path = $image->storeAs('public'.'/'.$filepath,$filename);  //起始路径为storage/app
 
         /**
          * 压缩图片
          */
+        $request->size = explode(',',$request->size);
+        $request->size_mid = explode(',',$request->size_mid);
+        $request->size_min = explode(',',$request->size_min);
+
         $manager  = new ImageManager();
         $image_new = $manager ->make('../storage/app/public/'.$filepath.'/'.$filename)->orientate();
-        if($request->width && $request->height){
-            $image_new = $image_new->fit($request->width,$request->height);
-        }elseif($request->width){
-            $image_new = $image_new->widen($request->width,function($constraint){
-                $constraint->upsize();
-            });
-        }elseif($request->height){
-            $image_new = $image_new->heighten($request->height,function($constraint){
-                $constraint->upsize();
-            });
-        }
+        //大图
+        $image_new = $image_new->fit($request->size[0],$request->size[1]);
         $image_new->save('../storage/app/public/'.$filepath.'/'.$filename);
+        //中等大小
+        $image_new = $image_new->fit($request->size_mid[0],$request->size_mid[1]);
+        $image_new->save('../storage/app/public/'.$filepath.'/'.$filename_mid);
+        //小图
+        $image_new = $image_new->fit($request->size_min[0],$request->size_min[1]);
+        $image_new->save('../storage/app/public/'.$filepath.'/'.$filename_min);
 
 
         //修改数据库记录
         $param['original_name'] = $image->getClientOriginalName();
         $param['name'] = $filename;
         $param['path'] = "/storage/".$filepath.'/'.$filename;
-        $param['md5'] = md5($param['path'].env("md5_key",""));
-        $param['sha1'] = md5($param['path'].env("sha1_key",""));
+        $param['md5'] = $md5;
+        $param['sha1'] = sha1($md5.env("sha1_key"));
         $param['url'] = '/image/'.$param['md5'];
         //$imageInfo = getimagesize($request->root().$param['path']);
         $param['width'] = $image_new->width();
         $param['height'] = $image_new->height();
         $param['size'] = $image_new->filesize();//获得文件的大小（字节）
-        $param['status'] = 0;
         $pic = Pic::create($param);//创建一条图片记录
         //返回信息
         return ["status"=>1,"msg"=>"","data"=>$pic];

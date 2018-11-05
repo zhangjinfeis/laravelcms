@@ -8,10 +8,11 @@
 --}}
 
 <style>
-.m-uploadimg-group{border:#ddd 1px dashed;overflow: hidden; display:table-cell;padding:0 10px 0 0;}
-.m-uploadimg-group ul{float:left;margin: 0px;padding:0px;}
-.m-uploadimg-group ul li{float:left;width:110px;height:110px;margin:10px 0px 10px 10px;position:relative;border:#ddd 1px solid; background:#fff;overflow: hidden;}
-.m-uploadimg-group ul li img{ width: 100%;}
+.m-uploadimg-group{border:#ddd 1px dashed;overflow: hidden; display:table-cell;padding:10px 0 10px 10px;}
+.m-uploadimg-group ul{margin: 0px;padding:0px;}
+.m-uploadimg-group ul li{ float:left;width:110px;height:110px;margin:0px 10px 0px 0px;border:#ddd 1px solid; background:#fff;overflow: hidden; display: block;}
+.m-uploadimg-group ul li .li-in{width:110px;height:110px;background: url('/resources/admin/images/pic_bg.png');display:table-cell; text-align:center;vertical-align:middle;position:relative; overflow: hidden;}
+.m-uploadimg-group ul li img{max-width:110px;max-height:110px; display: inline;}
 .m-uploadimg-group ul li.default{display:none;}
 .m-uploadimg-group ul li span.size{position:absolute;left:5px;top:5px;display:inline-block;height:18px;line-height:18px;border-radius:9px;padding:0 5px;background:rgba(0,0,0,0.5);color:#fff; font-size: 12px;}
 .m-uploadimg-group ul li a.prev{position:absolute;left:30px;bottom:5px;display:inline-block;height:20px;line-height:18px;width:20px;border-radius:10px;text-align:center;background:rgba(0,0,0,0.5);color:#fff; cursor: pointer;}
@@ -51,11 +52,13 @@
         <ul>
             @foreach($pics as $vo)
                 <li data-path="{{$vo['path']}}" data-md5="{{$vo['md5']}}">
-                    <img src="{{$vo['path']}}"/>
-                    {{--<span class="size">{{ $vo['width'] ?? '' }}×{{ $vo['height'] ?? '' }}</span>--}}
-                    <a class="prev">‹</a>
-                    <a class="next">›</a>
-                    <a class="delete">×</a>
+                    <div class="li-in">
+                        <img src="{{$vo['path']}}"/>
+                        {{--<span class="size">{{ $vo['width'] ?? '' }}×{{ $vo['height'] ?? '' }}</span>--}}
+                        <a class="prev">‹</a>
+                        <a class="next">›</a>
+                        <a class="delete">×</a>
+                    </div>
                 </li>
             @endforeach
         </ul>
@@ -64,11 +67,13 @@
 
     <!--克隆代码段-->
     <li class="fun-li-clone hide">
-        <img src=""/>
-        <span class="size"></span>
-        <a class="prev" href="#">‹</a>
-        <a class="next" href="#">›</a>
-        <a class="delete" href="#">×</a>
+        <div class="li-in">
+            <img src=""/>
+            <span class="size"></span>
+            <a class="prev" href="#">‹</a>
+            <a class="next" href="#">›</a>
+            <a class="delete" href="#">×</a>
+        </div>
     </li>
 
 

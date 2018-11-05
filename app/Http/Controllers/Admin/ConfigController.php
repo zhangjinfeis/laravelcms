@@ -220,7 +220,6 @@ class ConfigController extends Controller
      */
     public function ajaxEditValue(Request $request){
         $input = $request->all();
-        unset($input['editor_not_use'],$input['editor_use'],$input['pic_not_use_id'],$input['pic_use_id']);
         foreach($input as $k => $v){
             $c = Config::where('key',$k)->first();
             if(!in_array($c->type,[7])){

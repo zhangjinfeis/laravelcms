@@ -20,6 +20,17 @@ function array_sortby_array($target = [],$sort_array = [],$colume = 'id'){
     return $arr;
 }
 
+/**
+ * 文件大小转换
+ * @param unknown_type $size
+ * @return 文件大小  如 44KB
+ */
+function format_bytes($size) {
+    $units = array('B', 'KB', 'MB', 'G', 'T');
+    for ($i = 0; $size >= 1024 && $i < 4; $i++) $size /= 1024;
+    return round($size, 2).$units[$i];
+}
+
 
 /**
  * 将秒转换成时分秒
@@ -42,7 +53,7 @@ function his_format($s){
 }
 
 /**
- * 加密数组
+ * 加密数组(用在跳转返回原页面)
  * @param $arr
  * @return string
  * Created by zjf
@@ -54,7 +65,7 @@ function encrypt_arr($arr){
 }
 
 /**
- * 解密数组
+ * 解密数组(用在跳转返回原页面)
  * @param $str
  * @return mixed
  * Created by zjf
@@ -63,4 +74,19 @@ function encrypt_arr($arr){
 function decrypt_arr($str){
     $str = decrypt($str);
     return json_decode($str,true);
+}
+
+
+/**
+ * 将资源转化成另外命名，用于生成多规格图片
+ * @param unknown_type $path  资源路径
+ * @param unknown_type $fix  添加的后缀_mid _min
+ */
+function img_rename($path, $fix) {
+    if($path){
+        preg_match('/(.*)\.(.*)/', $path ,$a);
+        return $a[1].$fix.'.'.$a[2];
+    }else{
+        return '';
+    }
 }

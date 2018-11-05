@@ -14,6 +14,10 @@
 <script type="text/javascript" src="/resources/plugs/flatpickr/flatpickr.js"></script>
 <script type="text/javascript" src="/resources/plugs/flatpickr/zh.js"></script>
 
+<!--颜色选择器-->
+<link rel="stylesheet" type="text/css" href="/resources/plugs/spectrum/spectrum.css">
+<script type="text/javascript" src="/resources/plugs/spectrum/spectrum.js"></script>
+
 {{--文件上传-插件地址：https://github.com/danielm/uploader--}}
 <script src="/resources/plugs/dmuploader/jquery.dm-uploader.js"></script>
 

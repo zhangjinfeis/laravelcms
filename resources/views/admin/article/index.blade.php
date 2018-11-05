@@ -26,11 +26,11 @@
                         <option value="{{$vo['id']}}" @if($vo['id'] == request('cate_id')) selected @endif>{!!$vo['depth_name']!!}{{$vo['name_cn']}}({{$vo['count']}})</option>
                     @endforeach
                 </select>
-                <input class="form-control form-control-sm ml-1" type="text" name="title" placeholder="关键字搜索" value="{{request('title')}}">
-                 开启状态搜索<select class="form-control form-control-sm" name="is_show">
-                    <option value="x" selected>全部</option>
-                    <option value="on">开启</option>
-                    <option value="off">关闭</option>
+                <input class="form-control form-control-sm ml-1" type="text" name="title" placeholder="关键字搜索" value="{{request('title')}}">&nbsp;
+                 状态&nbsp;<select class="form-control form-control-sm" name="is_show">
+                    <option value="">全部</option>
+                    <option value="1" {{request('is_show') == 1?'selected':''}}>开启</option>
+                    <option value="9" {{request('is_show') == 9?'selected':''}}>关闭</option>
                 </select>
                 <button class="btn btn-sm btn-primary ml-1">搜索</button>
             </form>

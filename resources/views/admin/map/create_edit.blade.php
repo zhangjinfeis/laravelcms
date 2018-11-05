@@ -26,7 +26,7 @@
         <div class="form-group">
             <label><span class="text-danger">* </span>地址选择</label>
             <div>
-                @include('admin.component.amap_choose',array('input_lng'=>'lng','input_lat'=>'lat','input_zoom'=>'zoom','lng'=>$page->lng??'','lat'=>$page->lat??'','zoom'=>$page->zoom??'','height'=>'400px','width'=>'600px'))
+                @include('admin.component.amapChoose',array('input_lng'=>'lng','input_lat'=>'lat','input_zoom'=>'zoom','lng'=>$page->lng??'','lat'=>$page->lat??'','zoom'=>$page->zoom??'','height'=>'400px','width'=>'600px'))
             </div>
             <small class="form-text text-muted"></small>
         </div>

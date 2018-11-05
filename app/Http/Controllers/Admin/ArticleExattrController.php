@@ -70,6 +70,9 @@ class ArticleExattrController extends Controller
             $config->height = $request->height;
             $config->custom = $request->custom;
         }
+        if(in_array($request->type,[6,7])){
+            $config->radio_checkbox_json = $request->radio_checkbox_json;
+        }
         $config->tips = $request->tips;
         $config->sort = $request->sort;
         $res = $config->save();
@@ -160,19 +163,24 @@ class ArticleExattrController extends Controller
 
 
     /**
-     * 删除
+     * 删除某一附加属性
      * @author kevin 2017-11-06
      */
     public function ajaxDel(Request $request){
-        //验证分类是否正确
-        $manager_menu = ArticleExattr::find($request->id);
-        //执行删除操作
-        if(isset($manager_menu)){//若存在则删除
-            $manager_menu->delete();
-            return ['status'=>1,'msg'=>'删除成功'];
-        }else {
-            return ['status'=>0,'msg'=>'删除失败，未找到参数'];
-        }
+        ArticleExattr::where('id',$request->id)->delete();
+        return response()->json(['status'=>1,'msg'=>'删除成功']);
+    }
+
+    /**
+     * 删除某一分类的附加属性
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * Created by zjf
+     * Time: 2018/11/5 15:25
+     */
+    public function ajaxDelByCate(Request $request){
+        ArticleExattr::where('cate_id',$request->cate_id)->delete();
+        return response()->json(['status'=>1,'msg'=>'删除成功']);
     }
 
 

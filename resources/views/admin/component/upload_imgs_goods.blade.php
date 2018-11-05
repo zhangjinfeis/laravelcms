@@ -1,58 +1,65 @@
 {{--
 上传多张图片组件-调用方法:
-    @include('admin.component.uploadImgsResize',array())
+    @component('admin.component.uploadImgsResize',array()) @endcomponent
     必填：input_id,input_name
-    可选：width、height、size（单位M）
+    可选：size(大图)、size_mid(中等图)、size_min(小图)、size（单位M）
     赋值：input_value
     优先按宽度缩放，其次按高度，都未定义则上传原图
 --}}
 
 <style>
-    .m-uploadimg-group{border:#ddd 1px dashed;overflow: hidden;}
-    .m-uploadimg-group ul{float:left;margin: 0px;padding:0px;}
-    .m-uploadimg-group ul li{float:left;width:150px;height:150px;margin:10px 0px 10px 10px;position:relative;border:#ddd 1px solid; background:#fff;overflow: hidden;}
-    .m-uploadimg-group ul li img{ width: 100%;}
-    .m-uploadimg-group ul li.default{display:none;}
-    .m-uploadimg-group ul li span.size{position:absolute;left:5px;top:5px;display:inline-block;height:18px;line-height:18px;border-radius:9px;padding:0 5px;background:rgba(0,0,0,0.5);color:#fff; font-size: 12px;}
-    .m-uploadimg-group ul li a.prev{position:absolute;left:50px;bottom:5px;display:inline-block;height:20px;line-height:18px;width:20px;border-radius:10px;text-align:center;background:rgba(0,0,0,0.5);color:#fff; cursor: pointer;}
-    .m-uploadimg-group ul li a.next{position:absolute;left:80px;bottom:5px;display:inline-block;height:20px;line-height:18px;width:20px;border-radius:10px;text-align:center;background:rgba(0,0,0,0.5);color:#fff;cursor: pointer;}
-    .m-uploadimg-group ul li a.delete{display:inline-block;line-height:20px;height:20px;width:20px;border-radius:10px;text-align:center;overflow:hidden;position:absolute;right:5px;top:5px;text-decoration:none;background: rgba(0,0,0,0.5);font-size:16px;color:#fff; cursor: pointer;}
+    .m-upload_imgs_goods{border:#ddd 1px dashed;overflow: hidden; display:table-cell;padding:10px 0 10px 10px;}
+    .m-upload_imgs_goods ul{float:left;margin: 0px;padding:0px;}
+    .m-upload_imgs_goods ul li{ float:left;width:110px;height:110px;margin:0px 10px 0px 0px;border:#ddd 1px solid; background:#fff;overflow: hidden;display: block;}
+    .m-upload_imgs_goods ul li .li-in{width:110px;height:110px;background: url('/resources/admin/images/pic_bg.png');display:table-cell; text-align:center;vertical-align:middle;position:relative; overflow: hidden;}
+    .m-upload_imgs_goods ul li img{max-width:110px;max-height:110px; display: inline;}
+    .m-upload_imgs_goods ul li.default{display:none;}
+    .m-upload_imgs_goods ul li span.size{position:absolute;left:5px;top:5px;display:inline-block;height:18px;line-height:18px;border-radius:9px;padding:0 5px;background:rgba(0,0,0,0.5);color:#fff; font-size: 12px;}
+    .m-upload_imgs_goods ul li a.prev{position:absolute;left:30px;bottom:5px;display:inline-block;height:20px;line-height:18px;width:20px;border-radius:10px;text-align:center;background:rgba(0,0,0,0.5);color:#fff; cursor: pointer;}
+    .m-upload_imgs_goods ul li a.next{position:absolute;right:30px;bottom:5px;display:inline-block;height:20px;line-height:18px;width:20px;border-radius:10px;text-align:center;background:rgba(0,0,0,0.5);color:#fff;cursor: pointer;}
+    .m-upload_imgs_goods ul li a.delete{display:inline-block;line-height:20px;height:20px;width:20px;border-radius:10px;text-align:center;overflow:hidden;position:absolute;right:5px;top:5px;text-decoration:none;background: rgba(0,0,0,0.5);font-size:14px;color:#fff; cursor: pointer;}
+    .m-upload_imgs_goods ul li a:hover{color:#fff !important;background: rgba(0,0,0,0.8);}
 </style>
 
 @php
-    /*$input_value = isset($input_value)?$input_value:[];
-    $ids = [];
-    foreach($input_value as $val){
-        $ids[] = $val['md5'];
-    }
-    $ids = implode(',',$ids);*/
     $input_value = isset($input_value)&&$input_value?$input_value:'';
-    $arr = explode(',',$input_value);
+    $pics = [];
+    $old_md5s = '';
+    if(!empty($input_value)){
+        $arr = explode(',',$input_value);
+        foreach($arr as $key => $val){
+            preg_match_all('/[a-z0-9]{32}/',$val,$res);
+            $pics[$key]['path'] = $val;
+            $pics[$key]['md5'] = $res[0][0];
+            $old_md5s.= ','.$res[0][0];
+        }
+        $old_md5s = trim($old_md5s,',');
+    }
 @endphp
 
 <div id="upload-{{$input_id}}">
     <label id="{{$input_id}}_btn" class="u-dmuploader">
-        <span role="button" class="btn btn-sm btn-primary" style="width:150px;"><span class="fa fa-upload"></span> 多图上传</span>
+        <span role="button" class="btn btn-sm btn-primary w110"><span class="fa fa-upload"></span> 多图上传</span>
         <input type="file" name="files[]" class="hide">
     </label>
 
-    <input type="hidden" data-o="{{$input_value}}" name="{{$input_name}}" value="{{$input_value}}">
+    <input type="hidden" data-o="{{$old_md5s}}" name="{{$input_name}}" value="{{$input_value}}">
     <input type="hidden" name="pic_not_use_id[]" value="">
     <input type="hidden" name="pic_use_id[]" value="">
 
 
-    <div class="m-uploadimg-group">
+    <div class="m-upload_imgs_goods clearfix">
         <ul>
-            @foreach($arr as $vo)
-                @if($vo)
-                    <li data-md5="{{$vo}}">
-                        <img src="/image/{{$vo}}"/>
+            @foreach($pics as $vo)
+                <li data-path="{{$vo['path']}}" data-md5="{{$vo['md5']}}">
+                    <div class="li-in">
+                        <img src="{{$vo['path']}}"/>
                         {{--<span class="size">{{ $vo['width'] ?? '' }}×{{ $vo['height'] ?? '' }}</span>--}}
                         <a class="prev">‹</a>
                         <a class="next">›</a>
                         <a class="delete">×</a>
-                    </li>
-                @endif
+                    </div>
+                </li>
             @endforeach
         </ul>
         <div class="clear"></div>
@@ -60,11 +67,13 @@
 
     <!--克隆代码段-->
     <li class="fun-li-clone hide">
-        <img src=""/>
-        <span class="size"></span>
-        <a class="prev" href="#">‹</a>
-        <a class="next" href="#">›</a>
-        <a class="delete" href="#">×</a>
+        <div class="li-in">
+            <img src=""/>
+            <span class="size"></span>
+            <a class="prev" href="#">‹</a>
+            <a class="next" href="#">›</a>
+            <a class="delete" href="#">×</a>
+        </div>
     </li>
 
 
@@ -81,8 +90,9 @@
         multiple:true,
         extraData:{
             _token: $('meta[name="csrf-token"]').attr('content'),
-            width : '{{$width ?? 0}}',
-            height : '{{$height ?? 0}}',
+            size : '{{$size ?? '800,800'}}',
+            size_mid : '{{$size_mid ?? '420,420'}}',
+            size_min : '{{$size_min ?? '250,250'}}',
         },
         onComplete: function(){
             //$.danidemo.addLog('#demo-debug', 'default', 'All pending tranfers completed');
@@ -98,7 +108,7 @@
                 $boot.warn({text:res.msg});
             }else {
                 //添加到ul后面
-                add_group{{ $input_id }}(res.data.md5,res.data.width,res.data.height);
+                add_group{{ $input_id }}(res.data.md5,res.data.path,res.data.width,res.data.height);
 
                 //重新计算input值、no_use_id、use_id
                 reset_group{{ $input_id }}();
@@ -125,10 +135,10 @@
 
 
     //插入新图片
-    function add_group{{ $input_id}}($md5,$width,$height){
-        var $a = $("#upload-{{$input_id}} .fun-li-clone").clone(true).removeClass().attr('data-md5',$md5); //移除所有class
+    function add_group{{ $input_id}}($md5,$path,$width,$height){
+        var $a = $("#upload-{{$input_id}} .fun-li-clone").clone(true).removeClass().attr({'data-md5':$md5,'data-path':$path}); //移除所有class
         $a.find('.size').text($width+"×"+$height);
-        $a.find('img').attr('src','/image/'+$md5);
+        $a.find('img').attr('src',$path);
         $a.appendTo('#upload-{{$input_id}} ul');
     };
 
@@ -138,51 +148,53 @@
         var $old_md5 = $("input[name='{{$input_name}}']").attr('data-o');
         $("#upload-{{$input_id}}").find("input[name='pic_not_use_id[]']").val($old_md5);
         //取新的md5值
-        var $new_mds = [];
+        var $new_paths =[]; var $new_md5s = [];
         $("#upload-{{$input_id}} ul li").each(function(){
-            $new_mds.push($(this).attr('data-md5'));
+            $new_paths.push($(this).attr('data-path'));
+            $new_md5s.push($(this).attr('data-md5'));
         });
-        $new_mds = $new_mds.join(',');
+        $new_paths = $new_paths.join(',');
+        $new_md5s = $new_md5s.join(',');
         //新md5值赋给use
-        $("#upload-{{$input_id}}").find("input[name='pic_use_id[]']").val($new_mds);
+        $("#upload-{{$input_id}}").find("input[name='pic_use_id[]']").val($new_md5s);
         //新md5值赋给input
-        $("input[name='{{$input_name}}']").val($new_mds);
+        $("input[name='{{$input_name}}']").val($new_paths);
     }
 
     //只重新计算位置更换（调整顺序情况下）
     function reset_group_sort{{ $input_id}}(){
         //取新的md5值
-        var $new_mds = [];
+        var $new_paths = [];
         $("#upload-{{$input_id}} ul li").each(function(){
-            $new_mds.push($(this).attr('data-md5'));
+            $new_paths.push($(this).attr('data-path'));
         });
-        $new_mds = $new_mds.join(',');
+        $new_paths = $new_paths.join(',');
         //新md5值赋给input
-        $("input[name='{{$input_name}}']").val($new_mds);
+        $("input[name='{{$input_name}}']").val($new_paths);
     }
 
     //删除当前选中缩略图
     $("#upload-{{ $input_id }} a.delete").click(function(){
-        $(this).parent().remove();
+        $(this).parent('li').remove();
         reset_group{{ $input_id}}();
         return false;
     });
     //图片前移
     $("#upload-{{ $input_id }} a.prev").click(function(){
-        var $index = $(this).parent().prevAll().length;
+        var $index = $(this).parents('li').prevAll().length;
         if($index != 0){
-            var $target = $(this).parent().prev();
-            $(this).parent().insertBefore($target);
+            var $target = $(this).parents('li').prev();
+            $(this).parents('li').insertBefore($target);
         }
         reset_group_sort{{ $input_id}}();
         return false;
     });
     //图片后移
     $("#upload-{{ $input_id }} a.next").click(function(){
-        var $index = $(this).parent().nextAll().length;
+        var $index = $(this).parents('li').nextAll().length;
         if($index != 0){
-            var $target = $(this).parent().next();
-            $(this).parent().insertAfter($target);
+            var $target = $(this).parents('li').next();
+            $(this).parents('li').insertAfter($target);
         }
         reset_group_sort{{ $input_id}}();
         return false;

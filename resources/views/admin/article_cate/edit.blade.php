@@ -10,7 +10,9 @@
 
     <div class="nav nav-tabs" role="tablist">
         <a class="nav-item nav-link active" data-toggle="tab" href="#nav-1" role="tab" aria-selected="true">基本信息</a>
+        @if($menu->is_able == 1)
         <a class="nav-item nav-link" data-toggle="tab" href="#nav-2" role="tab" aria-selected="false">附加字段</a>
+        @endif
     </div>
     <div class="h15"></div>
 
@@ -22,7 +24,7 @@
             <div class="tab-pane fade show active" id="nav-1" role="tabpanel">
                 <div class="form-group">
                     <label for="name">父级</label>
-                    <span class="text-muted pl-2 js-pid">{{$parent->name ?? '根菜单'}}</span>
+                    <span class="text-muted pl-2 js-pid">{{$parent->name_cn ?? '根菜单'}}</span>
                 </div>
                 <input name="parent_id" type="hidden" value="">
                 <div class="form-group">
@@ -60,6 +62,7 @@
                 <button type="submit" class="btn btn-primary" onclick="return post_edit();">保存</button>
 
             </div>
+            @if($menu->is_able == 1)
             <div class="tab-pane fade show" id="nav-2" role="tabpanel">
                 <div class="mod_cate_edit_001">
                     <a role="button" class="btn btn-sm btn-primary" href="#" onclick="return alert_win();"><i class="fa fa-plus"></i> 新增字段</a>
@@ -97,22 +100,29 @@
                     </table>
                 </div>
                 <script>
-                    (function(){
-                        $("#btn_add_attr").click(function(){
-                            var data = $('#form1').serialize();
-                            var url = "/admin/article_cate/edit?id={{$menu->id}}&on=1";
-                            $.ajax({
-                                type:"post",
-                                url:"/admin/article_exattr/create",
-                                data:data,
-                                success:function(res){
-                                    if(res.status == 1){
-                                        window.location = url;
-                                    }
+
+
+
+                    //提交基本信息编辑
+                    function post_edit(){
+                        $.ajax({
+                            type:'post',
+                            url:'/admin/article_cate/edit',
+                            data:$('#form2').serialize(),
+                            success:function(res){
+                                if(res.status == 0){
+                                    $boot.warn({text:res.msg},function(){
+                                        $('input[name='+res.field+']').focus();
+                                    });
+                                }else{
+                                    $boot.success({text:res.msg},function(){
+                                        window.location = "{{ url()->previous() }}";
+                                    });
                                 }
-                            });
-                        });
-                    })();
+                            }
+                        })
+                        return false;
+                    }
 
                     function delete_attr(id){
                         $boot.confirm({text:"确定删除？"},function(){
@@ -135,6 +145,7 @@
 
                 </script>
             </div>
+            @endif
         </div>
 
     </form>
@@ -161,15 +172,20 @@
                 <input type="text" class="form-control" id="key" name="key" placeholder="键" value="">
                 <small class="form-text text-muted">取值的字段名</small>
             </div>
+            <div class="form-group hide js-radio-checkbox">
+                <label>单选/复选选项</label>
+                <textarea class="form-control" rows="4" name="radio_checkbox_json" placeholder="选项值"></textarea>
+                <small class="form-text text-muted">例如，颜色:1-红色，多个选项换行区分</small>
+            </div>
             <div class="form-group hide js-width">
                 <label>宽度</label>
                 <input type="text" class="form-control" name="width" placeholder="宽度" value="">
-                <small class="form-text text-muted">图片的高度，0或空值表示不限制</small>
+                <small class="form-text text-muted">图片或编辑器的宽度，0或空值表示不限制</small>
             </div>
             <div class="form-group hide js-height">
                 <label>高度</label>
                 <input type="text" class="form-control" name="height" placeholder="高度" value="">
-                <small class="form-text text-muted">图片的高度，0或空值表示不限制</small>
+                <small class="form-text text-muted">图片或编辑器的高度，0或空值表示不限制</small>
             </div>
             <div class="form-group hide js-size">
                 <label>图片允许大小</label>
@@ -203,24 +219,55 @@
     </div>
 
     <script>
-        //提交编辑
-        function post_edit(){
+
+        //弹出创建菜单窗口
+        function alert_win(){
+            $boot.win({id:'#as','title':'新增字段'});
+            return false;
+        }
+
+        //类型切换
+        $('select[name=type]').change(function(){
+            if($(this).val() == 3 || $(this).val() == 4){
+                $('.js-custom').hide();
+                $('.js-width').show();
+                $('.js-height').show();
+                $('.js-size').show();
+            }else if($(this).val() == 5){
+                $('.js-custom').show();
+                $('.js-width').show();
+                $('.js-height').show();
+                $('.js-size').hide();
+            }else if($(this).val() == 6 || $(this).val() == 7){
+                $('.js-custom').hide();
+                $('.js-radio-checkbox').show();
+                $('.js-width').hide().find('input[name=width]').val('');
+                $('.js-height').hide().find('input[name=height]').val('');
+                $('.js-size').hide();
+            }else{
+                $('.js-custom').hide();
+                $('.js-width').hide().find('input[name=width]').val('');
+                $('.js-height').hide().find('input[name=height]').val('');
+                $('.js-size').hide().find('input[name=size]').val('');
+            }
+        });
+
+        //新增附加字段提交
+        function create_exattr(){
+            var data = $('#form1').serialize();
+            var url = "/admin/article_cate/edit?id={{$menu->id}}&on=1";
             $.ajax({
-                type:'post',
-                url:'/admin/article_cate/edit',
-                data:$('#form2').serialize(),
+                type:"post",
+                url:"/admin/article_exattr/create",
+                data:data,
                 success:function(res){
-                    if(res.status == 0){
-                        $boot.warn({text:res.msg},function(){
-                            $('input[name='+res.field+']').focus();
-                        });
+                    if(res.status == 1){
+                        window.location = url;
                     }else{
-                        $boot.success({text:res.msg},function(){
-                            window.location = "{{ url()->previous() }}";
-                        });
+                        $boot.error({text:res.msg});
                     }
                 }
-            })
+            });
             return false;
         }
     </script>

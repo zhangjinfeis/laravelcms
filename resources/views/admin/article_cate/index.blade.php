@@ -105,7 +105,8 @@
                 </div>
             </th>
             <th>ID</th>
-            <th>分类名称/英文名称</th>
+            <th>分类名称/英文名称(文章数)</th>
+            <th width="50%">附加字段(优先顺序：当前分类->父类)</th>
             <th>开启/关闭</th>
             <th>操作</th>
         </tr>
@@ -133,6 +134,18 @@
 
                 </a>
 
+            </td>
+            <td>
+                @foreach($vo['exattr_keys'] as $v)
+                    {{$loop->index == 0 ?$v:'、'.$v}}
+                @endforeach
+                @if(count($vo['exattr_keys']) > 0)
+                    &nbsp;&nbsp;<a class="blue" href="#" onclick="return copy_exattr({{$vo['id']}});">[复制]</a>
+                @endif
+                &nbsp;&nbsp;<a class="blue" href="#"  onclick="return paste_exattr({{$vo['id']}});">[粘贴]</a>
+                @if(count($vo['exattr_keys']) > 0)
+                    &nbsp;&nbsp;<a class="blue" href="#"  onclick="return clear_exattr({{$vo['id']}});">[删除]</a>
+                @endif
             </td>
             <td>
                 @if($vo['is_show'] ==1)
@@ -412,6 +425,64 @@
             });
             return false;
         }
+
+        //复制附加属性
+        function copy_exattr(id){
+            $.ajax({
+                type:'post',
+                url:'/admin/article_cate/ajax_copy_exattr',
+                data:{id:id},
+                success:function(res){
+                    if(res.status == 0){
+                        $boot.error({text:res.msg});
+                    }else{
+                        $boot.success({text:res.msg});
+
+                    }
+                }
+            });
+            return false;
+        }
+
+        //粘贴附加属性
+        function paste_exattr(id){
+            $.ajax({
+                type:'post',
+                url:'/admin/article_cate/ajax_paste_exattr',
+                data:{id:id},
+                success:function(res){
+                    if(res.status == 0){
+                        $boot.error({text:res.msg});
+                    }else{
+                        $boot.success({text:res.msg},function(){
+                            window.location.reload();
+                        });
+
+                    }
+                }
+            });
+            return false;
+        }
+
+        function clear_exattr(id){
+            $.ajax({
+                type:'post',
+                url:'/admin/article_exattr/ajax_del_by_cate',
+                data:{cate_id:id},
+                success:function(res){
+                    if(res.status == 0){
+                        $boot.error({text:res.msg});
+                    }else{
+                        $boot.success({text:res.msg},function(){
+                            window.location.reload();
+                        });
+
+                    }
+                }
+            });
+            return false;
+        }
+
     </script>
 
 @endsection

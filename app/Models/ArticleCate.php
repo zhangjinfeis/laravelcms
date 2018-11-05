@@ -16,6 +16,7 @@ class ArticleCate extends Node
 {
     protected $table = 'article_cate';
     protected $guarded = [];
+
     /**
      * 分类下的文章
      * @author zjf ${date}
@@ -24,6 +25,18 @@ class ArticleCate extends Node
     public function articles(){
         return $this->hasMany('App\Models\Article','cate_id','id');
     }
+
+    /**
+     * 分类下的附加字段
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Created by zjf
+     * Time: 2018/11/5 10:45
+     */
+    public function exattr(){
+        return $this->hasMany('App\Models\ArticleExattr','cate_id','id');
+    }
+
+
 
     /**
      * 获取自身菜单以及所属所有的子节点
@@ -49,7 +62,7 @@ class ArticleCate extends Node
             $data[$key]['count'] = 0;
             $data[$key]['depth_name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;',$v['depth'] ).'└';
         }
-        $article = Article::select(DB::raw('count(cate_id) as count,cate_id'))->groupBy('cate_id')->get()->toArray();
+        $article = Article::select(DB::raw('count(1) as count,cate_id'))->groupBy('cate_id')->get()->toArray();
         foreach($data as $kee => $vaa){
             foreach($article as $ke=>$vo){
                 if($vaa['id'] == $vo['cate_id']){
@@ -59,7 +72,6 @@ class ArticleCate extends Node
         }
         return $data;
     }
-
 
     /**
      * 获取包含自身的子节点id集合
@@ -76,10 +88,5 @@ class ArticleCate extends Node
         }
 
     }
-
-
-
-
-
 
 }

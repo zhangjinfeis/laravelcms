@@ -49,6 +49,13 @@
                     @include('admin.component.upload_img',array("input_id"=>md5("thumb"),"input_name"=>"thumb",'input_value'=>$article->thumb))
                     <small class="form-text text-muted"></small>
                 </div>
+
+                <div class="form-group">
+                    <label for="url">缩略图1</label>
+                    @include('admin.component.upload_imgs_goods',array("input_id"=>md5("thumbs"),"input_name"=>"thumbs","input_value"=>$article->thumbs,'size'=>'700,400'))
+                    <small class="form-text text-muted"></small>
+                </div>
+
                 <div class="form-group">
                     <label for="sort">排序</label>
                     <input type="text" class="form-control" id="sort" name="sort" placeholder="排序" style="width:400px;" value="{{$article->sort ?? ''}}" />

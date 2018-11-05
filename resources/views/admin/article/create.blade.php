@@ -51,6 +51,12 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="url">缩略图1</label>
+                    @include('admin.component.upload_imgs_goods',array("input_id"=>md5("thumbs"),"input_name"=>"thumbs"))
+                    <small class="form-text text-muted"></small>
+                </div>
+
+                <div class="form-group">
                     <label for="sort">排序</label>
                     <input type="text" class="form-control" id="sort" name="sort" placeholder="排序" style="width:400px;" value="" />
                     <small class="form-text text-muted">默认50，越小排序越靠前</small>
@@ -133,7 +139,7 @@
                         });
                     }else{
                         $boot.success({text:res.msg},function(){
-                            window.location = "{{ url()->previous() }}";
+                            window.location = "{{url('/admin/article').'?cate_id='.request('cate_id')}}";
                         });
                     }
                 }

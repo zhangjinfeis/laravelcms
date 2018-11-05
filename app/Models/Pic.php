@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 /**
  * 图片模型
  * @author my 2017-10-26
@@ -21,9 +22,9 @@ class Pic extends Model
      * @param $id
      * @return mixed
      */
-    protected function getUploadById($id){
+    /*protected function getUploadById($id){
         return $this->select('width','height','size','md5')->where('id',$id)->first();
-    }
+    }*/
 
     /**
      * 获取用于图片上传的图片组
@@ -31,10 +32,10 @@ class Pic extends Model
      * @param $ids
      * @return mixed
      */
-    protected function getUploadByIds($ids){
+    /*protected function getUploadByIds($ids){
         $ids = explode(',',$ids);
         return $this->select('width','height','size','md5')->whereIn('id',$ids)->get();
-    }
+    }*/
 
     /**
      * 获取用于图片上传
@@ -42,9 +43,9 @@ class Pic extends Model
      * @param $md5
      * @return mixed
      */
-    protected function getUploadByMd5($md5){
+    /*protected function getUploadByMd5($md5){
         return $this->select('width','height','size','md5')->where('md5',$md5)->first();
-    }
+    }*/
 
     /**
      * 获取用于图片上传
@@ -52,10 +53,10 @@ class Pic extends Model
      * @param $md5s
      * @return mixed
      */
-    protected function getUploadByMd5s($md5s){
+    /*protected function getUploadByMd5s($md5s){
         $md5s = explode(',',$md5s);
         return $this->select('width','height','size','md5')->whereIn('md5',$md5s)->first();
-    }
+    }*/
 
     /**
      * 处理图片状态的方法
@@ -103,9 +104,36 @@ class Pic extends Model
                 $pic_use_id = array_merge($pic_use_id,$res[0]);
             };
         }
-        SELF::whereIn('md5',$pic_not_use_id)->update(['is_used' => 0]);
+        SELF::whereIn('md5',$pic_not_use_id)->update(['is_used' => 9]);
         SELF::whereIn('md5',$pic_use_id)->update(['is_used' => 1]);
         return true;
+    }
+
+    /**
+     * 将满足条件的表中图片数据进行标注
+     * @param $table  操作表
+     * @param $ids 操作id
+     * @return bool
+     * Created by zjf
+     * Time: 2018/11/5 18:08
+     */
+    protected function clearContent($table,$ids){
+        $pic_not_use_id = [];
+        $html = '';
+        $list = DB::table($table)->whereIn('id',$ids)->get()->toArray();
+        if(!count($list)){
+            return false;
+        }
+        foreach($list as $val){
+            foreach($val as $v){
+                $html .= $v;
+            }
+        }
+        preg_match_all('/[0-9a-z]{32}/i', $html, $res);
+        if($res){
+            $pic_not_use_id = array_merge($pic_not_use_id,$res[0]);
+        };
+        SELF::whereIn('md5',$pic_not_use_id)->update(['is_used' => 9]);
     }
 
 }

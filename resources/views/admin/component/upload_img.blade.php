@@ -17,8 +17,8 @@
 
 
 <style>
-.m-uploadimg-one{width:110px;height:110px;overflow:hidden;border:#dee2e6 1px solid; background:#fff;position: relative;}
-.m-uploadimg-one img{ width: 100%; height: auto;}
+.m-uploadimg-one{width:110px;height:110px;overflow:hidden;display:table-cell; text-align:center;vertical-align:middle;border:#dee2e6 1px solid; background:#fff;position: relative; background: url('/resources/admin/images/pic_bg.png');}
+.m-uploadimg-one img{max-width:110px;max-height:110px; display: inline;}
 .m-uploadimg-one span.size{display:inline-block;padding:0 5px;background:rgba(0,0,0,0.5);line-height:18px;height:18px;overflow:hidden;position:absolute;left:5px;top:5px;border-radius:9px;color:#eee;font-size:10px;display:none;}
 .m-uploadimg-one span.size-show{ display: inline-block;}
 .m-uploadimg-one a.delete{display:inline-block;line-height:18px;height:20px;width:20px;border-radius:10px;text-align:center;overflow:hidden;position:absolute;right:5px;top:5px;text-decoration:none;background: rgba(0,0,0,0.5);font-size:14px;color:#fff; display:none; cursor: pointer;}
@@ -56,6 +56,7 @@
         dataType: 'json',
         maxFileSize : '{{isset($size)&&$size?$size*1024:(int)ini_get('upload_max_filesize')*1024}}*1024',  //允许上传的大小，单位b
         allowedTypes: 'image/*',
+        extFilter: ["jpg", "jpeg", "png", "gif"],
         multiple:false,
         extraData:{
             _token: $('meta[name="csrf-token"]').attr('content'),

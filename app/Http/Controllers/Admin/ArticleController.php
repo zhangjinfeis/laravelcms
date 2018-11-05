@@ -10,6 +10,7 @@ use App\Models\ArticleCate;
 use App\Models\Article;
 use App\Models\ArticleExattr;
 use App\Models\Pic;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 后台菜单控制器
@@ -26,55 +27,24 @@ class ArticleController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request){
-              //标题搜索
-        $query = Article::query();
-        if($request->title&&$request->title!=''){
-            $query=$query->where('title','like','%'.$request->title.'%');
-        }
-        //开启状态搜索
-        if($request->is_show=='on') {
-            $query=$query->where(['is_show'=>1]);
-        }elseif($request->is_show=='off'){
-            $query=$query->where(['is_show'=>9]);
-        }else{
-            $query=$query->whereIn('is_show',[9,1]);
-        }
-        //分类搜索
-        if($request->cate_id&&$request->cate_id!=''){
-            $w['parent_id'] = $request->cate_id;
-            $s=ArticleCate::where($w)->get();
-            if(count($s)>0){
-                foreach($s as $v){
-                    $wherea[] = $v['id'];
-                }
-                $query=$query->whereIn('cate_id', $wherea);
-            } else{
-                $query=$query->where('cate_id', $request->cate_id);
-            }
-        }else{
-            $allcate=ArticleCate::where(['is_show'=>1])->pluck('id')->toArray();
-            $query=$query->whereIn('cate_id', $allcate);
-        }
-
-        $list= $query->orderBy('sort','asc')
-            ->orderBy('updated_at','desc')
-            ->paginate(15);
+        //条件筛选
+        $list = Article::when($request->title,function($query)use($request){
+            return $query->where('title','like','%'.$request->title.'%');
+        })->when($request->is_show,function($query)use($request){
+            return $query->where('is_show',$request->is_show);
+        })->when($request->cate_id,function($query)use($request){
+            return $query->where('cate_id',$request->cate_id);
+        });
+        $list= $list->orderBy('sort','asc')->orderBy('updated_at','desc')->paginate(15);
         $sign['list']=$list;
 
-        foreach($sign['list'] as $k=>$v){
-            $c= json_decode($v['exattr'],true);
-            if(!is_null($c)&&count($c)>0){
-                foreach($c as $kk=>$vv){
-                    $v[$kk]=$vv;
-                }
-            }
-        }
         //文章分类
         $cate = ArticleCate::getList();
-        //dd($cate);
         $sign['cate'] = $cate;
+
         //总记录数
-        $sign['count'] = $query->count();
+        $sign['count'] = $list->count();
+
         return view('admin/article/index', $sign);
     }
 
@@ -129,11 +99,13 @@ class ArticleController extends Controller
             $article['cate_id'] = $request->cate_id;
             $article['url'] = $request->url;
             $article['thumb'] = $request->thumb;
+            $article['thumbs'] = $request->thumbs;
             $article['body'] = htmlspecialchars($request->body);
             $article['keywords'] = $request->keywords;
             $article['description'] = $request->description;
             $article['is_show'] = $request->is_show;
             $article['exattr'] = json_encode($request->exattr);
+            //dd($article);
             $article = Article::create($article);
             if(!$article){
                 return response()->json(['status'=>0,'msg'=>'新增失败']);
@@ -154,6 +126,7 @@ class ArticleController extends Controller
      * @return array
      */
     public function ajaxDel(Request $request){
+        Pic::clearContent('article',$request->ids);
         $res = Article::whereIn('id',$request->ids)->delete();
         if($res){
             return ['status'=>1,'msg'=>'删除成功'];
@@ -186,7 +159,7 @@ class ArticleController extends Controller
      */
     public function edit(Request $request){
         if($request->isMethod('post')){
-            //dd($request->body);
+            //dd($request->all());
 
             $rule = [
                 'title' => 'required|between:1,100',
@@ -261,6 +234,25 @@ class ArticleController extends Controller
      */
     public function ajaxExattr(Request $request){
         $exattr = ArticleExattr::where('cate_id',$request->cate_id)->orderBy('sort','asc')->orderBy('id','asc')->get()->toArray();
+        if(count($exattr) == 0){
+            $cate = ArticleCate::where('id',$request->cate_id)->first();
+            if($cate && $cate->parent_id){
+                $exattr = ArticleExattr::where('cate_id',$cate->parent_id)->orderBy('sort','asc')->orderBy('id','asc')->get()->toArray();
+            }
+        }
+        foreach($exattr as $ke => $val){
+            if(!empty($val['radio_checkbox_json'])){
+
+                $item = str_replace("\r\n","\n",$exattr[$ke]['radio_checkbox_json']);
+                $item = trim($item,"\n");
+                $item = explode("\n",$item);
+                foreach($item as $k => $v){
+                    $item[$k] = explode('-',$v);
+                }
+                $exattr[$ke]['radio_checkbox_json'] = $item;
+            }
+        }
+
         if($request->article_id){
             $article = Article::find($request->article_id);
             $exattr_val = json_decode($article->exattr,true);
@@ -274,6 +266,7 @@ class ArticleController extends Controller
                 }
             }
         }
+        //dd($exattr);
         $sign['exattr'] = $exattr;
         $html = response()->view('admin.article.ajax_exattr',$sign)->getContent();
         return response()->json(['status'=>1,'html'=>$html]);
