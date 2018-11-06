@@ -21,7 +21,7 @@
 .m-uploadimg-one img{max-width:110px;max-height:110px; display: inline;}
 .m-uploadimg-one span.size{display:inline-block;padding:0 5px;background:rgba(0,0,0,0.5);line-height:18px;height:18px;overflow:hidden;position:absolute;left:5px;top:5px;border-radius:9px;color:#eee;font-size:10px;display:none;}
 .m-uploadimg-one span.size-show{ display: inline-block;}
-.m-uploadimg-one a.delete{display:inline-block;line-height:18px;height:20px;width:20px;border-radius:10px;text-align:center;overflow:hidden;position:absolute;right:5px;top:5px;text-decoration:none;background: rgba(0,0,0,0.5);font-size:14px;color:#fff; display:none; cursor: pointer;}
+.m-uploadimg-one a.delete{display:inline-block;line-height:20px;height:20px;width:20px;border-radius:10px;text-align:center;overflow:hidden;position:absolute;right:5px;top:5px;text-decoration:none;background: rgba(0,0,0,0.5);font-size:14px;color:#fff; display:none; cursor: pointer;}
 .m-uploadimg-one a.delete:hover{color:#fff;background: rgba(0,0,0,0.8);}
 .m-uploadimg-one a.delete-show{display:block;}
 </style>
@@ -82,7 +82,7 @@
                 reset_group{{ $input_id}}(res.data.md5,res.data.path)
 
                 //显示图片
-                $("#{{$input_id}}_img").attr('src',res.data.url);
+                $("#{{$input_id}}_img").attr('src',res.data.path);
                 $("#upload-{{$input_id}}").find('.size').addClass('size-show').text(res.data.width+'×'+res.data.height);
                 $("#upload-{{$input_id}}").find('.delete').addClass('delete-show');
             }

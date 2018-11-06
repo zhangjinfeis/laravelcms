@@ -8,7 +8,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function() {
 
 
     /*需要登录的*/
-    Route::group(['middleware' => ['auth:admin','processPic']], function(){
+    Route::group(['middleware' => ['auth:admin','processPicFile']], function(){
         //后台框架
         Route::match(['get'],'/', 'FrameController@index');
 

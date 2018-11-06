@@ -64,14 +64,14 @@ class UploadController extends Controller
                     break;
 
             }
-        }else if(!in_array($image->extension(),$this->config['allowed_ext_pic'])){
+        }else if(!in_array($image->getClientOriginalExtension(),$this->config['allowed_ext_pic'])){
             //判断文件类型
             return ["status"=>0,"msg"=>"上传图片失败，请上传正确的图片格式文件"];
         }
 
         //存储文件
         $md5 = md5(time().str_random(40).env("md5_key",""));
-        $filename = $md5.".".$image->clientExtension();//新文件名
+        $filename = $md5.".".$image->getClientOriginalExtension();//新文件名
         $filepath = 'picture/'.date("Y").date("m")."/".date("d");
         $path = $image->storeAs('public'.'/'.$filepath,$filename);  //起始路径为storage/app
 
@@ -100,11 +100,10 @@ class UploadController extends Controller
         $param['path'] = "/storage/".$filepath.'/'.$filename;
         $param['md5'] = $md5;
         $param['sha1'] = sha1($md5.env("sha1_key"));
-        $param['url'] = '/image/'.$param['md5'];
-        //$imageInfo = getimagesize($request->root().$param['path']);
         $param['width'] = $image_new->width();
         $param['height'] = $image_new->height();
         $param['size'] = $image_new->filesize();//获得文件的大小（字节）
+        $param['ext'] = $image->getClientOriginalExtension();//获得文件的后缀
         $pic = Pic::create($param);//创建一条图片记录
         //返回信息
         return ["status"=>1,"msg"=>"","data"=>$pic];
@@ -137,14 +136,14 @@ class UploadController extends Controller
                     break;
 
             }
-        }else if(!in_array($image->extension(),$this->config['allowed_ext_pic'])){
+        }else if(!in_array($image->getClientOriginalExtension(),$this->config['allowed_ext_pic'])){
             //判断文件类型
             return ["status"=>0,"msg"=>"上传图片失败，请上传正确的图片格式文件"];
         }
 
         //存储文件
         $md5 = md5(time().str_random(40).env("md5_key",""));
-        $filename = $md5.".".$image->clientExtension();//新文件名
+        $filename = $md5.".".$image->getClientOriginalExtension();//新文件名
         $filename_mid = $md5."_mid.".$image->clientExtension();//新文件名
         $filename_min = $md5."_min.".$image->clientExtension();//新文件名
         $filepath = 'goods/'.date("Y").date("m")."/".date("d");
@@ -176,11 +175,10 @@ class UploadController extends Controller
         $param['path'] = "/storage/".$filepath.'/'.$filename;
         $param['md5'] = $md5;
         $param['sha1'] = sha1($md5.env("sha1_key"));
-        $param['url'] = '/image/'.$param['md5'];
-        //$imageInfo = getimagesize($request->root().$param['path']);
         $param['width'] = $image_new->width();
         $param['height'] = $image_new->height();
         $param['size'] = $image_new->filesize();//获得文件的大小（字节）
+        $param['ext'] = $image->getClientOriginalExtension();//获得文件的后缀
         $pic = Pic::create($param);//创建一条图片记录
         //返回信息
         return ["status"=>1,"msg"=>"","data"=>$pic];
@@ -218,7 +216,7 @@ class UploadController extends Controller
                 return "<script>window.parent.CKEDITOR.tools.callFunction($callback, '', '$error');</script>";
             }
 
-        }else if(!in_array($image->extension(),$this->config['allowed_ext_pic'])){
+        }else if(!in_array($image->getClientOriginalExtension(),$this->config['allowed_ext_pic'])){
             //判断文件类型
             $error = "上传图片失败，请上传正确的图片格式文件";
             return "<script>window.parent.CKEDITOR.tools.callFunction($callback, '', '$error');</script>";
@@ -228,7 +226,7 @@ class UploadController extends Controller
 
         //存储文件
         $md5 = md5(time().str_random(40).env("md5_key"));
-        $filename = $md5.".".$image->clientExtension();//新文件名
+        $filename = $md5.".".$image->getClientOriginalExtension();//新文件名
         $filepath = date("Y").date("m")."/".date("d");
         $path = $image->storeAs('public'.'/'.$filepath,$filename);  //起始路径为storage/app
 
@@ -256,11 +254,10 @@ class UploadController extends Controller
         $param['path'] = "/storage/".$filepath.'/'.$filename;
         $param['md5'] = $md5;
         $param['sha1'] = sha1($md5.env("sha1_key"));
-        $param['url'] = '/image/'.$param['md5'];
-        //$imageInfo = getimagesize($request->root().$param['path']);
         $param['width'] = $image_new->width();
         $param['height'] = $image_new->height();
         $param['size'] = $image_new->filesize();//获得文件的大小（字节）
+        $param['ext'] = $image->getClientOriginalExtension();//获得文件的后缀
         $pic = Pic::create($param);//创建一条图片记录
         //返回信息
 
@@ -273,55 +270,53 @@ class UploadController extends Controller
      * @author kevin  2017-11-01
      */
     public function ajaxUploadFile(Request $request){
-        //接收文件
+        //获取文件
         $file = $request->file('file');
-        //验证文件是否存在
-        if(!$file) return ['status'=>0,'msg'=>'非法提交'];
+        //校验文件
+        if($file->getError() > 0){//文件传输有错误
+            switch ($file->getError()){
+                case 1:
+                    return ["status"=>0,"msg"=>"文件上传失败，文件大小不能超出".ini_get('upload_max_filesize')];
+                    break;
+                case 2:
+                    return ["status"=>0,"msg"=>"文件上传失败，文件大小不能超出表单的提交限制"];
+                    break;
+                case 3:
+                    return ["status"=>0,"msg"=>"文件上传失败，请检查网络状态是否可用"];
+                    break;
+                case 4:
+                    return ["status"=>0,"msg"=>"文件上传失败，请检查图片文件完整性"];
+                    break;
 
-        //验证文件后缀是否合法
-        $suffix = explode(".",$file->getClientOriginalName());//将原文件名用.分隔
-        $suffix = $suffix[1];//取后缀
-        if(!in_array(strtolower($suffix), $this->config['allowed_ext_file'])) {
-            return ['status'=>0, 'msg'=>'不合法的文件后缀，请重试'];
+            }
+        }else if(!in_array($file->getClientOriginalExtension(),$this->config['allowed_ext_file'])){
+            //判断文件类型
+            return ["status"=>0,"msg"=>"上传文件失败，请上传正确格式的文件"];
         }
-        //判断大小
-        $size = $file->getClientSize();
-        $max_size = (int)ini_get('upload_max_filesize')*1024*1024;
-        if($size > $max_size) return ['status'=>0,'msg'=>'文件大小超出限制'];
 
-        //生成文件名
-        $filename = uniqid().strtolower(str_random(7)).'.'.$suffix;
         //存储文件
-        $path = $file->storePubliclyAs(date("Y")."/".date("m")."/".date("d"),$filename);
-        //判断文件是否存储成功
-        if(!is_file('storage/'.$path)) return ['status'=>0,'msg'=>'文件保存失败,请检查目录权限'];
-        //整理数据
-        $md5 = md5('storage/'.$path);
-        $prename = $file->getClientOriginalName();
-        $param = [
-            'prename' => $prename,
-            'name' => $filename,
-            'path' => '/storage/app/public/'.$path,
-            'url' => '/storage/'.$path,
-            'size' => $size,
-            'ext' => $suffix,
-            'md5' => $md5,
-            'sha1' => sha1('storage/'.$path),
-            'status' => 0
-        ];
-        $res = File::create($param);
-        if($res){
-            $data = [
-                'md5' => $md5,
-                'suffix' => $suffix,
-                'icon' => config('config.file_suffix')[$suffix],
-                'filename' => $prename,
-                'path' => '/storage/app/public/'.$path,
-            ];
-            return ['status'=>1,'msg'=>'上传成功','data'=>$data];
-        }else{
-            return ['status'=>0,'msg'=>'上传失败'];
-        }
+        $md5 = md5(time().str_random(40).env("md5_key",""));
+        $filename = $md5.".".$file->getClientOriginalExtension();//新文件名
+        $filepath = 'file/'.date("Y").date("m")."/".date("d");
+        $path = $file->storeAs('public'.'/'.$filepath,$filename);  //起始路径为storage/app
+
+        //修改数据库记录
+        $param['original_name'] = $file->getClientOriginalName();
+        $param['name'] = $filename;
+        $param['path'] = "/storage/".$filepath.'/'.$filename;
+        $param['md5'] = $md5;
+        $param['sha1'] = sha1($md5.env("sha1_key"));
+        $param['size'] = $file->getClientSize();//获得文件的大小（字节）
+        $param['ext'] = $file->getClientOriginalExtension();//获得文件的后缀
+        $res = File::create($param);//创建一条图片记录
+        $data['size'] = format_bytes($res->size);
+        $data['original_name'] = mb_strlen($res->original_name) > 15 ? mb_substr($res->original_name,0,5).'...'.mb_substr($res->original_name,-10) : $res->original_name;
+        $data['ext'] = $res->ext;
+        $data['path'] = $res->path;
+        $data['md5'] = $res->md5;
+        //返回信息
+        return ["status"=>1,"msg"=>"上传成功","data"=>$data];
+
     }
 
 
