@@ -36,7 +36,7 @@
     <div class="m-uploadfile-one clearfix {{$input_value?'':'hide'}}">
         <div class="ext">{{$value['ext'] ?? ''}}</div>
         <div class="right">
-            <div class="name">{{$value['original_name'] ?? ''}}</div>
+            <div class="name" title="{{$value['original_name'] ?? ''}}">{{$value['original_name'] ?? ''}}</div>
             <div class="size">{{$value['size'] ?? ''}}</div>
         </div>
         <a class="delete">×</a>
@@ -79,7 +79,7 @@
 
                     $("#upload-{{$input_id}}").find('.m-uploadfile-one').removeClass('hide');
                     $("#upload-{{$input_id}}").find('.ext').text(res.data.ext);
-                    $("#upload-{{$input_id}}").find('.name').text(res.data.original_name);
+                    $("#upload-{{$input_id}}").find('.name').text(res.data.original_name).attr('title',res.data.original_name);
                     $("#upload-{{$input_id}}").find('.size').text(res.data.size);
                 }
 

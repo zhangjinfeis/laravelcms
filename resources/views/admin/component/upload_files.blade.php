@@ -53,7 +53,7 @@
         <div class="item clearfix" data-md5="{{$vo['md5']??''}}" data-item="{{$vo['item']??''}}">
             <div class="ext">{{$vo['ext'] ?? ''}}</div>
             <div class="right">
-                <div class="name">{{$vo['original_name'] ?? ''}}</div>
+                <div class="name" title="{{$value['original_name'] ?? ''}}">{{$vo['original_name'] ?? ''}}</div>
                 <div class="size">{{$vo['size'] ?? ''}}</div>
             </div>
             <a class="prev">⇧</a>
@@ -137,7 +137,7 @@
         function add_group{{ $input_id}}($md5,$ext,$original_name,$size,$item){
             var $a = $("#upload-{{$input_id}} .fun-li-clone").clone(true).removeClass("fun-li-clone").removeClass("hide").attr({'data-md5':$md5,'data-item':$item}); //移除所有class
             $a.find('.ext').text($ext);
-            $a.find('.name').text($original_name);
+            $a.find('.name').text($original_name).attr('title',$original_name);
             $a.find('.size').text($size);
             $a.appendTo('#upload-{{$input_id}} .m-uploadfiles');
         };

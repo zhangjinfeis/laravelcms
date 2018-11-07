@@ -129,7 +129,14 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function() {
         Route::group(['prefix' => 'pic'],function(){
             Route::match(['get'],'/', 'PicController@index');  //图片列表
             Route::match(['post'],'/ajax_detail', 'PicController@ajax_detail');  //图片详情
-            Route::match(['post'],'/ajax_clear', 'PicController@ajax_clear');  //图片详情
+            Route::match(['post'],'/ajax_clear', 'PicController@ajax_clear');  //清除过期图片
+        });
+
+        // ———————————————————————————资源-文件—————————————————————————————————
+        Route::group(['prefix' => 'file'],function(){
+            Route::match(['get'],'/', 'FileController@index');  //图片列表
+            Route::match(['post'],'/ajax_detail', 'FileController@ajax_detail');  //图片详情
+            Route::match(['post'],'/ajax_clear', 'FileController@ajax_clear');  //清除过期图片
         });
 
         //————————————————————————参数分类—————————————————————————————————————————

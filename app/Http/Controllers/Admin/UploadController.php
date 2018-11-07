@@ -310,7 +310,7 @@ class UploadController extends Controller
         $param['ext'] = $file->getClientOriginalExtension();//获得文件的后缀
         $res = File::create($param);//创建一条图片记录
         $data['size'] = format_bytes($res->size);
-        $data['original_name'] = mb_strlen($res->original_name) > 15 ? mb_substr($res->original_name,0,5).'...'.mb_substr($res->original_name,-10) : $res->original_name;
+        $data['original_name'] = $res->original_name;
         $data['ext'] = $res->ext;
         $data['path'] = $res->path;
         $data['md5'] = $res->md5;
