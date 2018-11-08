@@ -52,7 +52,7 @@
 
                 <div class="form-group">
                     <label for="url">缩略图1</label>
-                    @include('admin.component.upload_file',array("input_id"=>md5("thumbs"),"input_name"=>"thumbs"))
+                    @include('admin.component.upload_files',array("input_id"=>md5("thumbs"),"input_name"=>"thumbs"))
                     <small class="form-text text-muted"></small>
                 </div>
 

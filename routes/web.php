@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','Home\IndexController@index');
 
 Route::group(['namespace' => 'Common'],function() {
     Route::get('get_verify_code', 'VerifyCodeController@index'); //获取图片验证码
@@ -24,4 +22,3 @@ Route::group(['namespace' => 'Common'],function() {
 });
 
 include_once ("admin.php");
-include_once ("mobi.php");

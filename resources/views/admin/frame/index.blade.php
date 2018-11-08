@@ -261,36 +261,33 @@
             $(this).find('.handle').css({height:h});
         });
 
-
-
-        //$('.m-frame-sidenav_control').addClass('am-icon-toggle-off');
-        //$(".m-frame-sidenav ul li").removeClass('on');
-        //$('.arrow').addClass('am-icon-angle-down');
-
-        //控制左侧菜单统一打开或收起
-        /*$(".m-frame-sidenav_control").click(function(){
-            if($(this).is('.am-icon-toggle-off')){
-                $menu_opened = 1;
-                $(this).attr('title','展开所有');
-                $(".m-frame-sidenav ul li").addClass('on');
-                $(this).removeClass('am-icon-toggle-off').addClass('am-icon-toggle-on');
-            }else{
-                $menu_opened = 9;
-                $(this).attr('title','收起所有');
-
-                $(".m-frame-sidenav ul li").removeClass('on');
-                $(this).removeClass('am-icon-toggle-on').addClass('am-icon-toggle-off');
-            }
-
-            _ajax('/admin/ajax/update', {
-                mod : 'User',
-                id : '123',
-                menu_opened : $menu_opened
-            }, function (data) {
-
-
-            });
-        });*/
     </script>
+
+
+    <!--过期资源的清除-->
+    @if($admin->last_login_at+30*24*3600 < time())
+        <script>
+            $.ajax({
+                type:'post',
+                url:"{{url('/admin/pic/ajax_clear')}}",
+                success:function(res){
+                    if(res.status == 1){
+                        console.log('图片清除成功');
+                    }
+                }
+            });
+
+            $.ajax({
+                type:'post',
+                url:"{{url('/admin/file/ajax_clear')}}",
+                success:function(res){
+                    if(res.status == 1){
+                        console.log('文件清除成功');
+                    }
+                }
+            });
+
+        </script>
+    @endif
 
 @stop

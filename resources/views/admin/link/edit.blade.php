@@ -30,7 +30,7 @@
         </div>
         <div class="form-group">
             <label for="url">链接图片</label>
-            @include('admin.component.upload_img',array("input_id"=>md5("thumb"),"input_name"=>"thumb","input_value"=>$article->thumb_pic))
+            @include('admin.component.upload_img',array("input_id"=>md5("thumb"),"input_name"=>"thumb","input_value"=>$article->thumb))
             <small class="form-text text-muted"></small>
         </div>
         <div class="form-group">
@@ -80,7 +80,7 @@
             var data = $('form').serialize();
             $.ajax({
                 type:'post',
-                url:'/admin/stadium/edit',
+                url:'/admin/link/edit',
                 data:data,
                 success:function(res){
                     if(res.status == 0){

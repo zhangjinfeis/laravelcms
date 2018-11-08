@@ -10,6 +10,7 @@ use App\Models\ArticleCate;
 use App\Models\Article;
 use App\Models\ArticleExattr;
 use App\Models\Pic;
+use App\Models\File;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -106,10 +107,15 @@ class ArticleController extends Controller
             $article['is_show'] = $request->is_show;
             $article['exattr'] = json_encode($request->exattr);
             //dd($article);
-            $article = Article::create($article);
-            if(!$article){
+            DB::beginTransaction();
+                Pic::update_is_used($request);
+                File::update_is_used($request);
+                $res = Article::create($article);
+            if(!$res){
+                DB::rollBack();
                 return response()->json(['status'=>0,'msg'=>'新增失败']);
             }else{
+                DB::commit();
                 return response()->json(['status'=>1,'msg'=>'新增成功']);
             }
         }else{
@@ -126,11 +132,15 @@ class ArticleController extends Controller
      * @return array
      */
     public function ajaxDel(Request $request){
-        Pic::clearContent('article',$request->ids);
+        DB::beginTransaction();
+        Pic::clearContent('article',$request->ids,['thumb'],['body'],['exattr']);
+        File::clearContent('article',$request->ids,['thumbs']);
         $res = Article::whereIn('id',$request->ids)->delete();
         if($res){
+            DB::commit();
             return ['status'=>1,'msg'=>'删除成功'];
         }else {
+            DB::rollBack();
             return ['status'=>0,'msg'=>'删除失败'];
         }
     }
@@ -209,12 +219,19 @@ class ArticleController extends Controller
             $article['description'] = $request->description;
             $article['is_show'] = $request->is_show;
             $article['exattr'] = json_encode($request->exattr);
-            $article = Article::where('id',$request->id)->update($article);
-            if(!$article){
+
+            DB::beginTransaction();
+                Pic::update_is_used($request);
+                File::update_is_used($request);
+            $res = Article::where('id',$request->id)->update($article);
+            if(!$res){
+                DB::rollBack();
                 return response()->json(['status'=>0,'msg'=>'编辑失败']);
             }else{
+                DB::commit();
                 return response()->json(['status'=>1,'msg'=>'编辑成功']);
             }
+
         }else{
             //载入文章
             $article = Article::find($request->id);

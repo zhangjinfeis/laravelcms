@@ -1,7 +1,7 @@
 {{--
 编辑器参数：
 必选：input_id,input_name
-可选：width,height,custom,pic_max_width(图片最大宽度，默认1000)
+可选：width,height,custom,pic_max_width(图片最大宽度，默认800)
 值：input_value
 
 **custom:编辑器类型,对应ckeditor/custom下的js名称
@@ -13,7 +13,7 @@
 <script>
     var editor_{{$input_id}} = CKEDITOR.replace( '{{$input_id}}', {
         language: 'zh-cn'
-        ,filebrowserImageUploadUrl:'{{url('admin/upload/ajax_ckeditor_img')}}?_token={{csrf_token()}}&width={{$pic_max_width ?? '1000'}}'
+        ,filebrowserImageUploadUrl:'{{url('admin/upload/ajax_ckeditor_img')}}?_token={{csrf_token()}}&width={{$pic_max_width ?? '800'}}'
         @if(isset($height)&&$height)
         ,height:'{{$height}}px'
         @else

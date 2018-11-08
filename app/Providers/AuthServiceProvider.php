@@ -32,7 +32,7 @@ class AuthServiceProvider extends ServiceProvider
                 if($is_admin){
                     return true;
                 }*/
-                return false;
+                //return false;
                 return $user->hasPower($power);
             });
         }

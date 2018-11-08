@@ -8,7 +8,7 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function() {
 
 
     /*需要登录的*/
-    Route::group(['middleware' => ['auth:admin','processPicFile']], function(){
+    Route::group(['middleware' => ['auth:admin']], function(){
         //后台框架
         Route::match(['get'],'/', 'FrameController@index');
 
@@ -88,10 +88,10 @@ Route::group(['prefix' => 'admin','namespace' => 'Admin'], function() {
 
         // ———————————————————————————文章—————————————————————————————————
         Route::group(['prefix' => 'article'],function(){
-            Route::get('/', 'ArticleController@index');  //文章列表
-            Route::match(['get','post'],'/create', 'ArticleController@create');  //创建文章
-            Route::match(['get','post'],'/edit','ArticleController@edit');  //编辑文章
-            Route::match(['post'],'/ajax_del','ArticleController@ajaxDel');  //删除文章
+            Route::get('/', 'ArticleController@index')->middleware('can:article');  //文章列表
+            Route::match(['get','post'],'/create', 'ArticleController@create')->middleware('can:article_create');  //创建文章
+            Route::match(['get','post'],'/edit','ArticleController@edit')->middleware('can:article_edit');  //编辑文章
+            Route::match(['post'],'/ajax_del','ArticleController@ajaxDel')->middleware('can:article_del');  //删除文章
             Route::match(['post'],'/ajax_move','ArticleController@ajaxMove');  //移动文章
             Route::match(['post'],'/ajax_exattr','ArticleController@ajaxExattr');  //ajax获取附加字段[,值]
         });

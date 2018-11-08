@@ -103,7 +103,7 @@
                 <div class="form-group">
                     <label for="url">内容</label>
                     <div>
-                        @component('admin.component.ckeditor',array('input_id'=>'body','input_name'=>'body','custom'=>'full','height'=>400,'pic_max_width'=>100,'input_value'=>htmlspecialchars_decode($article->body))) @endcomponent
+                        @component('admin.component.ckeditor',array('input_id'=>'body','input_name'=>'body','custom'=>'full','height'=>400,'input_value'=>htmlspecialchars_decode($article->body))) @endcomponent
                     </div>
 
                     <small class="form-text text-muted"></small>

@@ -9,6 +9,7 @@ use Validator;
 use App\Models\LinkCate;
 use App\Models\Link;
 use App\Models\Pic;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 后台菜单控制器
@@ -78,12 +79,18 @@ class LinkController extends Controller
             $data['target'] = $request->target;
             $data['sort'] = $request->sort;
             $data['is_show'] = $request->is_show;
-            $link = Link::create($data);
-            if(!$link){
+
+            DB::beginTransaction();
+            Pic::update_is_used($request);
+            $res = Link::create($data);
+            if(!$res){
+                DB::rollBack();
                 return response()->json(['status'=>0,'msg'=>'新增失败']);
             }else{
+                DB::commit();
                 return response()->json(['status'=>1,'msg'=>'新增成功']);
             }
+
         }else{
             //载入文章分类
             $sign['cate'] = LinkCate::getList();
@@ -92,25 +99,27 @@ class LinkController extends Controller
     }
 
     /**
-     * 删除菜单
+     * 删除链接
      * @author my  2017-10-25
      * @param Request $request 请求
      * @return array
      */
     public function ajaxDel(Request $request){
-        //验证分类信息是否正确
-        $manager_menu = Link::find($request->id);
-        //执行删除操作
-        if(isset($manager_menu)){//若存在则删除
-            $manager_menu->delete();
+
+        DB::beginTransaction();
+            Pic::clearContent('link',$request->ids,['thumb']);
+            $res = Link::whereIn('id',$request->ids)->delete();
+        if($res){
+            DB::commit();
             return ['status'=>1,'msg'=>'删除成功'];
         }else {
-            return ['status'=>0,'msg'=>'删除失败，未找到文章'];
+            DB::rollBack();
+            return ['status'=>0,'msg'=>'删除失败'];
         }
     }
 
     /**
-     * 文章编辑
+     * 链接编辑
      * @author my  2017-10-25
      * @param Request $request
      * @param LinkCate $menu 依赖注入的菜单模型
@@ -154,12 +163,18 @@ class LinkController extends Controller
             $data['target'] = $request->target;
             $data['sort'] = $request->sort;
             $data['is_show'] = $request->is_show;
-            $link = Link::where('id',$request->id)->update($data);
-            if(!$link){
+
+            DB::beginTransaction();
+                Pic::update_is_used($request);
+            $res = Link::where('id',$request->id)->update($data);
+            if(!$res){
+                DB::rollBack();
                 return response()->json(['status'=>0,'msg'=>'编辑失败']);
             }else{
+                DB::commit();
                 return response()->json(['status'=>1,'msg'=>'编辑成功']);
             }
+
         }else{
             //载入文章
             $article = Link::find($request->id);

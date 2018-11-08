@@ -46,7 +46,7 @@
                 </td>
                 <td>
                     @if($vo->thumb)
-                        <img src="/image/{{$vo->thumb}}" height="30" />
+                        <img src="{{$vo->thumb}}" height="30" />
                     @endif
 
                 </td>
@@ -76,7 +76,7 @@
 
         //删除
         function del_menu(id){
-            $boot.confirm({text:'确认删除当前文章？'},function(){
+            $boot.confirm({text:'确认删除当前链接？'},function(){
                 if(!id){
                     $boot.warn({text:'删除参数出错'});
                     return false;
@@ -84,7 +84,7 @@
                 $.ajax({
                     type:'post',
                     url:'/admin/link/ajax_del',
-                    data:{id:id},
+                    data:{ids:[id]},
                     success:function(res){
                         if(res.status == 0){
                             $boot.warn({text:res.msg});

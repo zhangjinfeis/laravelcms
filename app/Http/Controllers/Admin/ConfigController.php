@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Pic;
-use App\File;
+use App\Models\Pic;
+use App\Models\File;
 use App\Models\Config;
 use App\Models\ConfigCate;
 use Validator;
@@ -125,7 +125,6 @@ class ConfigController extends Controller
      */
     public function edit(Request $request){
         if($request->isMethod('post')){
-
             $rule = [
                 'name' => 'required|between:1,20',
                 'key' => [
@@ -219,17 +218,24 @@ class ConfigController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function ajaxEditValue(Request $request){
+
         $input = $request->all();
-        foreach($input as $k => $v){
-            $c = Config::where('key',$k)->first();
-            if(!in_array($c->type,[7])){
-                $c->value= $v;
-                $c->save();
-            }else{
-                $c->value= implode(',',$v);
-                $c->save();
+        //去除多余参数
+        unset($input['pic_not_use_id'],$input['pic_use_id'],$input['editor_not_use'],$input['editor_use']);
+
+        DB::transaction(function()use($request,$input){
+            foreach($input as $k => $v){
+                $c = Config::where('key',$k)->first();
+                if(!in_array($c->type,[7])){
+                    $c->value= $v;
+                    $c->save();
+                }else{
+                    $c->value= implode(',',$v);
+                    $c->save();
+                }
             }
-        }
+            Pic::update_is_used($request);
+        });
         return response()->json(['status'=>1,'msg'=>'编辑成功']);
     }
 
@@ -239,14 +245,15 @@ class ConfigController extends Controller
      * @author kevin 2017-11-06
      */
     public function ajaxDel(Request $request){
-        //验证分类是否正确
-        $manager_menu = Config::find($request->id);
-        //执行删除操作
-        if(isset($manager_menu)){//若存在则删除
-            $manager_menu->delete();
+        DB::beginTransaction();
+        Pic::clearContent('config',[$request->id],['value']);
+        $res = Config::where('id',$request->id)->delete();
+        if($res){
+            DB::commit();
             return ['status'=>1,'msg'=>'删除成功'];
         }else {
-            return ['status'=>0,'msg'=>'删除失败，未找到参数'];
+            DB::rollBack();
+            return ['status'=>0,'msg'=>'删除失败'];
         }
     }
 
