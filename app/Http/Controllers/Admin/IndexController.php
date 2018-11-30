@@ -9,11 +9,14 @@ use App\Models\Link;
 use App\Models\Guestbook;
 use App\Models\Map;
 use App\Models\ManagerUser;
+use App\Events\TestEvent;
 
 class IndexController extends Controller
 {
 
     public function index(Request $request){
+
+        broadcast(new TestEvent('zjf'));
 
         //文章数
         $article_count = Article::count();

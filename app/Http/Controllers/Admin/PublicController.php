@@ -59,6 +59,7 @@ class PublicController extends Controller
 
             return response()->json(['status'=>0,'msg'=>'用户名或密码错误','field'=>'name']);
         }else{
+
             return view("admin/public/login");
         }
     }

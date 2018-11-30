@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -62,7 +62,6 @@
 
 @section('footer')
     @include('home.include.footer')
-    <script src="/resources/home/js/my.js"></script>
 @show
 </body>
 </html>

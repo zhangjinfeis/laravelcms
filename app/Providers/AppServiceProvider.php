@@ -2,16 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
 use App\Models\ManagerMenu;
 use App\Models\ManagerPower;
 use App\Models\Menu;
 use App\Models\Config;
-use App\Models\Article;
-use App\Models\Link;
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,11 +15,8 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(Request $request)
+    public function boot()
     {
-
-
-        Schema::defaultStringLength(191);
         //对admin.home.home模板进行渲染时，拿到所有的菜单，并且判断哪些可以展示出来，最终传递到页面中去
         \View::composer('admin.frame.index', function($view){
 
@@ -90,7 +82,6 @@ class AppServiceProvider extends ServiceProvider
             $config = Config::toItem();
             $view->with(['config'=>$config]);
         });
-
 
     }
 
