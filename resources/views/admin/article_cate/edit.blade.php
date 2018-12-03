@@ -100,30 +100,6 @@
                     </table>
                 </div>
                 <script>
-
-
-
-                    //提交基本信息编辑
-                    function post_edit(){
-                        $.ajax({
-                            type:'post',
-                            url:'/admin/article_cate/edit',
-                            data:$('#form2').serialize(),
-                            success:function(res){
-                                if(res.status == 0){
-                                    $boot.warn({text:res.msg},function(){
-                                        $('input[name='+res.field+']').focus();
-                                    });
-                                }else{
-                                    $boot.success({text:res.msg},function(){
-                                        window.location = "{{ url()->previous() }}";
-                                    });
-                                }
-                            }
-                        })
-                        return false;
-                    }
-
                     function delete_attr(id){
                         $boot.confirm({text:"确定删除？"},function(){
                             $.ajax({
@@ -219,6 +195,27 @@
     </div>
 
     <script>
+
+        //提交基本信息编辑
+        function post_edit(){
+            $.ajax({
+                type:'post',
+                url:'/admin/article_cate/edit',
+                data:$('#form2').serialize(),
+                success:function(res){
+                    if(res.status == 0){
+                        $boot.warn({text:res.msg},function(){
+                            $('input[name='+res.field+']').focus();
+                        });
+                    }else{
+                        $boot.success({text:res.msg},function(){
+                            window.location = "{{ url()->previous() }}";
+                        });
+                    }
+                }
+            })
+            return false;
+        }
 
         //弹出创建菜单窗口
         function alert_win(){
