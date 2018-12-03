@@ -16,7 +16,8 @@ class IndexController extends Controller
 
     public function index(Request $request){
 
-        broadcast(new TestEvent('zjf'));
+        //event(new TestEvent('zjf'));
+
 
         //文章数
         $article_count = Article::count();

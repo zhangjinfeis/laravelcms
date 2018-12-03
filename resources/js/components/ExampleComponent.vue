@@ -17,7 +17,11 @@
 <script>
     export default {
         mounted() {
-            console.log('Component mounted.')
+            window.Echo.channel('bkb').listen('.ak', (e)=>{
+                //console.log(123);
+                console.log(e);
+            });
+
         }
     }
 </script>
