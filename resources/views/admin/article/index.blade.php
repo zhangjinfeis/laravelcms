@@ -55,6 +55,11 @@
             <th>文章分类</th>
             <th>排序</th>
             <th>开启/关闭</th>
+            <th>首页</th>
+            <th>热门</th>
+            <th>点击量</th>
+            <th>查看点击来源</th>
+            <th>文章标签</th>
             <th>最近更新</th>
             <th>操作</th>
         </tr>
@@ -77,14 +82,36 @@
                 {{$vo->cate->name_cn ?? ''}}
             </td>
             <td>
-                {{$vo->sort}}
+                <a class="btn btn-sm " href="#" role="button" onclick="return alert_win('修改排序',{{$vo->id}},{{$vo->sort}},'{{$vo->title}}');" title="更改排序">{{$vo->sort}}</a>
             </td>
             <td>
                 @if($vo['is_show'] ==1)
-                    <span class="badge badge-success">开启</span>
+                    <a class="btn btn-sm " href="#" role="button" onclick="return open_close({{$vo['id']}},'is_show',9,'{{$vo->title}}');" title="关闭"> <span class="badge badge-success"> 开启</span></a>
                 @else
-                    <span class="badge badge-danger">关闭</span>
+                    <a class="btn btn-sm " href="#" role="button" onclick="return open_close({{$vo['id']}},'is_show',1,'{{$vo->title}}');" title="开启">    <span class="badge badge-danger">关闭</span></a>
+                    {{--<span class="badge badge-danger">关闭</span>--}}
+                    {{--<a class="btn btn-sm " href="#" role="button" onclick="return open_close({{$vo['id']}},'is_show',1,'{{$vo->title}}');" title="开启"><i class="fa fa-toggle-on"style="color:#0acf97"></i></a>--}}
                 @endif
+            </td>
+            <td>
+                @if($vo['is_index'] ==1)
+                    <a class="btn btn-sm " href="#" role="button" onclick="return open_close({{$vo['id']}},'is_index',9,'{{$vo->title}}');" title="关闭"> <span class="badge badge-success"> 开启</span></a>
+                @else
+                    <a class="btn btn-sm " href="#" role="button" onclick="return open_close({{$vo['id']}},'is_index',1,'{{$vo->title}}');" title="开启">    <span class="badge badge-danger">关闭</span></a>
+                @endif
+            </td>
+            <td>
+                @if($vo['is_hot'] ==1)
+                    <a class="btn btn-sm " href="#" role="button" onclick="return open_close({{$vo['id']}},'is_hot',9,'{{$vo->title}}');" title="关闭"> <span class="badge badge-success"> 开启</span></a>
+                @else
+                    <a class="btn btn-sm " href="#" role="button" onclick="return open_close({{$vo['id']}},'is_hot',1,'{{$vo->title}}');" title="开启">    <span class="badge badge-danger">关闭</span></a>
+                @endif
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
             </td>
             <td>
                 {{$vo->updated_at->format('Y-m-d H:i')}}
@@ -123,8 +150,56 @@
             </div>
         </div>
     </div>
-
+    <div id="as" style="display: none;">
+        <div class="m-manager-menu-create">
+            <input name="article_id" type="hidden" value="">
+            <div class="form-group">
+                <label for="sort">排序值</label>
+                <input type="number" oninput="if(value.length>5)value=value.slice(0,5)" max="10000"  class="form-control" id="sort" name="sort" placeholder="排序值"  >
+                <small class="form-text text-muted">1-10000整数值</small>
+            </div>
+            <div class="h10"></div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary" onclick="return edit_sort();">确认修改</button>
+            </div>
+        </div>
+    </div>
     <script>
+        //弹出排序编辑窗口
+        function alert_win(name,id,sort,title){
+            $('.js-pid').text(name);
+            $('input[name=article_id]').val(id);
+            $('input[name=sort]').val(sort);
+            var s='修改：'+title+'，的排序值';
+            $boot.win({id:'#as','title':s});
+            return false;
+        }
+        //排序编辑
+        function edit_sort(){
+            if(!$('input[name=sort]').val()){
+                $boot.warn({text:'不能为空'});
+                return false;
+            }
+            var data = {
+                id:$('input[name=article_id]').val(),
+                sort:$('input[name=sort]').val(),
+            };
+            $.ajax({
+                type:'post',
+                url:'/admin/article/ajax_open_close',
+                data:{id:data.id,type:'sort',status:data.sort},
+                success:function(res){
+                    if(res.status == 0){
+                        $boot.warn({text:res.msg});
+                    }else{
+                        $boot.success({text:res.msg},function(){
+                            window.location = window.location;
+                        });
+                    }
+                }
+            });
+            return false;
+        }
 
         //删除文章all
         function ajax_del_all(){
@@ -146,7 +221,7 @@
                             $boot.error({text:res.msg});
                         }else{
                             $boot.success({text:res.msg},function(){
-                                window.location = window.location;
+                                window.location .reload();
                             });
 
                         }
@@ -187,9 +262,8 @@
                         $boot.error({text:res.msg});
                     }else{
                         $boot.success({text:res.msg},function(){
-                            window.location = window.location;
+                            window.location .reload();
                         });
-
                     }
                 }
             });
@@ -212,7 +286,44 @@
                             $boot.warn({text:res.msg});
                         }else{
                             $boot.success({text:res.msg},function(){
-                                window.location = window.location;
+                                window.location .reload();
+                            });
+                        }
+                    }
+                });
+            });
+            return false;
+        }
+        //文章状态开启。关闭
+        function open_close(id,type,status,title){
+            var ti=title+',的';
+            if(type=='is_index'){
+                ty='首页展示';
+            }else if(type=='is_hot'){
+                ty='热门展示';
+            }else{
+                ty='基础显示';
+            }
+            if(status==1){
+                sx='确认开启:'+ti+ty+'状态？';
+            }else{
+                sx='确认关闭:'+ti+ty+'状态？'
+            }
+            $boot.confirm({text:sx},function(){
+                if(!id){
+                    $boot.warn({text:'参数出错'});
+                    return false;
+                }
+                $.ajax({
+                    type:'post',
+                    url:'/admin/article/ajax_open_close',
+                    data:{id:id,type:type,status:status},
+                    success:function(res){
+                        if(res.status == 0){
+                            $boot.warn({text:res.msg});
+                        }else{
+                            $boot.success({text:res.msg},function(){
+                                window.location.reload();
                             });
 
                         }

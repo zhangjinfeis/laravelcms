@@ -35,9 +35,17 @@
                     <small class="form-text text-muted">1-100个字符</small>
                 </div>
                 <div class="form-group">
+                    <label for="name">icon背景</label>
+                    <div>
+                        <input type="text" id="colorpicker" name="title_color" value=""/>
+                    </div>
+                    <small class="form-text text-muted">1-20个字符</small>
+                </div>
+                <div class="form-group">
                     <label for="title_sub">副标题</label>
-                    <input type="text" class="form-control" id="title_sub" name="title_sub" placeholder="副标题" style="width:400px;" value="" />
-                    <small class="form-text text-muted">1-100个字符</small>
+                    <textarea class="form-control"id="title_sub" name="title_sub" placeholder="副标题" rows="2"  style="width:600px;" ></textarea>
+                    {{--<input type="text" class="form-control" id="title_sub" name="title_sub" placeholder="副标题" style="width:400px;" value="" />--}}
+                    <small class="form-text text-muted">1-200个字符</small>
                 </div>
                 <div class="form-group">
                     <label for="url">链接</label>
@@ -50,11 +58,6 @@
                     <small class="form-text text-muted"></small>
                 </div>
 
-                <div class="form-group">
-                    <label for="url">缩略图1</label>
-                    @include('admin.component.upload_files',array("input_id"=>md5("thumbs"),"input_name"=>"thumbs"))
-                    <small class="form-text text-muted"></small>
-                </div>
 
                 <div class="form-group">
                     <label for="sort">排序</label>
@@ -75,6 +78,32 @@
                     <small class="form-text text-muted">默认50，越小排序越靠前</small>
                 </div>
                 <div class="form-group">
+                    <label>首页显示</label>
+                    <div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="is_index1" name="is_index" class="custom-control-input" value="1" >
+                            <label class="custom-control-label" for="is_index1">开启</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="is_index2" name="is_index" class="custom-control-input" value="0" checked>
+                            <label class="custom-control-label" for="is_index2">关闭</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>热门</label>
+                    <div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="is_hot1" name="is_hot" class="custom-control-input" value="1" >
+                            <label class="custom-control-label" for="is_hot1">开启</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" id="is_hot2" name="is_hot" class="custom-control-input" value="0" checked>
+                            <label class="custom-control-label" for="is_hot2">关闭</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label>状态</label>
                     <div>
                         <div class="custom-control custom-radio custom-control-inline">
@@ -92,10 +121,16 @@
                 <div class="js-exattr-container"></div>
             </div>
             <div class="tab-pane fade show" id="nav-3" role="tabpanel">
+
+                <div class="form-group">
+                    <label for="url">视频文件上传</label>
+                    @include('admin.component.upload_files',array("input_id"=>md5("thumbs"),"input_name"=>"thumbs"))
+                    <small class="form-text text-muted"></small>
+                </div>
                 <div class="form-group">
                     <label for="url">内容</label>
                     <div>
-                        @include('admin.component.ckeditor',array('input_id'=>'body','input_name'=>'body','custom'=>'full','height'=>400))
+                        @include('admin.component.ckeditor',array('input_id'=>'body','input_name'=>'body','custom'=>'full','height'=>1090,'width'=>794))
                     </div>
 
                     <small class="form-text text-muted"></small>
@@ -123,6 +158,7 @@
         <button type="submit" class="btn btn-primary" onclick="return post_create();">保存</button>
     </form>
     <script>
+        $("#colorpicker").spectrum();
         //提交编辑
         function post_create(){
             var data = $('form').serializeObject();

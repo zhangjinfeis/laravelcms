@@ -35,9 +35,16 @@
                     <small class="form-text text-muted">1-100个字符</small>
                 </div>
                 <div class="form-group">
+                    <label for="name">标题颜色</label>
+                    <div>
+                        <input type="text" id="colorpicker" name="title_color" value="{{$article->title_color ?? ''}}"/>
+                    </div>
+                    <small class="form-text text-muted">1-20个字符</small>
+                </div>
+                <div class="form-group">
                     <label for="title_sub">副标题</label>
-                    <input type="text" class="form-control" id="title_sub" name="title_sub" placeholder="副标题" style="width:400px;" value="{{$article->title_sub ?? ''}}" />
-                    <small class="form-text text-muted">1-100个字符</small>
+                    <textarea class="form-control" id="title_sub" name="title_sub" placeholder="副标题" style="width:600px;"rows="2">{{$article->title_sub ??''}}</textarea>
+                    <small class="form-text text-muted">1-200个字符</small>
                 </div>
                 <div class="form-group">
                     <label for="url">链接</label>
@@ -50,11 +57,11 @@
                     <small class="form-text text-muted"></small>
                 </div>
 
-                <div class="form-group">
-                    <label for="url">缩略图1</label>
-                    @include('admin.component.upload_files',array("input_id"=>md5("thumbs"),"input_name"=>"thumbs","input_value"=>$article->thumbs))
-                    <small class="form-text text-muted"></small>
-                </div>
+                {{--<div class="form-group">--}}
+                    {{--<label for="url">缩略图1</label>--}}
+                    {{--@include('admin.component.upload_files',array("input_id"=>md5("thumbs"),"input_name"=>"thumbs","input_value"=>$article->thumbs))--}}
+                    {{--<small class="form-text text-muted"></small>--}}
+                {{--</div>--}}
 
                 <div class="form-group">
                     <label for="sort">排序</label>
@@ -64,7 +71,8 @@
                  <div class="form-group">
                     <label for="sort">创建日期</label>
                     <div class="input-group" style="width: 400px;">
-                        <input type="text" class="form-control" placeholder="选择时间" id="datetime" name="created_at" value="{{$article->created_at or ''}}">
+                        <input type="text" class="form-control" placeholder="选择时间" id="datetime" name="created_at" value="{{$article->created_at}}">
+                
                         <div class="input-group-append">
                     <span class="input-group-text">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -95,15 +103,59 @@
                         </div>
                     </div>
                 </div>
+            <div class="form-group">
+                <label>首页显示</label>
+                <div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="is_index1" name="is_index" class="custom-control-input" value="1"
+                               @if($article->is_index == 1)
+                           checked
+                                @endif>
+                        <label class="custom-control-label" for="is_index1">开启</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="is_index2" name="is_index" class="custom-control-input" value="0"
+                               @if($article->is_index == 0)
+                               checked
+                                @endif>
+                        <label class="custom-control-label" for="is_index2">关闭</label>
+                    </div>
+                </div>
             </div>
+            <div class="form-group">
+                <label>热门</label>
+                <div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="is_hot1" name="is_hot" class="custom-control-input" value="1"
+                               @if($article->is_hot == 1)
+                               checked
+                                @endif
+                        >
+                        <label class="custom-control-label" for="is_hot1">开启</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="is_hot2" name="is_hot" class="custom-control-input" value="0"
+                               @if($article->is_hot == 0)
+                               checked
+                                @endif>
+                        <label class="custom-control-label" for="is_hot2">关闭</label>
+                    </div>
+                </div>
+            </div>
+        </div>
             <div class="tab-pane fade show" id="nav-2" role="tabpanel">
                 <div class="js-exattr-container"></div>
             </div>
             <div class="tab-pane fade show" id="nav-3" role="tabpanel">
                 <div class="form-group">
+                    <label for="url">视频文件上传</label>
+                    @include('admin.component.upload_files',array("input_id"=>md5("thumbs"),"input_name"=>"thumbs","input_value"=>$article->thumbs))
+                    <small class="form-text text-muted"></small>
+                </div>
+                <div class="form-group">
                     <label for="url">内容</label>
                     <div>
-                        @component('admin.component.ckeditor',array('input_id'=>'body','input_name'=>'body','custom'=>'full','height'=>400,'input_value'=>htmlspecialchars_decode($article->body))) @endcomponent
+                        @component('admin.component.ckeditor',array('input_id'=>'body','input_name'=>'body','custom'=>'full','height'=>1090,'width'=>794,'input_value'=>htmlspecialchars_decode($article->body))) @endcomponent
                     </div>
 
                     <small class="form-text text-muted"></small>
@@ -129,6 +181,7 @@
         <button type="submit" class="btn btn-primary" onclick="return post_edit();">保存</button>
     </form>
     <script>
+        $("#colorpicker").spectrum();
         //提交编辑
         function post_edit(){
             var data = $('form').serializeObject();
