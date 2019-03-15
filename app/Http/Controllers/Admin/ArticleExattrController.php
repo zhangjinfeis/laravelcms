@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ArticleExattr;
+use App\Models\Article;
+use App\Models\ArticleCate;
 use Validator;
 use Illuminate\Validation\Rule;
 
@@ -145,6 +147,53 @@ class ArticleExattrController extends Controller
                 $config->height = $request->height;
                 $config->custom = $request->custom;
             }
+            if(in_array($request->type,[6,7])) {
+                $config->radio_checkbox_json = $request->radio_checkbox_json;
+                //删除文章exattr 中的 标签的值
+                if (!empty($config->radio_checkbox_json)) {
+                    //修改文章值
+                    $item = str_replace("\r\n", "\n", $config->radio_checkbox_json);
+                    $item = trim($item, "\n");
+                    $item = explode("\n", $item);
+                    $itemx=[];
+                    foreach($item as $k=>$v){
+                        $itemx[]=substr($v,0,1);
+                    }
+                    $key = 'exattr';
+                    $articles = Article::where(['cate_id' => $config->cate_id])
+                        ->select('id',$key)
+                        ->get();
+                    foreach($articles as $k=>$v){
+                        $radio=[];
+                        $v['exattr']=json_decode($v['exattr'],true);
+                        if(!empty($v['exattr'])&&is_array($v['exattr'])){
+                            foreach ($v['exattr'] as $kk=> $vv){
+                                if($kk==$config->key&&!empty($vv)&&is_array($vv)) {
+                                    foreach ($vv as$kkk=> $vvv) {
+                                        foreach($itemx as $kx=>$x){
+                                            if($vvv==$x) {
+                                                $radio[]=$vvv;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                     $s=json_encode($radio);
+//                                            print_r($s);die();
+                    Article::where(['id' => $v['id']])->update(['exattr->marks'=>$s]);
+                        $article = Article::where(['id' => $v['id']])
+                            ->select($key)
+                            ->first();
+                       $ss=str_replace('"[', "[", $article->exattr);
+                       $ss=str_replace(']"', "]", $ss);
+                        $ss=str_replace('\\"', '"', $ss);
+                        Article::where(['id' => $v['id']])->update(['exattr'=>$ss]);
+                    }
+//                    dump($articles);die();
+                }
+            }
+
             $config->tips = $request->tips;
             $config->sort = $request->sort;
             $res = $config->save();

@@ -62,13 +62,13 @@ class ArticleController extends Controller
                 'title' => 'required|between:1,100',
             ];
 
-            $request->title_sub && $rule['title_sub'] ='between:1,100';
+            $request->title_sub && $rule['title_sub'] ='between:1,200';
             $request->keywords && $rule['keywords'] ='between:1,100';
             $request->description && $rule['description'] ='between:1,500';
 
             $message = [
                 'required' => ':attribute不能为空',
-                'title.between' => ':attribute字符长度1-100',
+                'title.between' => ':attribute字符长度1-200',
                 'title_sub.between' => ':attribute字符长度1-100',
                 'keywords.between' => ':attribute字符长度1-100',
                 'description.between' => ':attribute字符长度1-500',
@@ -98,14 +98,38 @@ class ArticleController extends Controller
             $article['title'] = $request->title;
             $article['title_sub'] = $request->title_sub;
             $article['cate_id'] = $request->cate_id;
-            $article['url'] = $request->url;
+            if($request->sort!=''){
+                $article['sort'] = $request->sort;
+
+            }
+
+            if($request->url!=''){
+                $article['url'] = $request->url;
+            }
+            else{
+                foreach(config('config.article_url') as $k=>$v){
+                    if($k==($request->cate_id+0)){
+                        $article['url'] = $v;
+                    }
+                }
+            }
+
             $article['thumb'] = $request->thumb;
             $article['thumbs'] = $request->thumbs;
             $article['body'] = htmlspecialchars($request->body);
             $article['keywords'] = $request->keywords;
             $article['description'] = $request->description;
             $article['is_show'] = $request->is_show;
+            $article['is_index'] = $request->is_index;
+            $article['is_hot'] = $request->is_hot;
             $article['exattr'] = json_encode($request->exattr);
+            if($request->created_at&&$request->created_at!=''){
+                $article['created_at'] = strtotime($request->created_at);
+
+            }
+            if($request->title_color!=''){
+                $article['title_color'] = $request->title_color;
+            }
             //dd($article);
             DB::beginTransaction();
                 Pic::update_is_used($request);
@@ -175,14 +199,14 @@ class ArticleController extends Controller
                 'title' => 'required|between:1,100',
             ];
 
-            $request->title_sub && $rule['title_sub'] ='between:1,100';
+            $request->title_sub && $rule['title_sub'] ='between:1,200';
             $request->keywords && $rule['keywords'] ='between:1,100';
             $request->description && $rule['description'] ='between:1,500';
 
             $message = [
                 'required' => ':attribute不能为空',
                 'title.between' => ':attribute字符长度1-100',
-                'title_sub.between' => ':attribute字符长度1-100',
+                'title_sub.between' => ':attribute字符长度1-200',
                 'keywords.between' => ':attribute字符长度1-100',
                 'description.between' => ':attribute字符长度1-500',
             ];
@@ -218,7 +242,18 @@ class ArticleController extends Controller
             $article['keywords'] = $request->keywords;
             $article['description'] = $request->description;
             $article['is_show'] = $request->is_show;
+            $article['is_index'] = $request->is_index;
+            $article['is_hot'] = $request->is_hot;
             $article['exattr'] = json_encode($request->exattr);
+            if($request->sort!=''){
+                $article['sort'] = $request->sort;
+
+            }
+            if($request->title_color!=''){
+                $article['title_color'] = $request->title_color;
+
+            }
+
 
             DB::beginTransaction();
                 Pic::update_is_used($request);
@@ -287,6 +322,19 @@ class ArticleController extends Controller
         $sign['exattr'] = $exattr;
         $html = response()->view('admin.article.ajax_exattr',$sign)->getContent();
         return response()->json(['status'=>1,'html'=>$html]);
+    }
+
+    /**
+     * @param Request $request
+     * 文章状态排序修改
+     */
+    public function ajaxOpenClose(Request $request){
+        $res = Article::where(['id'=>$request->id])->update([$request->type=>$request->status]);
+        if($res){
+            return ['status'=>1,'msg'=>'修改成功'];
+        }else {
+            return ['status'=>0,'msg'=>'修改失败'];
+        }
     }
 
 }
